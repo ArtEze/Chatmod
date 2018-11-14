@@ -427,24 +427,27 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 	var soy_un_bot = regularizar_texto(obtener_nombre_propio()).test(hacia)
 	if(soy_un_bot)
 	{
-		if(entrada.match(/^\s*big\s*bang\s*$/gi)!=null)
+		if(big_bang_activado)
 		{
-			setTimeout(()=>enviar_mensaje("[size=30][b]Atención: Todos serán pateados. [/b][/size] >:) ",sala),10000)
-			setTimeout(()=>patear_futuro(usuarios),20000)
-			puede_patear = 1
-			eliminar_mensaje(número,sala)
-		}
-		if(entrada.match(/^\s*detener\s*$/gi)!=null)
-		{
-			var suerte = aleatorio(3)!=0
-			if(suerte)
+			if(entrada.match(/^\s*big\s*bang\s*$/gi)!=null)
 			{
-				enviar_mensaje("[size=20][b]El pateo ha sido detenido.[/b][/size]",sala)
-				puede_patear = 0
-			}else{
-				enviar_mensaje("[size=20][b]Es imposible detener el pateo.[/b][/size]",sala)
+				setTimeout(()=>enviar_mensaje("[size=30][b]Atención: Todos serán pateados. [/b][/size] >:) ",sala),10000)
+				setTimeout(()=>patear_futuro(usuarios),20000)
+				puede_patear = 1
+				eliminar_mensaje(número,sala)
 			}
-			eliminar_mensaje(número,sala)
+			if(entrada.match(/^\s*detener\s*$/gi)!=null)
+			{
+				var suerte = aleatorio(3)!=0
+				if(suerte)
+				{
+					enviar_mensaje("[size=20][b]El pateo ha sido detenido.[/b][/size]",sala)
+					puede_patear = 0
+				}else{
+					enviar_mensaje("[size=20][b]Es imposible detener el pateo.[/b][/size]",sala)
+				}
+				eliminar_mensaje(número,sala)
+			}
 		}
 	}
 }
@@ -2042,7 +2045,7 @@ var valores = [
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[new DOMParser(),"domparser"]
 	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
-	,[0,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"]
+	,[0,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
 ]
 for(var i in valores)
 {
