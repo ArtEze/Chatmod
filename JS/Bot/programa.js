@@ -460,6 +460,7 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 				var actual = hacia[i]
 				if(puede_patear_usuarios)
 				{
+					eliminar_mensaje(número,sala)
 					banear_según_minutos(actual,0)
 				}
 			}
