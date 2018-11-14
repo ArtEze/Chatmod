@@ -448,6 +448,28 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 		}
 	}
 }
+function patear_usuarios(entrada,número,usuario,sala,hacia)
+{
+	var soy_un_bot = regularizar_texto(obtener_nombre_propio()).test(hacia)
+	if(soy_un_bot)
+	{
+		if(entrada.match(/^\s*patear\s*$/gi)!=null)
+		{
+			for(var i in hacia)
+			{
+				var actual = usuarios[i]
+				if(puede_patear_usuarios)
+				{
+					banear_según_minutos(actual,0)
+				}
+			}
+			if(hacia.length==0)
+			{
+				puede_patear_usuarios ^= 1
+			}
+		}
+	}
+}
 function pedir_hora_usuario(datos,usuario,sala,hacia)
 {
 	var analizado = JSON.parse(datos)
@@ -1812,6 +1834,7 @@ function procesar_mensajes(a,b)
 			banear_por_votos			(entrada,usuario,hacia,sala)
 			martillo					(entrada,número,sala)
 			patear_a_todos				(entrada,número,usuario,sala,hacia)
+			patear_usuarios				(entrada,número,usuario,sala,hacia)
 			entrar_o_salir				(entrada)
 			interruptor_ban				(entrada,usuario,sala,hacia)
 
@@ -2018,7 +2041,7 @@ var valores = [
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[new DOMParser(),"domparser"]
 	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
-	,[0,"puede_mostrar_avatar"]
+	,[0,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"]
 ]
 for(var i in valores)
 {
@@ -2091,6 +2114,7 @@ var lugares_ban = [
 	,["Korea","T",500]
 	,["Dearborn","T",500]
 	,["Vietnam","T",500]
+	,["Albania","T",500]
 ]
 var avatar_excluidos = [
 	"Genciita*_*"
