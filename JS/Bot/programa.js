@@ -450,10 +450,10 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 }
 function patear_usuarios(entrada,número,usuario,sala,hacia)
 {
-	var soy_un_bot = regularizar_texto(obtener_nombre_propio()).test(hacia)
+	var soy_un_bot = soy_bot()
 	if(soy_un_bot)
 	{
-		if(entrada.match(/^\s*patear\s*$/gi)!=null)
+		if(/^\s*patear\s*$/gi.test(entrada))
 		{
 			for(var i in hacia)
 			{
