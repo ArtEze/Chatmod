@@ -2023,6 +2023,7 @@ var ips_ban = [
 	,["190.183.212","BUDIN CON CHISPAS",44640]
 	,["185.233","-",44640]
 	,["185.234","-",44640]
+	,["186.134.90.106","Agustín",10080]
 ]
 var arrays = [
 	"votados", "mensajes", "entrar_salir", "idos", "entrados"
