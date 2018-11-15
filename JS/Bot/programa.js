@@ -1508,8 +1508,12 @@ function ban_ip(datos,nombre)
     var i
 	if(no_error)
 	{
+		var ip_usuario = analizado.lastIp
+		var ip_geo_usuario = analizado.lastIpGeo
+		var navegador = analizado.lastUserAgent
 		var id_cuenta = analizado.accountId
 		var no_tiene_cuenta = id_cuenta==undefined
+		var no_tiene_país = ip_geo_usuario==undefined
 		if(!permitir_kendall)
 		{
 			if(/jakekendall1\d+@yahoo.com/gi.test(analizado.accountLogin))
@@ -1518,44 +1522,39 @@ function ban_ip(datos,nombre)
 				banear_según_minutos(nombre,1,"Kendall")
 			}
 		}
-		if(no_tiene_cuenta)
+		if(no_tiene_país & no_tiene_cuenta)
 		{
-			var ip_usuario = analizado.lastIp
-			var ip_geo_usuario = analizado.lastIpGeo
-			var navegador = analizado.lastUserAgent
-			
-			var no_tiene_país = ip_geo_usuario==undefined
-			if(no_tiene_país)
+			if(ip_usuario!=undefined&!inhabilitado_banear.includes(ip_usuario))
 			{
-				if(ip_usuario!=undefined&!inhabilitado_banear.includes(ip_usuario))
-				{
-					console.log(nombre,ip_usuario,ip_geo_usuario,id_cuenta)
-					inhabilitado_banear.push(ip_usuario)
-					inhabilitado_banear = inhabilitado_banear.sort()
-				}
-				activar_ban_37_minutos()
-				//banear_según_minutos(nombre,1000,".")
+				console.log(nombre,ip_usuario,ip_geo_usuario,id_cuenta)
+				inhabilitado_banear.push(ip_usuario)
+				inhabilitado_banear = inhabilitado_banear.sort()
 			}
-			var causa = "."
-			var minutos = 3
-			if(!baneados.includes(nombre))
+			activar_ban_37_minutos()
+			//banear_según_minutos(nombre,1000,".")
+		}
+		var causa = "."
+		var minutos = 3
+		if(!baneados.includes(nombre))
+		{
+			if(ip_usuario!=undefined)
 			{
-				if(ip_usuario!=undefined)
+				var actual
+				for(i in ips_ban)
 				{
-					var actual
-					for(i in ips_ban)
+					actual = ips_ban[i]
+					if(ip_usuario.includes(actual[0]))
 					{
-						actual = ips_ban[i]
-						if(ip_usuario.includes(actual[0]))
-						{
-							causa = actual[1]
-							minutos = actual[2]
-							banear_según_minutos(nombre,minutos,causa)
-							console.log(12,actual[0],nombre,minutos,causa)
-							baneados.push(nombre)
-						}
+						causa = actual[1]
+						minutos = actual[2]
+						banear_según_minutos(nombre,minutos,causa)
+						console.log(12,actual[0],nombre,minutos,causa)
+						baneados.push(nombre)
 					}
 				}
+			}
+			if(no_tiene_cuenta)
+			{
 				console.log(datos,nombre)
 				console.log(ip_geo_usuario,nombre)
 				if(ip_geo_usuario!=undefined & ban_heurístico)
@@ -1592,13 +1591,13 @@ function ban_ip(datos,nombre)
 					}
 				}
 			}
-			if(!sospechosos.includes(nombre))
+		}
+		if(!sospechosos.includes(nombre))
+		{
+			if(ip_geo_usuario==undefined)
 			{
-				if(ip_geo_usuario==undefined)
-				{
-					//enviar_mensaje("Posible camuflado.",1,0,[nombre])
-					sospechosos.push(nombre)
-				}
+				//enviar_mensaje("Posible camuflado.",1,0,[nombre])
+				sospechosos.push(nombre)
 			}
 		}
 	}
