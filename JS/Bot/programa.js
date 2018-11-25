@@ -1101,13 +1101,9 @@ function unban(función)
 	var dirección = chat + modo + fin
 	descargar(dirección,función)
 }
-function desbanear(entrada,número,usuario,sala,hacia)
+function desbanear_usuario(usuario)
 {
-	if(sala==1|sala==2)
-	{
-		sala = sala_ban
-	}
-	var función = function(datos,usuario,baneado,sala){
+	var función = function(datos,usuario){
 		var html = texto_hacia_html(datos)
 		var lista_baneados = Array.from(html.querySelectorAll("label"))
 		var ban_analizado = lista_baneados.map(x=>
@@ -1128,12 +1124,20 @@ function desbanear(entrada,número,usuario,sala,hacia)
 				}
 			}
 		)
-		var usuario_baneado = ban_analizado.filter(x=>x.baneado==baneado)[0]
+		var usuario_baneado = ban_analizado.filter(x=>x.baneado==usuario)[0]
 		if(usuario_baneado!=undefined)
 		{
-			var función_2 = ()=>enviar_mensaje("Ban removido.",sala,[usuario,baneado])
-			desbanear_desde_número(usuario_baneado["número"],función_2)
+			desbanear_desde_número(usuario_baneado["número"])
 		}
+	}
+	var función_3 = x=>función(x,usuario)
+	unban(función_3)
+}
+function desbanear(entrada,número,usuario,sala,hacia)
+{
+	if(sala==1|sala==2)
+	{
+		sala = sala_ban
 	}
 	if(entrada.match(/^\s*unban|desban\s*$/gi)!=null)
 	{
@@ -1142,8 +1146,22 @@ function desbanear(entrada,número,usuario,sala,hacia)
 			var actual = hacia[i]
 			if(!/b[oòôóö]t/gi.test(actual))
 			{
-                var función_3 = x=>función(x,usuario,actual,sala)
-				unban(función_3)
+                desbanear_usuario(actual)
+			}
+		}
+	}
+	if(entrada.match(/^Recibiste ban de/gi)!=null)
+	{
+		for(var i in hacia)
+		{
+			var actual = hacia[i]
+			if(!/b[oòôóö]t/gi.test(actual))
+			{
+                var función_4 = x=>función(x,usuario,actual,sala)
+				if(actual=="ari ☯")
+				{
+					desbanear_usuario(actual)
+				}
 			}
 		}
 	}
