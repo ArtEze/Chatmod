@@ -563,58 +563,6 @@ function eliminar_palabras(entrada,número,sala)
 		eliminar_mensaje(número,sala)
 	}
 }
-function eliminar_banes(entrada,número,sala)
-{
-	var regexp = /^<span class="minor"><a href="#" class="nick" data-nick="(.+)">.+<\/a> baneado hasta (\d{2}\.\d{2}\.\d{4} \d{2}:\d{2})\. Causa: (.+)\. \(<a href="#" class="nick" data-nick="(.+)">.+<\/a>\)<\/span>$/gi
-	if(regexp.test(entrada))
-	{
-		mensajes_entra_sale_ban.push([número,sala])
-		eliminar_mensaje(número,sala)
-		var array = JSON.parse(entrada.replace(regexp,"[\"$1\",\"$2\",\"$3\",\"$4\"]"))
-		console.log(array[array])
-		var fecha_desde = new Date()
-		var fecha_hasta = new Date(array[1].replace(/\./gi,"/").replace(/^(\d+)\/(\d+)/gi,"$2/$1"))
-		var unidad = "segundo"
-		var tiempo = (fecha_hasta-fecha_desde)/1000
-		if(tiempo>30)
-		{
-			tiempo/=60; unidad = "minuto"
-			if(tiempo>=30)
-			{
-				tiempo/=60; unidad = "hora"
-				if(tiempo>=12)
-				{
-					tiempo/=24; unidad = "día"
-					if(tiempo>=4)
-					{
-						tiempo/=7; unidad = "semana"
-						if(tiempo>=2)
-						{
-							tiempo/=4; unidad = "mes"
-						}
-					}
-				}
-			}
-		}
-		tiempo = Math.round(tiempo)
-		if(tiempo==1)
-		{
-			tiempo="un"
-			if(unidad=="semana"){tiempo+="a"}
-			if(unidad=="hora"){tiempo+="a"}
-		}else
-		{
-			unidad+="s"
-		}
-		if((id_chat!=1)&(id_chat!=2))
-		{
-			enviar_mensaje(
-				"Recibiste ban de " + array[3]
-				+ " durante " + tiempo + " " + unidad + ". (" + array[2] + ")",sala_ban,[array[0]]
-			)
-		}
-	}
-}
 function martillo(entrada,número,sala)
 {
 	if(/\b[aeiou]*m[aeiou]+rt[aeiou]+(ll|y|sh).*[aeiou]+[ns]?\b/gi.test(entrada))
@@ -1150,19 +1098,58 @@ function desbanear(entrada,número,usuario,sala,hacia)
 			}
 		}
 	}
-	if(entrada.match(/^Recibiste ban de/gi)!=null)
+}
+function eliminar_banes(entrada,número,sala)
+{
+	var regexp = /^<span class="minor"><a href="#" class="nick" data-nick="(.+)">.+<\/a> baneado hasta (\d{2}\.\d{2}\.\d{4} \d{2}:\d{2})\. Causa: (.+)\. \(<a href="#" class="nick" data-nick="(.+)">.+<\/a>\)<\/span>$/gi
+	if(regexp.test(entrada))
 	{
-		for(var i in hacia)
+		mensajes_entra_sale_ban.push([número,sala])
+		eliminar_mensaje(número,sala)
+		var array = JSON.parse(entrada.replace(regexp,"[\"$1\",\"$2\",\"$3\",\"$4\"]"))
+		var usuario = array[0]
+		console.log(array)
+		var fecha_desde = new Date()
+		var fecha_hasta = new Date(array[1].replace(/\./gi,"/").replace(/^(\d+)\/(\d+)/gi,"$2/$1"))
+		var unidad = "segundo"
+		var tiempo = (fecha_hasta-fecha_desde)/1000
+		if(tiempo>30)
 		{
-			var actual = hacia[i]
-			if(!/b[oòôóö]t/gi.test(actual))
+			tiempo/=60; unidad = "minuto"
+			if(tiempo>=30)
 			{
-                var función_4 = x=>función(x,usuario,actual,sala)
-				if(actual=="ari ☯")
+				tiempo/=60; unidad = "hora"
+				if(tiempo>=12)
 				{
-					desbanear_usuario(actual)
+					tiempo/=24; unidad = "día"
+					if(tiempo>=4)
+					{
+						tiempo/=7; unidad = "semana"
+						if(tiempo>=2)
+						{
+							tiempo/=4; unidad = "mes"
+						}
+					}
 				}
 			}
+		}
+		tiempo = Math.round(tiempo)
+		if(tiempo==1)
+		{
+			tiempo="un"
+			if(unidad=="semana"){tiempo+="a"}
+			if(unidad=="hora"){tiempo+="a"}
+		}else
+		{
+			unidad+="s"
+		}
+		if((id_chat!=1)&(id_chat!=2))
+		{
+			enviar_mensaje(
+				"Recibiste ban de " + array[3]
+				+ " durante " + tiempo + " " + unidad + ". (" + array[2] + ")",sala_ban,[usuario]
+			)
+			desbanear_usuario(usuario)
 		}
 	}
 }
