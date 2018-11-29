@@ -1956,6 +1956,21 @@ function activar_bot()
 			console.log("Error desconocido.")
 		}
 	}
+	eliminados=[]
+	Bq=function(a,b){
+		if(b.t=="md")
+		{
+			for(var i in b.ts)
+			{
+				var mensaje = mensajes[mensajes.map(x=>x[1]).indexOf(b.ts[i])]
+				eliminados.push(mensaje)
+			}
+		}
+		var c=a.I["room"+b.r],d=b.ts;
+		z(Sd("chatMessage",c),function(a){var b=U(a,"ts");
+		b&&Ta(d,b)&&de(a)});
+		hi(U(c,"chatovodScrollBar"))
+	}
 	if(id_chat==3)
 	{
 		setTimeout(decir_la_hora,aleatorio_hora())
