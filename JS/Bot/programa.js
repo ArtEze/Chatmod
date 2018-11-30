@@ -1956,7 +1956,7 @@ function activar_bot()
 			console.log("Error desconocido.")
 		}
 	}
-	var eliminados=[]
+	window.eliminados=[]
 	Bq=function(a,b){
 		if(b.t=="md")
 		{
@@ -1971,7 +1971,7 @@ function activar_bot()
 		b&&Ta(d,b)&&de(a)});
 		hi(U(c,"chatovodScrollBar"))
 	}
-	var elim = ()=>eliminados.filter(x=>x).map(x=>x[2]+": "+x[0]).join("\n")
+	window.elim = ()=>eliminados.filter(x=>x).map(x=>x[2]+": "+x[0]).join("\n")
 	if(id_chat==3)
 	{
 		setTimeout(decir_la_hora,aleatorio_hora())
