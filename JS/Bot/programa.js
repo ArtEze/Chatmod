@@ -514,8 +514,8 @@ function decir_la_hora()
 	// Falta: Bolivia, Costa Rica, Cuba, El Salvador, Honduras
 	var color = "981221"
 	var sp = "\n"
-	var co = "[color=%23"+color+"]"
-	var ci = "[/color]"
+    var co = "[color=%23"+color+"]"
+    var ci = "[/color]"
 	var v = ""
 	var mensaje = "[color=%23"+color+"]Horas en el mundo: " + ci + sp
 	var array = [
@@ -1094,7 +1094,7 @@ function desbanear(entrada,número,usuario,sala,hacia)
 			var actual = hacia[i]
 			if(!/b[oòôóö]t/gi.test(actual))
 			{
-				desbanear_usuario(actual)
+                desbanear_usuario(actual)
 			}
 		}
 	}
@@ -1149,7 +1149,10 @@ function eliminar_banes(entrada,número,sala)
 				"Recibiste ban de " + array[3]
 				+ " durante " + tiempo + " " + unidad + ". (" + array[2] + ")",sala_ban,[usuario]
 			)
-			//desbanear_usuario(usuario)
+			if(usuario=="ari ☯")
+			{
+				desbanear_usuario(usuario)
+			}
 		}
 	}
 }
@@ -1260,7 +1263,7 @@ function evaluar_javascript(entrada,usuario,sala,hacia)
 	{
 		hacia = [usuario]
 	}
-	es_texto = false
+    es_texto = false
 	var permite = false
 	if(!es_texto)
 	{
@@ -1430,7 +1433,7 @@ function obtener_GMT(entrada)
 function pedir_la_hora(entrada,usuario,sala,hacia)
 {
 	var hecho = false
-	var mensaje
+    var mensaje
 	if(
 		!hecho
 		&entrada.match(/\bhora\b/gi)!=null
@@ -1510,7 +1513,7 @@ function ban_ip(datos,nombre)
 	if(id_chat==1|id_chat==2){return;}
 	var analizado = JSON.parse(datos)
 	var no_error = analizado.t!="error"
-	var i
+    var i
 	if(no_error)
 	{
 		var ip_usuario = analizado.lastIp
@@ -2113,33 +2116,33 @@ var inbaneables = [
 ]
 var lugares_ban = [
 	["Fremont","San José",100]
-	,["French"		 ,"F",500]
-	,["United"		 ,"N",500]
-	,["Republic of"	,"P",500]
-	,["Romania"		,"O",500]
-	,["Canada"		 ,"C",500]
-	,["Switzerland"	,"W",500]
-	,["Slovakia"	   ,"V",500]
-	,["Ukraine"		,"E",500]
-	,["Netherlands"	,"T",500]
-	,["Liberia"		,"I",500]
-	,["Munich"		 ,"H",500]
-	,["Germany"		,"M",500]
-	,["Sweden"		 ,"S",500]
-	,["France"		 ,"R",500]
-	,["Buffalo"		,"B",500]
+	,["French"         ,"F",500]
+	,["United"         ,"N",500]
+	,["Republic of"    ,"P",500]
+	,["Romania"        ,"O",500]
+	,["Canada"         ,"C",500]
+	,["Switzerland"    ,"W",500]
+	,["Slovakia"       ,"V",500]
+	,["Ukraine"        ,"E",500]
+	,["Netherlands"    ,"T",500]
+	,["Liberia"        ,"I",500]
+	,["Munich"         ,"H",500]
+	,["Germany"        ,"M",500]
+	,["Sweden"         ,"S",500]
+	,["France"         ,"R",500]
+	,["Buffalo"        ,"B",500]
 	,["Anonymous Proxy","X",500]
-	,["Hungary"		,"Y",500]
-	,["Czech"		  ,"Z",500]
-	,["Austria"		,"A",500]
-	,["Winnipeg"	   ,"G",500]
-	,["Chisinau"	   ,"U",500]
-	,["Japan"		  ,"J",500]
-	,["Australia"	  ,"L",500]
-	,["Korea"		  ,"K",500]
-	,["Dearborn"	   ,"D",500]
-	,["Vietnam"		,"Q",500]
-	,["Albania"		,"Ñ",500]
+	,["Hungary"        ,"Y",500]
+	,["Czech"          ,"Z",500]
+	,["Austria"        ,"A",500]
+	,["Winnipeg"       ,"G",500]
+	,["Chisinau"       ,"U",500]
+	,["Japan"          ,"J",500]
+	,["Australia"      ,"L",500]
+	,["Korea"          ,"K",500]
+	,["Dearborn"       ,"D",500]
+	,["Vietnam"        ,"Q",500]
+	,["Albania"        ,"Ñ",500]
 ]
 var avatar_excluidos = [
 	"Genciita*_*"
