@@ -1151,7 +1151,7 @@ function eliminar_banes(entrada,número,sala)
 			)
 			if(usuario=="ari ☯")
 			{
-				desbanear_usuario(usuario)
+				//desbanear_usuario(usuario)
 			}
 		}
 	}
