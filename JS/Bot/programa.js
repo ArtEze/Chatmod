@@ -2143,6 +2143,7 @@ var lugares_ban = [
 	,["Dearborn"       ,"D",500]
 	,["Vietnam"        ,"Q",500]
 	,["Albania"        ,"Ñ",500]
+	,["Tbilisi"        ,"Tbilisi",500]
 ]
 var avatar_excluidos = [
 	"Genciita*_*"
