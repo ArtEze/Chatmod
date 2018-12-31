@@ -1,4 +1,6 @@
-﻿function x()
+﻿// Código hecho por Emiliano Ezequiel Parenti
+
+function x()
 {
 	console.log(Array.from(arguments))
 }
