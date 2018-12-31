@@ -2007,7 +2007,7 @@ function permanecer_conectado()
 	var es_ventana_propia = estado_conexión()>-1
 	if(es_ventana_propia)
 	{
-		tiempos.tiempo_permanecer = setTimeout(permanecer_conectado,1000*30)
+		// tiempos.tiempo_permanecer = setTimeout(permanecer_conectado,1000*30)
 	}
 }
 var tiempos = {}
