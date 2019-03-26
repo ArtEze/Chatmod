@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
-// @name		 Bot Otecald Chatovod
+// @name		 Bot2 Otecald Chatovod
 // @version	  3.0.0
-// @description  Cargador del cargador del Bot Otecald para Chatovod.
+// @description  El bot versión 2.
 // @author	   ArtEze
 // @match		*://*.chatovod.com/*
 // @grant		none
