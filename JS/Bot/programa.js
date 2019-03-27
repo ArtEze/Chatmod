@@ -27,6 +27,7 @@ function estado_conexión()
 {
 	var devuelve = -1
 	var accountMenu = document.querySelector("#accountMenu")
+	var nickMenu = document.querySelector("#nickMenu")
 	if(accountMenu==undefined){devuelve-=1}
 	if(nickMenu==undefined){devuelve-=2}
 	if(devuelve==-1)
