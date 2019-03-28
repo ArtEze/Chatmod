@@ -21,15 +21,15 @@ function crear_activador()
 	window.bot_está_activado = 0
 	var span = document.createElement("span")
 	var div = document.createElement("div")
+	var función = x=>cambiar_color()
+	var existe_activador = document.querySelector("#activador")!=null
 	span.className = "text"
 	span.innerHTML = "Bot desactivado"
 	div.id = "activador"
 	div.className = "menuItem"
 	div.appendChild(span)
 	div.style["backgroundColor"]="#000000"
-	var función = x=>cambiar_color()
 	div.addEventListener("click",función)
-	var existe_activador = document.querySelector("#activador")!=null
 	if(!existe_activador)
 	{
 		document.querySelector("#menubar").appendChild(div)
