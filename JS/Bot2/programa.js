@@ -19,11 +19,13 @@ function cambiar_color()
 function crear_activador()
 {
 	window.bot_está_activado = 0
-	var outer = '<span class="text">Bot desactivado</span>'
+	var span = document.createElement("span")
 	var div = document.createElement("div")
+	span.className = "text"
+	span.innerHTML = "Bot desactivado"
 	div.id = "activador"
 	div.className = "menuItem"
-	div.innerHTML = outer
+	div.appendChild(span)
 	div.style["backgroundColor"]="#000000"
 	var función = x=>cambiar_color()
 	div.addEventListener("click",función)
