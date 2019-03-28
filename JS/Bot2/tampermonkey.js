@@ -20,9 +20,9 @@ window.cargar_cargador = function()
 		/^(.+):\/\/(.+)\.([^/]+)\/(.+)\/(.+)\/blob\/master([^.]+)\/([^.]+)\.(.+)$/gi,'["$1","$2","$3","$4","$5","$6","$7","$8"]')
 	)
 	var a = window.dir_partes
-	window.raw_dir = a[0]+"://"+a[3].toLowerCase()+"."+a[1]+".io/"+a[4]+a[5]+"/"
+	window.raw_dir_bot2 = a[0]+"://"+a[3].toLowerCase()+"."+a[1]+".io/"+a[4]+a[5]+"/"
 	var archivo = "navegador"
-	var ruta = window.raw_dir + archivo + ".js" + window.no_chache()
+	var ruta = window.raw_dir_bot2 + archivo + ".js" + window.no_chache()
 	var b = document.createElement("script")
 	b.src = ruta
 	document.head.appendChild(b)
