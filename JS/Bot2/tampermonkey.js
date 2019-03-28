@@ -16,10 +16,10 @@ window.cargar_cargador = function()
 {
 	if(document.querySelector(".chat")==null){return;}
 	window.dir_bot2 = "https://github.com/ArtEze/Chatovod_Mod/blob/master/JS/Bot2/tampermonkey.js"
-	window.dir_partes = JSON.parse(window.dir_bot2.replace(
+	window.dir_partes_bot2 = JSON.parse(window.dir_bot2.replace(
 		/^(.+):\/\/(.+)\.([^/]+)\/(.+)\/(.+)\/blob\/master([^.]+)\/([^.]+)\.(.+)$/gi,'["$1","$2","$3","$4","$5","$6","$7","$8"]')
 	)
-	var a = window.dir_partes
+	var a = window.dir_partes_bot2
 	window.raw_dir_bot2 = a[0]+"://"+a[3].toLowerCase()+"."+a[1]+".io/"+a[4]+a[5]+"/"
 	var archivo = "navegador"
 	var ruta = window.raw_dir_bot2 + archivo + ".js" + window.no_chache()
