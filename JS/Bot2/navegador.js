@@ -5,7 +5,7 @@
 	{
 		var actual = archivos[i]
 		var a = document.createElement("script")
-		var directorio = window.raw_dir
+		var directorio = window.raw_dir_bot2
 		var extensión = ".js" + window.no_chache()
 		a.src = directorio + actual + extensión
 		document.head.appendChild(a)
