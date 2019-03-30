@@ -1789,13 +1789,6 @@ function entrar_o_salir(entrada)
 		}
 	}
 }
-function cargar_mensajes(a, b, c, d)
-{
-	var e = {limit: cantidad_cargar_mensajes}
-	null != d && (e.toTime = d)
-	'room' == b ? e.roomId = c : 'private' == b && (e.nick = c)
-	return jh(a.ra, 'loadLastMessages', e, !0)
-}
 function agregar_mensaje(mensaje)
 {
 	var posición = buscar_en_matriz(mensajes,1,mensaje)
@@ -1949,7 +1942,6 @@ function registrar_los_pedidos(a,b)
 function activar_bot()
 {
 	cc.prototype.log = entrar_y_salir
-	rl = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
 	modificar_función(mh,registrar_los_pedidos)
 	modificar_función(yq,procesar_mensajes)
 	ch.prototype.Rj = function ()
@@ -2067,7 +2059,6 @@ var valores = [
 	 [0,"id_votación"],[1,"sala"]
 	,[1,"sala_ban"],[1,"sala_visible"],[0,"id_chat"]
 	,[4,"votos_necesarios"],[undefined,"privado_moderador"]
-	,[200,"cantidad_cargar_mensajes"]
 
 	,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
