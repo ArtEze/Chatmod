@@ -1707,15 +1707,15 @@ function buscar_google(entrada,usuario,sala,hacia)
 		descargar(dirección,x=>{
 			var r = 0
 			var html = texto_hacia_html(x)
-			var resultado = html.querySelectorAll(".srg>.g")		
+			var resultado = html.querySelectorAll(".srg>.g")
 			var mensaje = Array.from(resultado).slice(0,5).map(x=>{
+				console.log(1,x)
 				var título = x.querySelector("h3").textContent
 				var enlace = x.querySelector("a").href
-				console.log([título,enlace])
 				var enlace = (++r)+" [url="+enlace+"]"+título+"[/url]"
-				enviar_mensaje(mensaje,sala,hacia)
 				return enlace
 			}).join("%0a")
+			enviar_mensaje(mensaje,sala,hacia)
 		})
 	}
 }
