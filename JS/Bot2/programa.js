@@ -39,32 +39,57 @@ function borrar_activador()
 {
 	document.querySelector("#activador").remove()
 }
-
-// Cargar mensajes
-
-function cargar_mensajes(a, b, c, d)
+function esperar_carga_mensajes()
 {
-	var cantidad_cargar_mensajes = 200
-	var e = {limit: cantidad_cargar_mensajes}
-	null != d && (e.toTime = d)
-	'room' == b ? e.roomId = c : 'private' == b && (e.nick = c)
-	return jh(a.ra, 'loadLastMessages', e, !0)
+	var esperador = document.querySelector(".chatMessagesLoading.nosel")
+	if(esperador.style.display=="none")
+	{
+		window.primer_elemento.scrollIntoView()
+	}else
+	{
+		++window.intentos_carga_mensajes
+		if(window.intentos_carga_mensajes<100)
+		{
+			setTimeout(esperar_carga_mensajes,100)
+		}
+	}
 }
-rl = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
-
-// Fin cargar mensajes
-
-function carga(){ 
-	var areas_mensajes = document.querySelectorAll(".chatMessagesTab")
-	Array.from(areas_mensajes).map(x=>{
+function cargar_mensajes(a, b, c, d, e)
+{
+	var cantidad_cargar_mensajes = window.bot_está_activado==1?200:e
+	var f={limit:cantidad_cargar_mensajes}
+	null!=d&&(f.toTime=d)
+	"room"==b?f.roomId=c:"private"==b&&(f.nick=c)
+	window.primer_elemento = document.querySelector("div.chatMessage")
+	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
+	window.intentos_carga_mensajes = 0
+	esperar_carga_mensajes()
+	return devuelve
+}
+function cambiar_deslizador()
+{
+	Array.from(document.querySelectorAll(".chatMessagesTab")).map(x=>{
 		var deslizador = x.querySelector(".chatMessagesScrollBar")
 		var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
-		deslizador_nuevo.style["overflow-y"]="scroll"
-		if(deslizador!=null)
-		{
-			deslizador.remove()
+		if(window.bot_está_activado==1){
+			deslizador_nuevo.style["overflow-y"]="scroll"
+			if(deslizador!=null)
+			{
+				deslizador.style.display="none"
+			}
+		}else{
+			deslizador_nuevo.style["overflow-y"]="hidden"
+			if(deslizador!=null)
+			{
+				deslizador.style.display="block"
+			}
 		}
 	})
+}
+
+function carga(){ 
+	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
+	cambiar_deslizador()
 }
 
 crear_activador()
