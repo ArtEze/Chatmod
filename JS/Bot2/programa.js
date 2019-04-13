@@ -10,8 +10,7 @@ function cambiar_color()
 	{
 		activador.style["backgroundColor"]="#23aa34"
 		activador.querySelector(".text").innerHTML = "Bot activado"
-	}else
-	{
+	}else{
 		activador.style["backgroundColor"]="#000000"
 		activador.querySelector(".text").innerHTML = "Bot desactivado"
 	}
@@ -66,7 +65,7 @@ function cargar_mensajes(a, b, c, d, e)
 		window.primer_elemento = document.querySelector("div.chatMessage")
 	}
 	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
-	if(if(window.bot_está_activado==1){
+	if(window.bot_está_activado==1){
 		window.intentos_carga_mensajes = 0
 		esperar_carga_mensajes()
 	}
