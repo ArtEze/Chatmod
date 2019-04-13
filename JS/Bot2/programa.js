@@ -15,6 +15,7 @@ function cambiar_color()
 		activador.style["backgroundColor"]="#000000"
 		activador.querySelector(".text").innerHTML = "Bot desactivado"
 	}
+	cambiar_deslizador()
 }
 function crear_activador()
 {
