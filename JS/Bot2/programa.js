@@ -61,10 +61,14 @@ function cargar_mensajes(a, b, c, d, e)
 	var f={limit:cantidad_cargar_mensajes}
 	null!=d&&(f.toTime=d)
 	"room"==b?f.roomId=c:"private"==b&&(f.nick=c)
-	window.primer_elemento = document.querySelector("div.chatMessage")
+	if(window.bot_está_activado==1){
+		window.primer_elemento = document.querySelector("div.chatMessage")
+	}
 	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
-	window.intentos_carga_mensajes = 0
-	esperar_carga_mensajes()
+	if(if(window.bot_está_activado==1){
+		window.intentos_carga_mensajes = 0
+		esperar_carga_mensajes()
+	}
 	return devuelve
 }
 function cambiar_deslizador()
