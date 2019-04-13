@@ -5,8 +5,8 @@ console.log("Cargado programa.js")
 function cambiar_color()
 {
 	var activador = document.querySelector("#activador")
-	bot_está_activado ^= 1
-	if(bot_está_activado)
+	window.bot_está_activado ^= 1
+	if(window.bot_está_activado==1)
 	{
 		activador.style["backgroundColor"]="#23aa34"
 		activador.querySelector(".text").innerHTML = "Bot activado"
@@ -35,6 +35,7 @@ function crear_activador()
 	{
 		document.querySelector("#menubar").appendChild(div)
 	}
+	cambiar_color()
 }
 function borrar_activador()
 {
