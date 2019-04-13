@@ -19,7 +19,7 @@ function cambiar_color()
 }
 function crear_activador()
 {
-	window.bot_está_activado = 0
+	window.bot_está_activado = 1
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>cambiar_color()
