@@ -2,35 +2,7 @@
 
 console.log("Cargado programa.js")
 
-function cambiar_color()
-{
-	var activador = document.querySelector("#activador")
-	window.bot_está_activado ^= 1
-	if(window.bot_está_activado==1)
-	{
-		activador.style["backgroundColor"]="#23aa34"
-		activador.querySelector(".text").innerHTML = "Bot activado"
-	}else{
-		activador.style["backgroundColor"]="#000000"
-		activador.querySelector(".text").innerHTML = "Bot desactivado"
-	}
-	cambiar_deslizador()
-}
-function copiar_todo()
-{
-	var contenedor = document.querySelector(".chatMessagesTab.active .chatMessages")
-	var range = document.createRange(contenedor)
-	range.selectNode(contenedor)
-	window.getSelection().removeAllRanges()
-	window.getSelection().addRange(range)
-	document.execCommand("copy")
-	window.getSelection().removeAllRanges()
-	document.querySelector("#copiador>span").innerHTML = "¡Copiado!"
-	setTimeout(()=>document.querySelector("#copiador>span").innerHTML = "Copiar",1000)
-}
-
-function crear_activador()
-{
+function crear_activador(){
 	window.bot_está_activado = 1
 	var span = document.createElement("span")
 	var div = document.createElement("div")
@@ -53,8 +25,18 @@ function crear_activador()
 		document.querySelector("#menubar").appendChild(div)
 	}
 }
-function crear_copiador()
-{
+function copiar_todo(){
+	var contenedor = document.querySelector(".chatMessagesTab.active .chatMessages")
+	var range = document.createRange(contenedor)
+	range.selectNode(contenedor)
+	window.getSelection().removeAllRanges()
+	window.getSelection().addRange(range)
+	document.execCommand("copy")
+	window.getSelection().removeAllRanges()
+	document.querySelector("#copiador>span").innerHTML = "¡Copiado!"
+	setTimeout(()=>document.querySelector("#copiador>span").innerHTML = "Copiar",1000)
+}
+function crear_copiador(){
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>copiar_todo()
@@ -72,6 +54,75 @@ function crear_copiador()
 		document.querySelector("#menubar").appendChild(div)
 	}
 }
+function borrar_todo(){
+	
+	var mensajes = Array.from(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts"))
+	mensajes.slice(30).map(x=>x.remove())
+}
+function crear_borrador(){
+	var span = document.createElement("span")
+	var div = document.createElement("div")
+	var función = x=>borrar_todo()
+	var nombre = "borrador"
+	var existe_botón = document.querySelector("#"+nombre)!=null
+	span.className = "text"
+	span.innerHTML = "Borrar"
+	div.style["backgroundColor"]="#543210"
+	div.id = nombre
+	div.className = "menuItem"
+	div.appendChild(span)
+	div.addEventListener("click",función)
+	if(!existe_botón)
+	{
+		document.querySelector("#menubar").appendChild(div)
+	}
+}
+
+function cambiar_deslizador(){
+	Array.from(document.querySelectorAll(".chatMessagesTab")).map(x=>{
+		var deslizador = x.querySelector(".chatMessagesScrollBar")
+		var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
+		if(window.bot_está_activado==1){
+			deslizador_nuevo.style["overflow-y"]="scroll"
+			if(deslizador!=null)
+			{
+				deslizador.style.display="none"
+			}
+		}else{
+			deslizador_nuevo.style["overflow-y"]="hidden"
+			if(deslizador!=null)
+			{
+				deslizador.style.display="block"
+			}
+		}
+	})
+}
+function cambiar_botones(){
+	if(window.bot_está_activado==1)
+	{
+		crear_copiador()
+		crear_borrador()
+	}else{
+		Array.from(document.querySelectorAll(
+			"#copiador,#borrador"
+		)).map(x=>x.remove())
+	}
+}
+function cambiar_color(){
+	var activador = document.querySelector("#activador")
+	window.bot_está_activado ^= 1
+	if(window.bot_está_activado==1)
+	{
+		activador.style["backgroundColor"]="#23aa34"
+		activador.querySelector(".text").innerHTML = "Bot activado"
+	}else{
+		activador.style["backgroundColor"]="#000000"
+		activador.querySelector(".text").innerHTML = "Bot desactivado"
+	}
+	cambiar_deslizador()
+	cambiar_botones()
+}
+
 function borrar_activador()
 {
 	document.querySelector("#activador").remove()
@@ -107,31 +158,10 @@ function cargar_mensajes(a, b, c, d, e)
 	}
 	return devuelve
 }
-function cambiar_deslizador()
-{
-	Array.from(document.querySelectorAll(".chatMessagesTab")).map(x=>{
-		var deslizador = x.querySelector(".chatMessagesScrollBar")
-		var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
-		if(window.bot_está_activado==1){
-			deslizador_nuevo.style["overflow-y"]="scroll"
-			if(deslizador!=null)
-			{
-				deslizador.style.display="none"
-			}
-		}else{
-			deslizador_nuevo.style["overflow-y"]="hidden"
-			if(deslizador!=null)
-			{
-				deslizador.style.display="block"
-			}
-		}
-	})
-}
 
 function carga()
 {
-	crear_activador()
-	crear_copiador()
+	cambiar_botones()
 	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
 	cambiar_deslizador()
 }
