@@ -18,7 +18,7 @@ function cambiar_color()
 }
 function copiar_todo()
 {
-	var contenedor = document.querySelector(".chatMessages")
+	var contenedor = document.querySelector(".chatMessagesTab.active .chatMessages")
 	var range = document.createRange(contenedor)
 	range.selectNode(contenedor)
 	window.getSelection().removeAllRanges()
