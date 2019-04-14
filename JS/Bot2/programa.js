@@ -55,8 +55,10 @@ function crear_copiador(){
 	}
 }
 function borrar_todo(){
-	
-	var mensajes = Array.from(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts"))
+	var array_mensajes = document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts")
+	var mensajes = Array.from(array_mensajes)
+	var segundo_elemento = mensajes[1]
+	segundo_elemento.scrollIntoView()
 	mensajes.slice(30).map(x=>x.remove())
 }
 function crear_borrador(){
@@ -132,7 +134,10 @@ function esperar_carga_mensajes()
 	var esperador = document.querySelector(".chatMessagesLoading.nosel")
 	if(esperador.style.display=="none")
 	{
-		window.primer_elemento.scrollIntoView()
+		var array_mensajes = document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts")
+		var mensajes = Array.from(array_mensajes)
+		var primer_elemento = mensajes[0]
+		primer_elemento.scrollIntoView()
 	}else
 	{
 		++window.intentos_carga_mensajes
@@ -148,9 +153,6 @@ function cargar_mensajes(a, b, c, d, e)
 	var f={limit:cantidad_cargar_mensajes}
 	null!=d&&(f.toTime=d)
 	"room"==b?f.roomId=c:"private"==b&&(f.nick=c)
-	if(window.bot_está_activado==1){
-		window.primer_elemento = document.querySelector("div.chatMessage")
-	}
 	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
 	if(window.bot_está_activado==1){
 		window.intentos_carga_mensajes = 0
