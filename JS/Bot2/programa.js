@@ -161,6 +161,7 @@ function cargar_mensajes(a, b, c, d, e)
 
 function carga()
 {
+	crear_activador()
 	cambiar_botones()
 	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
 	cambiar_deslizador()
