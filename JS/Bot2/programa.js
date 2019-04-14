@@ -16,13 +16,26 @@ function cambiar_color()
 	}
 	cambiar_deslizador()
 }
+function copiar_todo()
+{
+	var contenedor = document.querySelector(".chatMessages")
+	var range = document.createRange(contenedor)
+	range.selectNode(contenedor)
+	window.getSelection().removeAllRanges()
+	window.getSelection().addRange(range)
+	document.execCommand("copy")
+	window.getSelection().removeAllRanges()
+	document.querySelector("#copiador>span").innerHTML = "¡Copiado!"
+	setTimeout(()=>document.querySelector("#copiador>span").innerHTML = "Copiar",1000)
+}
+
 function crear_activador()
 {
 	window.bot_está_activado = 1
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>cambiar_color()
-	var existe_activador = document.querySelector("#activador")!=null
+	var existe_botón = document.querySelector("#activador")!=null
 	span.className = "text"
 	if(window.bot_está_activado==1){
 		span.innerHTML = "Bot activado"
@@ -35,7 +48,26 @@ function crear_activador()
 	div.className = "menuItem"
 	div.appendChild(span)
 	div.addEventListener("click",función)
-	if(!existe_activador)
+	if(!existe_botón)
+	{
+		document.querySelector("#menubar").appendChild(div)
+	}
+}
+function crear_copiador()
+{
+	var span = document.createElement("span")
+	var div = document.createElement("div")
+	var función = x=>copiar_todo()
+	var nombre = "copiador"
+	var existe_botón = document.querySelector("#"+nombre)!=null
+	span.className = "text"
+	span.innerHTML = "Copiar"
+	div.style["backgroundColor"]="#012345"
+	div.id = nombre
+	div.className = "menuItem"
+	div.appendChild(span)
+	div.addEventListener("click",función)
+	if(!existe_botón)
 	{
 		document.querySelector("#menubar").appendChild(div)
 	}
@@ -96,10 +128,11 @@ function cambiar_deslizador()
 	})
 }
 
-function carga(){ 
+function carga()
+{
+	crear_activador()
+	crear_copiador()
 	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
 	cambiar_deslizador()
 }
-
-crear_activador()
 carga()
