@@ -3,13 +3,13 @@
 console.log("Cargado programa.js")
 
 function crear_activador(){
-	window.bot_está_activado = 1
+	window.bot2_está_activado = 1
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>cambiar_color()
 	var existe_botón = document.querySelector("#activador")!=null
 	span.className = "text"
-	if(window.bot_está_activado==1){
+	if(window.bot2_está_activado==1){
 		span.innerHTML = "Bot activado"
 		div.style["backgroundColor"]="#23aa34"
 	}else{
@@ -80,27 +80,35 @@ function crear_borrador(){
 	}
 }
 
-function cambiar_deslizador(){
+function cambiar_deslizadores(){
 	Array.from(document.querySelectorAll(".chatMessagesTab")).map(x=>{
 		var deslizador = x.querySelector(".chatMessagesScrollBar")
 		var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
-		if(window.bot_está_activado==1){
-			deslizador_nuevo.style["overflow-y"]="scroll"
-			if(deslizador!=null)
-			{
+		if(deslizador!=null)
+		{
+			if(window.bot2_está_activado==1){
+				deslizador_nuevo.style["overflow-y"]="scroll"
 				deslizador.style.display="none"
-			}
-		}else{
-			deslizador_nuevo.style["overflow-y"]="hidden"
-			if(deslizador!=null)
-			{
+			}else{
+				deslizador_nuevo.style["overflow-y"]="hidden"
 				deslizador.style.display="block"
 			}
 		}
 	})
+	Array.from(document.querySelectorAll(".chatUsersTab")).map(x=>{
+		var deslizador = x.querySelector(".chatUsersScrollBar")
+		var deslizador_nuevo = x.querySelector(".chatUsersContainer")
+		if(window.bot2_está_activado==1){
+			deslizador_nuevo.style["overflow-y"]="scroll"
+			deslizador.style.display="none"
+		}else{
+			deslizador_nuevo.style["overflow-y"]="hidden"
+			deslizador.style.display="block"
+		}
+	})
 }
 function cambiar_botones(){
-	if(window.bot_está_activado==1)
+	if(window.bot2_está_activado==1)
 	{
 		crear_copiador()
 		crear_borrador()
@@ -112,8 +120,8 @@ function cambiar_botones(){
 }
 function cambiar_color(){
 	var activador = document.querySelector("#activador")
-	window.bot_está_activado ^= 1
-	if(window.bot_está_activado==1)
+	window.bot2_está_activado ^= 1
+	if(window.bot2_está_activado==1)
 	{
 		activador.style["backgroundColor"]="#23aa34"
 		activador.querySelector(".text").innerHTML = "Bot activado"
@@ -121,7 +129,7 @@ function cambiar_color(){
 		activador.style["backgroundColor"]="#000000"
 		activador.querySelector(".text").innerHTML = "Bot desactivado"
 	}
-	cambiar_deslizador()
+	cambiar_deslizadores()
 	cambiar_botones()
 }
 
@@ -143,18 +151,18 @@ function esperar_carga_mensajes()
 		++window.intentos_carga_mensajes
 		if(window.intentos_carga_mensajes<100)
 		{
-			setTimeout(esperar_carga_mensajes,100)
+			setTimeout(esperar_carga_mensajes,300)
 		}
 	}
 }
 function cargar_mensajes(a, b, c, d, e)
 {
-	var cantidad_cargar_mensajes = window.bot_está_activado==1?200:e
+	var cantidad_cargar_mensajes = window.bot2_está_activado==1?200:e
 	var f={limit:cantidad_cargar_mensajes}
 	null!=d&&(f.toTime=d)
 	"room"==b?f.roomId=c:"private"==b&&(f.nick=c)
 	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
-	if(window.bot_está_activado==1){
+	if(window.bot2_está_activado==1){
 		window.intentos_carga_mensajes = 0
 		esperar_carga_mensajes()
 	}
@@ -166,6 +174,6 @@ function carga()
 	crear_activador()
 	cambiar_botones()
 	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
-	cambiar_deslizador()
+	cambiar_deslizadores()
 }
 carga()
