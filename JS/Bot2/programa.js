@@ -137,10 +137,9 @@ function borrar_activador()
 {
 	document.querySelector("#activador").remove()
 }
-function deslizar_mensaje(){
+function mostrar_si_no_se_ve(){
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
-	mensaje.scrollIntoView()
 	var no_se_ve = Math.abs(mensaje.offsetTop-contenedor.scrollTop)>=mensaje.scrollHeight
 	if(no_se_ve)
 	{
@@ -152,6 +151,10 @@ function deslizar_mensaje(){
 			setTimeout(deslizar_mensaje,100)
 		}
 	}
+}
+function deslizar_mensaje(){
+	mensaje.scrollIntoView()
+	setTimeout(mostrar_si_no_se_ve,100)
 }
 function cargar_mensajes(a, b, c, d) {
 	
