@@ -144,9 +144,7 @@ function mostrar_si_no_se_ve(){
 	if(no_se_ve)
 	{
 		++contador_deslizar_mensaje
-		console.log(contador_deslizar_mensaje)
-		console.log((mensaje.offsetTop-contenedor.scrollTop),mensaje.scrollHeight)
-		if(contador_deslizar_mensaje<100)
+		if(contador_deslizar_mensaje<50)
 		{
 			setTimeout(deslizar_mensaje,100)
 		}
@@ -161,7 +159,6 @@ function cargar_mensajes(a, b, c, d) {
 	cantidad_carga_mensajes = window.bot2_está_activado==1?100:20
 	if(window.bot2_está_activado==1){
 		mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-		console.log(mensaje.textContent)
 	}
 	var e = a.I[b];
 	if (!0 !== U(e, 'lock')) {
