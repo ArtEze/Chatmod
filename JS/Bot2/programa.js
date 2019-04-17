@@ -185,6 +185,14 @@ function cargar_mensajes(a, b, c, d) {
 		)
 	}
 }
+function actualizar_cantidades(){
+	var cantidades = Array.from(document.querySelectorAll(".chatMessagesTab"))
+		.map(x=>x.querySelectorAll(".chatMessage").length).join(" ")
+	document.querySelector(".chatRoomsButton>a").innerHTML = cantidades
+}
+function ver_cantidad_mensajes(){
+	setInterval(actualizar_cantidades,1000)
+}
 
 function carga()
 {
@@ -192,5 +200,6 @@ function carga()
 	cambiar_botones()
 	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
 	cambiar_deslizadores()
+	ver_cantidad_mensajes()
 }
 carga()
