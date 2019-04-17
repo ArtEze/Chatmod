@@ -137,43 +137,60 @@ function borrar_activador()
 {
 	document.querySelector("#activador").remove()
 }
-function esperar_carga_mensajes()
-{
-	var esperador = document.querySelector(".chatMessagesLoading.nosel")
-	if(esperador.style.display=="none")
+function deslizar_mensaje(){
+	var activo = document.querySelector(".chatMessagesTab.active")
+	var contenedor = activo.querySelector(".chatMessagesContainer")
+	mensaje.scrollIntoView()
+	var no_se_ve = Math.abs(mensaje.offsetTop-contenedor.scrollTop)>=mensaje.scrollHeight
+	if(no_se_ve)
 	{
-		var array_mensajes = document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts")
-		var mensajes = Array.from(array_mensajes)
-		var primer_elemento = mensajes[0]
-		primer_elemento.scrollIntoView()
-	}else
-	{
-		++window.intentos_carga_mensajes
-		if(window.intentos_carga_mensajes<100)
+		++contador_deslizar_mensaje
+		console.log(contador_deslizar_mensaje)
+		console.log((mensaje.offsetTop-contenedor.scrollTop),mensaje.scrollHeight)
+		if(contador_deslizar_mensaje<100)
 		{
-			setTimeout(esperar_carga_mensajes,300)
+			setTimeout(deslizar_mensaje,100)
 		}
 	}
 }
-function cargar_mensajes(a, b, c, d, e)
-{
-	var cantidad_cargar_mensajes = window.bot2_está_activado==1?200:e
-	var f={limit:cantidad_cargar_mensajes}
-	null!=d&&(f.toTime=d)
-	"room"==b?f.roomId=c:"private"==b&&(f.nick=c)
-	var devuelve = jh(a.ra,"loadLastMessages",f,!0)
+function cargar_mensajes(a, b, c, d) {
+	
+	cantidad_carga_mensajes = window.bot2_está_activado==1?100:20
 	if(window.bot2_está_activado==1){
-		window.intentos_carga_mensajes = 0
-		esperar_carga_mensajes()
+		mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+		console.log(mensaje.textContent)
 	}
-	return devuelve
+	var e = a.I[b];
+	if (!0 !== U(e, 'lock')) {
+		var g = U(e, 'type'),
+		h = U(e, 'id'),
+		k = 0;
+		void 0 != c ? k = c : (c = U(e, 'cm'), void 0 !== c && (c = N('ts', c)) && (k = U(c, 'ts') - 1));
+		c = U(e, 'oldestTime');
+		void 0 !== c && k <= c || (
+			W(e, 'lock', !0),
+			N('chatMessagesLoading', e).style.display = 'block',
+			xd(
+				rl(a.jb, g, h, k, void 0 !== d ? d : cantidad_carga_mensajes)
+				,function () {
+					W(e, 'lock', !1);
+					N('chatMessagesLoading', this.I[b]).style.display = 'none'
+					if(bot2_está_activado==1){
+						contador_deslizar_mensaje = 0
+						deslizar_mensaje()
+					}
+				}
+				,a
+			)
+		)
+	}
 }
 
 function carga()
 {
 	crear_activador()
 	cambiar_botones()
-	rl = (a,b,c,d,e)=>cargar_mensajes(a,b,c,d,e)
+	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
 	cambiar_deslizadores()
 }
 carga()
