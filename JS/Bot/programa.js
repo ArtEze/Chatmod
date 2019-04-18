@@ -1726,12 +1726,12 @@ function descargar_lightshot(entrada,usuario,sala,hacia)
 		var salida = []
 		var descargado = 0
 		var array_img = entrada.replace(/(https?:\/\/prntscr.com\/[0-9a-z]{6})/gi,"{$1}").split(/[{}]/gi)
-		for(var i=0;i<array_img;++i){
+		for(var i=0;i<array_img.length;++i){
 			var actual = array_img[i]
 			if(regex.test(actual)){
-				descargar(dirección,x=>{
+				descargar(actual,x=>{
 					var html = texto_hacia_html(x)
-					var resultado = html.querySelectorAll(".image-info-item a")[2].href.split("=")[1]			
+					var resultado = html.querySelectorAll(".image-info-item a")[2].href.split("=")[1]
 					salida.push("[img]"+resultado+"[/img]")
 				})
 			}else{
@@ -1740,6 +1740,7 @@ function descargar_lightshot(entrada,usuario,sala,hacia)
 		}
 		setTimeout(()=>{
 			var mensaje = salida.join("")
+			hacia.unshift(usuario)
 			enviar_mensaje(mensaje,sala,hacia)
 		},1000)
 	}
