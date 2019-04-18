@@ -1718,6 +1718,32 @@ function buscar_google(entrada,usuario,sala,hacia)
 		})
 	}
 }
+function descargar_lightshot(entrada,usuario,sala,hacia)
+{
+	var regex = /(https?:\/\/prntscr.com\/[0-9a-z]{6})/gi
+	if(regex.test(entrada) & puede_descargar_lightshot )
+	{
+		var salida = []
+		var descargado = 0
+		var array_img = entrada.replace(/(https?:\/\/prntscr.com\/[0-9a-z]{6})/gi,"{$1}").split(/[{}]/gi)
+		for(var i=0;i<array_img;++i){
+			var actual = array_img[i]
+			if(regex.test(actual)){
+				descargar(dirección,x=>{
+					var html = texto_hacia_html(x)
+					var resultado = html.querySelectorAll(".image-info-item a")[2].href.split("=")[1]			
+					salida.push("[img]"+resultado+"[/img]")
+				})
+			}else{
+				salida[i] = actual
+			}
+		}
+		setTimeout(()=>{
+			var mensaje = salida.join("")
+			enviar_mensaje(mensaje,sala,hacia)
+		},1000)
+	}
+}
 function entrar(es_entrar,nombre,función)
 {
 	if(función==undefined)
@@ -1857,6 +1883,7 @@ function procesar_mensajes(a,b)
 			fonetizar_mensaje			(entrada,usuario,sala,hacia)
 			horóscopo					(entrada,usuario,sala,hacia)
 			buscar_google				(entrada,usuario,sala,hacia)
+			descargar_lightshot			(entrada,usuario,sala,hacia)
 			definir						(entrada,usuario,sala)
 		}
 	}
@@ -2061,7 +2088,7 @@ var valores = [
 
 	,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
-	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[new DOMParser(),"domparser"]
+	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
 	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
 	,[0,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
 ]
