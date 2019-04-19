@@ -679,6 +679,21 @@ function es_domingo()
 {
 	return new Date().getDay() == 0
 }
+function color_usuario(usuario){
+	return Array.from(
+		document.querySelectorAll(".chatUsers")[0].querySelectorAll("li a")
+	).map(
+		x=>[
+			x.textContent
+			,x.style.color.match(/\d+/gi)
+		]
+	).map(
+		x=>x[1]==null?[x[0],"1D6E9C"]:[
+			x[0]
+			,x[1].map(x=>("0"+(1*x).toString(16)).slice(-2)).join("")
+		]
+	).map(x=>x[0]==usuario?x[1]:undefined).filter(x=>x!=undefined)[0]
+}
 function mostrar_imágenes(entrada,número,usuario,sala,hacia)
 {
 	if(puede_mostrar_imágenes)
@@ -700,19 +715,7 @@ function mostrar_imágenes(entrada,número,usuario,sala,hacia)
 			return;
 		}
 		if(usuario=="LAMAGDALENA"){return}
-		var color = Array.from(
-			document.querySelectorAll(".chatUsers")[0].querySelectorAll("li a")
-		).map(
-			x=>[
-				x.textContent
-				,x.style.color.match(/\d+/gi)
-			]
-		).map(
-			x=>x[1]==null?[x[0],"1D6E9C"]:[
-				x[0]
-				,x[1].map(x=>("0"+(1*x).toString(16)).slice(-2)).join("")
-			]
-		).map(x=>x[0]==usuario?x[1]:undefined).filter(x=>x!=undefined)[0]
+		var color = color_usuario(usuario)
 		var borrar = true
 		entrada = entrada.replace(/\/([^/]+\.com\/)/gi," $1")
 		if(entrada[0]=="."){entrada = entrada.slice(1)}
@@ -1740,7 +1743,8 @@ function descargar_lightshot(entrada,usuario,sala,hacia)
 		}
 		setTimeout(()=>{
 			var mensaje = salida.join("")
-			hacia.unshift(usuario)
+			var color = color_usuario(usuario)
+			mensaje+="\nEnviado por: [b][color=#"+color+"]"+usuario+"[/color][/b]"
 			enviar_mensaje(mensaje,sala,hacia)
 		},1000)
 	}
