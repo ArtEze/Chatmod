@@ -1720,12 +1720,12 @@ function buscar_google(entrada,usuario,sala,hacia)
 }
 function descargar_lightshot(entrada,usuario,sala,hacia)
 {
-	var regex = /(https?:\/\/prntscr.com\/[0-9a-z]{6})/gi
+	var regex = /(https?:\/\/(prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
 	if(regex.test(entrada) & puede_descargar_lightshot )
 	{
 		var salida = []
 		var descargado = 0
-		var array_img = entrada.replace(/(https?:\/\/prntscr.com\/[0-9a-z]{6})/gi,"{$1}").split(/[{}]/gi)
+		var array_img = entrada.replace(regex,"{$1}").split(/[{}]/gi)
 		for(var i=0;i<array_img.length;++i){
 			var actual = array_img[i]
 			if(regex.test(actual)){
@@ -1735,7 +1735,7 @@ function descargar_lightshot(entrada,usuario,sala,hacia)
 					salida.push("[img]"+resultado+"[/img]")
 				})
 			}else{
-				salida[i] = actual
+				salida.push(actual)
 			}
 		}
 		setTimeout(()=>{
