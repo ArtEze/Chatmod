@@ -467,7 +467,6 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 				var actual = hacia[i]
 				if(
 					puede_patear_usuarios
-					& !excluidos_patear.includes(actual)
 					& esperar_confirmar_patear==0
 				){
 					// eliminar_mensaje(número,sala)
@@ -488,13 +487,18 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 	if(window.esperar_confirmar_patear==1){
 		if(usuario==window.usuario_pateador){
-			if(/^\s*s[iíïìî]p?.*\s*$/gi .test(entrada)){
-				window.esperar_confirmar_patear=0
-				banear_según_minutos(window.usuario_a_patear,0)
+			if(/^(\s*s[iíïìî]p?.*\s*)|(obvio)$/gi .test(entrada)){
+				if(excluidos_patear.includes(window.usuario_a_patear)){
+					window.esperar_confirmar_patear=0
+					enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)
+				}else{
+					window.esperar_confirmar_patear=0
+					banear_según_minutos(window.usuario_a_patear,0)
+				}
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
 				window.esperar_confirmar_patear=0
-				enviar_mensaje("Al cabo que ni quería.",sala,usuario)
+				enviar_mensaje(objeto_aleatorio(no_patear),sala,usuario)
 			}
 		}
 	}
@@ -2240,6 +2244,17 @@ var error_de_cálculo = [
 	"Usted me ha pedido algo que me parece imposible de resolver.",
 	"Perdone, pero esa pregunta me parece algo compleja.",
 	"Se me dificultó un poco resolver eso, por lo que me he rendido."
+]
+var no_patear = [
+	"Al cabo que ni quería."
+	,"Mejor así."
+	,"Menos trabajo para mí."
+	,"Simón, mejor Nelson."
+]
+var no_patear_excluido = [
+	"Error desconocido."
+	,"Circuito desconectado."
+	,"El sistema falló."
 ]
 
 var madre = [ "vieja", "viejo", "madre", "padre", "papá", "mamá", "madrastra", "padrastro", "zorra", "novia", "perrita", "novio", "abuela", "futuro hijo", "futura hija", "amigo de la esquina", "jefe", "jefa", "prima", "abuela", "tía", "tío", "esposa", "esposo", "nieto", "nieta", "tatarabuela", "tatarabuelo", "sobrino", "sobrina", "mujer", "hombre", "bisabuelo", "bisabuela" ]
