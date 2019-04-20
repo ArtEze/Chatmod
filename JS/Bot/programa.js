@@ -465,16 +465,35 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 			for(var i in hacia)
 			{
 				var actual = hacia[i]
-				if(puede_patear_usuarios & !excluidos_patear.includes(actual))
-				{
+				if(
+					puede_patear_usuarios
+					& !excluidos_patear.includes(actual)
+					& esperar_confirmar_patear==0
+				){
 					// eliminar_mensaje(número,sala)
-					banear_según_minutos(actual,0)
+					enviar_mensaje("¿Realmente quieres patear?",sala,usuario)
+					window.esperar_confirmar_patear = 1
+					window.usuario_a_patear = actual
+					window.usuario_pateador = usuario
+					setTimeout(()=>window.esperar_confirmar_patear=0,20*1000)
 				}
 			}
 			if(hacia.length==0)
 			{
 				puede_patear_usuarios ^= 1
 			}
+		}
+	}
+}
+function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
+	if(window.esperar_confirmar_patear==1){
+		if(usuario==window.usuario_pateador){
+			var regex = /^\s*s[iíïìî]p?.*\s*$/gi 
+			if(regex.test(entrada)){
+				window.esperar_confirmar_patear=0
+				banear_según_minutos(window.usuario_a_patear,0)
+			}
+
 		}
 	}
 }
@@ -1885,6 +1904,7 @@ function procesar_mensajes(a,b)
 			martillo					(entrada,número,sala)
 			patear_a_todos				(entrada,número,usuario,sala,hacia)
 			patear_usuarios				(entrada,número,usuario,sala,hacia)
+			esperar_confirmación_patear	(entrada,número,usuario,sala,hacia)
 			entrar_o_salir				(entrada)
 			interruptor_ban				(entrada,usuario,sala,hacia)
 
@@ -2104,6 +2124,7 @@ var valores = [
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
 	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
 	,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
+	,[0,"esperar_confirmar_patear"]
 ]
 for(var i in valores)
 {
