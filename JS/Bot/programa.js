@@ -465,7 +465,7 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 			for(var i in hacia)
 			{
 				var actual = hacia[i]
-				if(puede_patear_usuarios)
+				if(puede_patear_usuarios & !excluidos_patear.includes(actual))
 				{
 					// eliminar_mensaje(número,sala)
 					banear_según_minutos(actual,0)
