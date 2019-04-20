@@ -455,10 +455,18 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 		}
 	}
 }
-function usuario_está_presente(usuario){
-	return Array.from(
+function usuario_está_presente(usuarios){
+	var devuelve = false
+	var presentes = Array.from(
 		document.querySelector(".chatUsers").querySelectorAll(".nick")
-	).map(x=>x.innerHTML).includes(usuario)
+	).map(x=>x.innerHTML)
+	for(var i in usuarios){
+		var actual = usuarios[i]
+		if(presentes.includes(actual)){
+			devuelve = true
+		}
+	}
+	return devuelve
 }
 function patear_usuarios(entrada,número,usuario,sala,hacia)
 {
@@ -477,7 +485,7 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 					// eliminar_mensaje(número,sala)
 					enviar_mensaje("¿Realmente quieres patear?",sala,usuario)
 					window.esperar_confirmar_patear = 1
-					window.usuario_a_patear = actual
+					window.usuarios_a_patear.push(actual)
 					window.usuario_pateador = usuario
 					setTimeout(()=>window.esperar_confirmar_patear=0,40*1000)
 				}
@@ -489,25 +497,33 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 		}
 	}
 }
+function patear_usuarios_seleccionados(){
+	window.esperar_confirmar_patear=0
+	for(var i in window.usuarios_a_patear)
+	{
+		var actual = window.usuarios_a_patear[i]
+		setTimeout(Function("banear_según_minutos("+actual+",0)"),100*i)
+	}
+	window.usuarios_a_patear=[]
+}
 function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 	if(window.esperar_confirmar_patear==1){
 		if(usuario==window.usuario_pateador){
 			if(/^\s*(pues)*.*((\s*s[iíïìî]p?)|(obvio)).*\s*$/gi.test(entrada)){
-				if(excluidos_patear.includes(window.usuario_a_patear)){
-					if(window.usuario_a_patear==window.usuario_pateador){
-						window.esperar_confirmar_patear=0
-						banear_según_minutos(window.usuario_a_patear,0)
+				if(excluidos_patear.includes(window.usuarios_a_patear)){
+					if(window.usuarios_a_patear.includes(window.usuario_pateador)){
+						patear_usuarios_seleccionados()
 					}else{
 						window.esperar_confirmar_patear=0
 						enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)						
 					}
 				}else{
 					window.esperar_confirmar_patear=0
-					if(usuario_está_presente(usuario)){
-						banear_según_minutos(window.usuario_a_patear,0)
+					if(usuario_está_presente(window.usuarios_a_patear)){
+						patear_usuarios_seleccionados()
 					}else{
-						setTimeout(()=>banear_según_minutos(window.usuario_a_patear,0),5000)
-					}					
+						setTimeout(patear_usuarios_seleccionados,5000)
+					}
 				}
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
@@ -2127,7 +2143,7 @@ var arrays = [
 	"votados", "mensajes", "entrar_salir", "idos", "entrados"
 	,"mensajes_entra_sale_ban", "baneados", "sospechosos"
 	,"inhabilitado_banear", "votantes", "tiempos_votos", "salas"
-	,"pedidos","mensajes_privados"
+	,"pedidos","mensajes_privados","usuarios_a_patear"
 ]
 for(var i in arrays)
 {
@@ -2276,7 +2292,6 @@ var nombres_chat = [
 
 	,"es Neko7w7"
 	,"no es Neko7w7"
-	,"es Fernanfloo Fans"
 	,"no es Fernanfloo Fans"
 	,"no es ♠тнє gαℓαאָу♠"
 
