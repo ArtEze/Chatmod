@@ -566,6 +566,9 @@ function eliminar_palabras(entrada,número,sala)
 	){
 		eliminar_mensaje(número,sala)
 	}
+	if(entrada.includes("\u1ecf\u0337\u0356\u0348\u031e\u0329")&entrada.length>500){
+		eliminar_mensaje(número,sala)
+	}
 }
 function martillo(entrada,número,sala)
 {
