@@ -25,6 +25,36 @@ function crear_activador(){
 		document.querySelector("#menubar").appendChild(div)
 	}
 }
+function activar_bot(){
+	var activador = document.querySelector("#activar_bot")
+	window.bot_está_activado ^= 1
+	if(window.bot_está_activado==1)
+	{
+		activador.style["backgroundColor"]="#117733"
+		activador.querySelector(".text").innerHTML = "Bot activado"
+	}else{
+		activador.style["backgroundColor"]="#771133"
+		activador.querySelector(".text").innerHTML = "Bot desactivado"
+	}
+}
+function crear_activar_bot(){
+	var span = document.createElement("span")
+	var div = document.createElement("div")
+	var función = x=>activar_bot()
+	var nombre = "activar_bot"
+	var existe_botón = document.querySelector("#"+nombre)!=null
+	span.className = "text"
+	span.innerHTML = "Bot activado"
+	div.style["backgroundColor"]="#117733"
+	div.id = nombre
+	div.className = "menuItem"
+	div.appendChild(span)
+	div.addEventListener("click",función)
+	if(!existe_botón)
+	{
+		document.querySelector("#menubar").appendChild(div)
+	}
+}
 function copiar_todo(){
 	var contenedor = document.querySelector(".chatMessagesTab.active .chatMessages")
 	var range = document.createRange(contenedor)
@@ -110,11 +140,12 @@ function cambiar_deslizadores(){
 function cambiar_botones(){
 	if(window.está_activado==1)
 	{
+		crear_activar_bot()
 		crear_copiador()
 		crear_borrador()
 	}else{
 		Array.from(document.querySelectorAll(
-			"#copiador,#borrador"
+			"#activar_bot,#copiador,#borrador"
 		)).map(x=>x.remove())
 	}
 }
