@@ -2102,7 +2102,7 @@ var valores = [
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
 	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
-	,[0,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
+	,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
 ]
 for(var i in valores)
 {
