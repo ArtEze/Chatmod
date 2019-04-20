@@ -479,7 +479,7 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 					window.esperar_confirmar_patear = 1
 					window.usuario_a_patear = actual
 					window.usuario_pateador = usuario
-					setTimeout(()=>window.esperar_confirmar_patear=0,20*1000)
+					setTimeout(()=>window.esperar_confirmar_patear=0,30*1000)
 				}
 			}
 			if(hacia.length==0)
@@ -502,8 +502,7 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 						banear_según_minutos(window.usuario_a_patear,0)
 					}else{
 						setTimeout(()=>banear_según_minutos(window.usuario_a_patear,0),5000)
-					}
-					
+					}					
 				}
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
@@ -1722,7 +1721,7 @@ function saludar(datos,nombre)
 	{
 		var tipo = analizado.accountType
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-		var mensaje = "¡Bienvenid"+ tipo +" " + nombre + "! ¡Esto es Neko7w7!"
+		var mensaje = "¡Bienvenid"+ tipo +" " + nombre + "! ¡Esto "+objeto_aleatorio(nombres_chat)+"!"
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify("entrados"))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*5))
@@ -2265,6 +2264,18 @@ var no_patear_excluido = [
 	"Error desconocido."
 	,"Circuito desconectado."
 	,"El sistema falló."
+]
+var nombres_chat = [
+	"es un chat"
+	,"no es un chat"
+
+	,"es Neko7w7"
+	,"no es Neko7w7"
+	,"es Fernanfloo Fans"
+	,"no es Fernanfloo Fans"
+	,"no es ♠тнє gαℓαאָу♠"
+
+	,"es ♠тнє gαℓαאָу♠"
 ]
 
 var madre = [ "vieja", "viejo", "madre", "padre", "papá", "mamá", "madrastra", "padrastro", "zorra", "novia", "perrita", "novio", "abuela", "futuro hijo", "futura hija", "amigo de la esquina", "jefe", "jefa", "prima", "abuela", "tía", "tío", "esposa", "esposo", "nieto", "nieta", "tatarabuela", "tatarabuelo", "sobrino", "sobrina", "mujer", "hombre", "bisabuelo", "bisabuela" ]
