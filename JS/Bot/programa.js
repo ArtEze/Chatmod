@@ -1686,7 +1686,7 @@ function saludar(datos,nombre)
 		var mensaje = "¡Bienvenid"+ tipo +" " + nombre + "! ¡Esto es Neko7w7!"
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify("entrados"))
-		setTimeout(()=>enviar_mensaje(mensaje),Math.floor(Math.random()*1000*60*5))
+		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*5))
 	}
 }
 function buscar_google(entrada,usuario,sala,hacia)
@@ -1941,12 +1941,10 @@ function entrar_y_salir (a, b, c)
 		if(entrada==1)
 		{
 			entrar_salir.push([1,nombre,tiempo])
-			banear_ip(nombre)
-			activar_ban(nombre,sala_ban)
+			//banear_ip(nombre)
+			//activar_ban(nombre,sala_ban)
 			if(entrados[nombre]==0){
-				/*
 				moderar_usuario(nombre,x=>saludar(x,nombre))
-				*/
 			}
 		}else{
 			entrar_salir.push([0,nombre,tiempo])
@@ -1954,9 +1952,7 @@ function entrar_y_salir (a, b, c)
 			{
 				mensaje = "¡Qué mal que te vayas " + nombre + "! ¡Te extrañaremos, vuelve pronto! :3"
 				idos[nombre] = 1
-				/*
-				setTimeout(()=>enviar_mensaje(mensaje),Math.floor(Math.random()*1000*60*5))
-				*/
+				setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*5))
 			}
 		}
 	}
