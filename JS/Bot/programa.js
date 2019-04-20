@@ -479,7 +479,7 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 					window.esperar_confirmar_patear = 1
 					window.usuario_a_patear = actual
 					window.usuario_pateador = usuario
-					setTimeout(()=>window.esperar_confirmar_patear=0,30*1000)
+					setTimeout(()=>window.esperar_confirmar_patear=0,40*1000)
 				}
 			}
 			if(hacia.length==0)
@@ -494,8 +494,13 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 		if(usuario==window.usuario_pateador){
 			if(/^\s*(pues)*.*((\s*s[iíïìî]p?)|(obvio)).*\s*$/gi.test(entrada)){
 				if(excluidos_patear.includes(window.usuario_a_patear)){
-					window.esperar_confirmar_patear=0
-					enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)
+					if(window.usuario_a_patear==window.usuario_pateador){
+						window.esperar_confirmar_patear=0
+						banear_según_minutos(window.usuario_a_patear,0)
+					}else{
+						window.esperar_confirmar_patear=0
+						enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)						
+					}
 				}else{
 					window.esperar_confirmar_patear=0
 					if(usuario_está_presente(usuario)){
