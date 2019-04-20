@@ -488,12 +488,14 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 	if(window.esperar_confirmar_patear==1){
 		if(usuario==window.usuario_pateador){
-			var regex = /^\s*s[iíïìî]p?.*\s*$/gi 
-			if(regex.test(entrada)){
+			if(/^\s*s[iíïìî]p?.*\s*$/gi .test(entrada)){
 				window.esperar_confirmar_patear=0
 				banear_según_minutos(window.usuario_a_patear,0)
 			}
-
+			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
+				window.esperar_confirmar_patear=0
+				enviar_mensaje("Al cabo que ni quería.",sala,usuario)
+			}
 		}
 	}
 }
