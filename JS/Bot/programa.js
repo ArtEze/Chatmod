@@ -2034,7 +2034,7 @@ function registrar_los_pedidos(a,b)
 		}
 	}
 }
-function activar_bot()
+function activar_bot_2()
 {
 	cc.prototype.log = entrar_y_salir
 	modificar_función(mh,registrar_los_pedidos)
@@ -2084,7 +2084,7 @@ function permanecer_conectado()
 	{
 		if(puedo_enviar&!bot_está_activado)
 		{
-			activar_bot()
+			activar_bot_2()
 			insertar_textarea(texto,1)
 		}
 		if(está_conectado&sin_espera)
