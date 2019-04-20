@@ -455,6 +455,11 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 		}
 	}
 }
+function usuario_está_presente(usuario){
+	return Array.from(
+		document.querySelector(".chatUsers").querySelectorAll(".nick")
+	).map(x=>x.innerHTML).includes(usuario)
+}
 function patear_usuarios(entrada,número,usuario,sala,hacia)
 {
 	var soy_un_bot = soy_bot()
@@ -487,13 +492,18 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 	if(window.esperar_confirmar_patear==1){
 		if(usuario==window.usuario_pateador){
-			if(/^(\s*s[iíïìî]p?.*\s*)|(obvio)$/gi .test(entrada)){
+			if(/^\s*(pues)*.*((\s*s[iíïìî]p?)|(obvio)).*\s*$/gi.test(entrada)){
 				if(excluidos_patear.includes(window.usuario_a_patear)){
 					window.esperar_confirmar_patear=0
 					enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)
 				}else{
 					window.esperar_confirmar_patear=0
-					banear_según_minutos(window.usuario_a_patear,0)
+					if(usuario_está_presente(usuario)){
+						banear_según_minutos(window.usuario_a_patear,0)
+					}else{
+						setTimeout(()=>banear_según_minutos(window.usuario_a_patear,0),5000)
+					}
+					
 				}
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
