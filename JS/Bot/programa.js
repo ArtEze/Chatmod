@@ -1192,11 +1192,12 @@ function agregar_avatar(datos,usuario,hacia,sala,i)
 	}else{
 		var posición = buscar_en_matriz(usuarios,"alias",actual)
 		console.log("nick avatar",actual,posición)
-		identidad = usuarios[posición].id
+		var us_pos = usuarios[posición]
+		identidad = us_pos==undefined?"":us_pos.id
 		if(es_moderador)
 		{
 			es_moderador = 0
-			console.log("Se detectó que el bot no puede moderar.")
+			console.log(identidad,"Se detectó que el bot no puede moderar.")
 		}
 	}
 }
