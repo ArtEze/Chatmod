@@ -2196,6 +2196,7 @@ var info_excluidos = [
 var excluidos_patear = [
 	"yarispanditabebe15"
 	,"mαdєlínє"
+	,"ѕσƒι025~\u2661"
 ]
 var desconocimiento = [
 	"No lo sé.",
