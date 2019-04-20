@@ -502,7 +502,7 @@ function patear_usuarios_seleccionados(){
 	for(var i in window.usuarios_a_patear)
 	{
 		var actual = window.usuarios_a_patear[i]
-		setTimeout(Function("banear_según_minutos("+actual+",0)"),100*i)
+		setTimeout(Function("banear_según_minutos('"+actual+"',0)"),100*i)
 	}
 	window.usuarios_a_patear=[]
 }
@@ -515,10 +515,10 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 						patear_usuarios_seleccionados()
 					}else{
 						window.esperar_confirmar_patear=0
+						window.usuarios_a_patear=[]
 						enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)						
 					}
 				}else{
-					window.esperar_confirmar_patear=0
 					if(usuario_está_presente(window.usuarios_a_patear)){
 						patear_usuarios_seleccionados()
 					}else{
@@ -528,6 +528,7 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
 				window.esperar_confirmar_patear=0
+				window.usuarios_a_patear=[]
 				enviar_mensaje(objeto_aleatorio(no_patear),sala,usuario)
 			}
 		}
