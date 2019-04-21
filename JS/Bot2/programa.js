@@ -156,10 +156,10 @@ function cambiar_color(){
 	if(window.está_activado==1)
 	{
 		activador.style["backgroundColor"]="#23aa34"
-		activador.querySelector(".text").innerHTML = "Bot activado"
+		activador.querySelector(".text").innerHTML = "Activado"
 	}else{
 		activador.style["backgroundColor"]="#000000"
-		activador.querySelector(".text").innerHTML = "Bot desactivado"
+		activador.querySelector(".text").innerHTML = "Desactivado"
 	}
 	cambiar_deslizadores()
 	cambiar_botones()

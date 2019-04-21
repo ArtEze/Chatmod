@@ -2281,7 +2281,6 @@ var no_patear_excluido = [
 ]
 var nombres_chat = [
 	"es un chat"
-	,"no es Neko7w7"
 	,"no es Fernanfloo Fans"
 	,"no es ♠тнє gαℓαאָу♠"
 
