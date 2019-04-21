@@ -47,9 +47,10 @@ function puedo_enviar_mensajes()
 {
 	return estado_conexión()==2
 }
-function objeto_aleatorio(objeto)
+function elemento_aleatorio(array)
 {
-	return objeto[Math.floor(Math.random()*objeto.length)]
+	array = array.filter(x=>x!=undefined)
+	return array[Math.floor(Math.random()*array.length)]
 }
 function texto_hacia_html(texto)
 {
@@ -280,10 +281,10 @@ function obtener_país(datos,usuario,sala,hacia)
 		{
 			mensaje = "Las " + dos_dígitos((hora+24+cambio)%24) + ":" + minutos + "."
 		}else{
-			mensaje = objeto_aleatorio(desconocimiento)
+			mensaje = elemento_aleatorio(desconocimiento)
 		}
 	}else{
-		mensaje = objeto_aleatorio(desconocimiento)
+		mensaje = elemento_aleatorio(desconocimiento)
 	}
 	enviar_mensaje(mensaje,sala,[usuario])
 }
@@ -498,7 +499,7 @@ function patear_usuarios_seleccionados(usuario,sala){
 		}
 		else{
 			if(window.excluidos_patear.includes(pateado)){
-				enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,[usuario])
+				enviar_mensaje(elemento_aleatorio(no_patear_excluido),sala,[usuario])
 			}else{
 				setTimeout(patear_seleccionado[i],50*i)
 			}
@@ -515,7 +516,7 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
 				window.esperar_confirmar_patear=0
 				window.usuarios_a_patear=[]
-				enviar_mensaje(objeto_aleatorio(no_patear),sala,usuario)
+				enviar_mensaje(elemento_aleatorio(no_patear),sala,usuario)
 			}
 		}
 	}
@@ -535,7 +536,7 @@ function pedir_hora_usuario(datos,usuario,sala,hacia)
 			console.log(dirección)
 			descargar(dirección,x=>obtener_país(x,usuario,sala,hacia))
 		}else{
-			mensaje = objeto_aleatorio(desconocimiento)
+			mensaje = elemento_aleatorio(desconocimiento)
 			enviar_mensaje(mensaje,sala,[usuario])
 		}
 	}
@@ -1456,7 +1457,7 @@ function evaluar_javascript(entrada,usuario,sala,hacia)
 				}
 				if(resultado.includes("undefined"))
 				{
-					enviar_mensaje(objeto_aleatorio(error_de_cálculo),sala,hacia)
+					enviar_mensaje(elemento_aleatorio(error_de_cálculo),sala,hacia)
 				}else
 				{
 					if(permite & resultado!=entrada & resultado!=0)
@@ -1497,9 +1498,9 @@ function pedir_la_hora(entrada,usuario,sala,hacia)
 	if(
 		!hecho
 		&entrada.match(/\bhora\b/gi)!=null
-		&entrada.match(/virgo|gil|gay|novi/gi)!=null
+		&entrada.match(/v[ei]rg[ao]|gil|gay|novi/gi)!=null
 	){
-		mensaje = "La hora en la que " + objeto_aleatorio(sexo) + " a tu " + objeto_aleatorio(madre)+"."
+		mensaje = "La hora en la que " + elemento_aleatorio(sexo) + " a tu " + elemento_aleatorio(madre)+"."
 		enviar_mensaje(mensaje,sala,[usuario])
 	}else{
 		if(!hecho&entrada.match(/(([qk]u?)|k)h?[eé]?h? h?ora (e[hs]|son)?/gi)!=null)
@@ -1521,7 +1522,7 @@ function pedir_la_hora(entrada,usuario,sala,hacia)
 					entrada.match(/ en /gi)!=null
 					&entrada.match(/mi pa[íi]s/gi)==null
 				){
-					mensaje = objeto_aleatorio(desconocimiento)
+					mensaje = elemento_aleatorio(desconocimiento)
 					enviar_mensaje(mensaje,sala,[usuario])
 				}
 				else
@@ -1736,7 +1737,7 @@ function saludar(datos,nombre)
 	{
 		var tipo = analizado.accountType
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-		var mensaje = "¡Bienvenid"+ tipo +" " + bbcode_usuario(nombre) + "! ¡Esto "+objeto_aleatorio(nombres_chat)+"!"
+		var mensaje = "¡Bienvenid"+ tipo +" " + bbcode_usuario(nombre) + "! ¡Esto "+elemento_aleatorio(nombres_chat)+"!"
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify("entrados"))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
@@ -2276,8 +2277,6 @@ var no_patear_excluido = [
 ]
 var nombres_chat = [
 	,"no es Fernanfloo Fans"
-	,"no es ♠тнє gαℓαאָу♠"
-
 	,"es ♠тнє gαℓαאָу♠"
 ]
 
