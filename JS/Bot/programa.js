@@ -731,19 +731,15 @@ function es_domingo()
 	return new Date().getDay() == 0
 }
 function color_usuario(usuario){
-	return Array.from(
-		document.querySelectorAll(".chatUsers")[0].querySelectorAll("li a")
-	).map(
-		x=>[
-			x.textContent
-			,x.style.color.match(/\d+/gi)
-		]
-	).map(
-		x=>x[1]==null?[x[0],"1D6E9C"]:[
-			x[0]
-			,x[1].map(x=>("0"+(1*x).toString(16)).slice(-2)).join("")
-		]
-	).map(x=>x[0]==usuario?x[1]:undefined).filter(x=>x!=undefined)[0]
+	var devuelve
+	var div = document.querySelector(".nick[data-nick="+usuario+"]")
+	if(div==undefined)
+	{
+		devuelve = "000000"
+	}else{
+		devuelve = div.style.color.split(/[(),]/gi).slice(1,-1).map(x=>("0"+(+x).toString(16)).slice(-2)).join("")
+	}
+	return devuelve
 }
 function bbcode_usuario(usuario){
 	var color = color_usuario(usuario)
@@ -1738,8 +1734,15 @@ function saludar(datos,nombre)
 	if(no_error)
 	{
 		var tipo = analizado.accountType
+		var nombre_chat = document.querySelector(".text").textContent
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-		var mensaje = "¡Bienvenid"+ tipo +" " + bbcode_usuario(nombre) + "! ¡Esto "+elemento_aleatorio(nombres_chat)+"!"
+		console.log([nombre,bbcode_usuario(nombre)])
+		var mensaje = "¡Bienvenid"
+			+ tipo +" "
+			+ bbcode_usuario(nombre)
+			+ "! ¡Esto es [b][color=#123456]"+nombre_chat+"[/color][/b]!"
+		;
+		console.log(mensaje)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify("entrados"))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
@@ -2130,8 +2133,16 @@ var ips_ban = [
 	,["185.234","-",44640]
 	//,["186.134.90.106","Agustín",10080]
 ]
+var objetos = [
+	"entrados", "idos"
+]
+for(var i in objetos)
+{
+	var actual = objetos[i]
+	window[actual] = {}
+}
 var arrays = [
-	"votados", "mensajes", "entrar_salir", "idos", "entrados"
+	"votados", "mensajes", "entrar_salir", "entrados"
 	,"mensajes_entra_sale_ban", "baneados", "sospechosos"
 	,"inhabilitado_banear", "votantes", "tiempos_votos", "salas"
 	,"pedidos","mensajes_privados","usuarios_a_patear"
@@ -2277,11 +2288,6 @@ var no_patear_excluido = [
 	,"Circuito desconectado."
 	,"El sistema falló."
 ]
-var nombres_chat = [
-	,"no es Fernanfloo Fans"
-	,"es ♠тнє gαℓαאָу♠"
-]
-
 var madre = [ "vieja", "viejo", "madre", "padre", "papá", "mamá", "madrastra", "padrastro", "zorra", "novia", "perrita", "novio", "abuela", "futuro hijo", "futura hija", "amigo de la esquina", "jefe", "jefa", "prima", "abuela", "tía", "tío", "esposa", "esposo", "nieto", "nieta", "tatarabuela", "tatarabuelo", "sobrino", "sobrina", "mujer", "hombre", "bisabuelo", "bisabuela" ]
 
 var sexo = [ "garché", "cojí", "emperné", "empomaba", "empomé", "entubaba", "culeaba", "trinqué", "encamé", "acosté", "conejeaba", "daba matraca", "le estaba enterrando la batata", "mojé el bizcocho", "soplaba la cañita", "sobaba el pirulín", "le regaba la lechuga", "le divertía el pelado", "le germinaba el poroto", "le sacaba las telarañas", "me enflautaba", "fui a echarle un fierro", "le mojé la chaucha", "le pintaba el templo", "le regué la lechuga", "le lustraba la manija", "le destapaba las cloacas", "le limpié el horno" ]
