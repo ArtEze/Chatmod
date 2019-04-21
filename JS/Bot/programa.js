@@ -1735,7 +1735,7 @@ function saludar(datos,nombre)
 	{
 		var tipo = analizado.accountType
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-		var mensaje = "¡Bienvenid"+ tipo +" " + nombre + "! ¡Esto "+objeto_aleatorio(nombres_chat)+"!"
+		var mensaje = "¡Bienvenid"+ tipo +" " + bbcode_usuario(nombre) + "! ¡Esto "+objeto_aleatorio(nombres_chat)+"!"
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify("entrados"))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
