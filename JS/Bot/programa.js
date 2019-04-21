@@ -732,7 +732,7 @@ function es_domingo()
 }
 function color_usuario(usuario){
 	var devuelve
-	var div = document.querySelector(".nick[data-nick="+usuario+"]")
+	var div = document.querySelector(".nick[data-nick='"+usuario+"']")
 	if(div==undefined)
 	{
 		devuelve = "000000"
