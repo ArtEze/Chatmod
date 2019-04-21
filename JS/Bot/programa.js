@@ -744,6 +744,7 @@ function color_usuario(usuario){
 }
 function bbcode_usuario(usuario){
 	var color = color_usuario(usuario)
+	if(color==undefined){color="000000"}
 	return "[b][color=#"+color+"]"+usuario+"[/color][/b]"
 }
 function mostrar_imágenes(entrada,número,usuario,sala,hacia)
@@ -2084,28 +2085,7 @@ function activar_bot_2()
 }
 function permanecer_conectado()
 {
-	var puedo_enviar = puedo_enviar_mensajes()
-	var está_conectado = estado_conexión()==1
-	var sin_espera = está_listo()
-	var fecha = new Date()
-	var texto = obtener_nombre_propio()+": "+fecha.getHours()+" "+fecha.getMinutes()+" "+fecha.getSeconds()
-	
-	if(puedo_enviar)
-	{
-		activar_bot_2()
-		insertar_textarea(texto,1)
-	}
-	if(está_conectado&sin_espera)
-	{
-		entrar(1)
-		insertar_textarea(texto,1)
-	}
-
-	var es_ventana_propia = estado_conexión()>-1
-	if(es_ventana_propia)
-	{
-		// tiempos.tiempo_permanecer = setTimeout(permanecer_conectado,1000*30)
-	}
+	activar_bot_2()
 }
 var tiempos = {}
 var objetos = ["flood"]
@@ -2295,7 +2275,6 @@ var no_patear_excluido = [
 	,"El sistema falló."
 ]
 var nombres_chat = [
-	"es un chat"
 	,"no es Fernanfloo Fans"
 	,"no es ♠тнє gαℓαאָу♠"
 
