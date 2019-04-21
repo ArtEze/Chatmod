@@ -131,7 +131,7 @@ function unicode(nombre)
 		insertar_textarea(texto)
 	})(nombre)
 }
-function modificar_función(entrada,intermediario)
+function modificar_función(entrada,intermediario,escribir_textarea)
 {
 	var función = typeof(entrada)=="string"?window[entrada]:entrada
 	var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
@@ -142,7 +142,9 @@ function modificar_función(entrada,intermediario)
 		/^function ([^\x28]+)\s*\x28((?:,?\s*[^,\x29]+)+)\x29\s*\x7b\s*((?:.|\n)+)\x7d$/gi
 		,"function $1($2){"+nombre_intermediario+"($2);$3}"
 	)
-	try{insertar_textarea(modificado)}catch(e){}
+	if(escribir_textarea){
+		try{insertar_textarea(modificado)}catch(e){}
+	}
 	try{eval(nombre_entrada+"="+modificado)}catch(e){}
 	return window[nombre_entrada]
 }
@@ -2039,8 +2041,8 @@ function registrar_los_pedidos(a,b)
 function activar_bot_2()
 {
 	cc.prototype.log = entrar_y_salir
-	modificar_función(mh,registrar_los_pedidos)
-	modificar_función(yq,procesar_mensajes)
+	modificar_función(mh,registrar_los_pedidos,false)
+	modificar_función(yq,procesar_mensajes,false)
 	
 	ch.prototype.Rj = function ()
 	{
