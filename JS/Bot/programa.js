@@ -475,34 +475,39 @@ function patear_usuarios(entrada,número,usuario,sala,hacia)
 	{
 		if(/^\s*patear\s*$/gi.test(entrada))
 		{
-			for(var i in hacia)
-			{
-				var actual = hacia[i]
-				if(
-					puede_patear_usuarios
-					& esperar_confirmar_patear==0
-				){
-					// eliminar_mensaje(número,sala)
-					enviar_mensaje("¿Realmente quieres patear?",sala,usuario)
-					window.esperar_confirmar_patear = 1
-					window.usuarios_a_patear.push(actual)
-					window.usuario_pateador = usuario
-					setTimeout(()=>window.esperar_confirmar_patear=0,40*1000)
-				}
-			}
 			if(hacia.length==0)
 			{
 				puede_patear_usuarios ^= 1
+			}else{
+				if(puede_patear_usuarios && !esperar_confirmar_patear){
+					// eliminar_mensaje(número,sala)
+					window.usuarios_a_patear = hacia
+					enviar_mensaje("¿Realmente quieres patear?",sala,usuario)
+					window.usuario_pateador = usuario
+					setTimeout(()=>window.esperar_confirmar_patear=0,40*1000)
+					window.esperar_confirmar_patear = true
+				}
 			}
 		}
 	}
 }
-function patear_usuarios_seleccionados(){
+function patear_usuarios_seleccionados(usuario,sala){
 	window.esperar_confirmar_patear=0
+	var patear_seleccionado = []
 	for(var i in window.usuarios_a_patear)
 	{
-		var actual = window.usuarios_a_patear[i]
-		setTimeout(Function("banear_según_minutos('"+actual+"',0)"),100*i)
+		var pateado = window.usuarios_a_patear[i]
+		patear_seleccionado[i] = Function("banear_según_minutos('"+pateado+"',0)")
+		if(window.excluidos_patear.includes(window.usuario_pateador)){
+			setTimeout(patear_seleccionado[i],50*i)
+		}
+		else{
+			if(window.excluidos_patear.includes(pateado)){
+				enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,[usuario])
+			}else{
+				setTimeout(patear_seleccionado[i],50*i)
+			}
+		}
 	}
 	window.usuarios_a_patear=[]
 }
@@ -510,21 +515,7 @@ function esperar_confirmación_patear(entrada,número,usuario,sala,hacia){
 	if(window.esperar_confirmar_patear==1){
 		if(usuario==window.usuario_pateador){
 			if(/^\s*(pues)*.*((\s*s[iíïìî]p?)|(obvio)).*\s*$/gi.test(entrada)){
-				if(excluidos_patear.includes(window.usuarios_a_patear)){
-					if(window.usuarios_a_patear.includes(window.usuario_pateador)){
-						patear_usuarios_seleccionados()
-					}else{
-						window.esperar_confirmar_patear=0
-						window.usuarios_a_patear=[]
-						enviar_mensaje(objeto_aleatorio(no_patear_excluido),sala,usuario)						
-					}
-				}else{
-					if(usuario_está_presente(window.usuarios_a_patear)){
-						patear_usuarios_seleccionados()
-					}else{
-						setTimeout(patear_usuarios_seleccionados,5000)
-					}
-				}
+				patear_usuarios_seleccionados(usuario,sala)
 			}
 			if(/^\s*n[oóöòô]p?.*\s*$/gi .test(entrada)){
 				window.esperar_confirmar_patear=0
@@ -753,6 +744,10 @@ function color_usuario(usuario){
 		]
 	).map(x=>x[0]==usuario?x[1]:undefined).filter(x=>x!=undefined)[0]
 }
+function bbcode_usuario(usuario){
+	var color = color_usuario(usuario)
+	return "[b][color=#"+color+"]"+usuario+"[/color][/b]"
+}
 function mostrar_imágenes(entrada,número,usuario,sala,hacia)
 {
 	if(puede_mostrar_imágenes)
@@ -774,7 +769,6 @@ function mostrar_imágenes(entrada,número,usuario,sala,hacia)
 			return;
 		}
 		if(usuario=="LAMAGDALENA"){return}
-		var color = color_usuario(usuario)
 		var borrar = true
 		entrada = entrada.replace(/\/([^/]+\.com\/)/gi," $1")
 		if(entrada[0]=="."){entrada = entrada.slice(1)}
@@ -920,7 +914,7 @@ function mostrar_imágenes(entrada,número,usuario,sala,hacia)
 				{
 					salida += "[img]"+protocolo+"://"+res+"[/img]"
 				}
-				salida+="\nEnviado por: [b][color=#"+color+"]"+usuario+"[/color][/b]"
+				salida+="\nEnviado por: "+bbcode_usuario(usuario)
 			}else
 			{
 				salida+=res
@@ -1800,8 +1794,7 @@ function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	}else
 	{
 		var mensaje = salida.join("")
-		var color = color_usuario(usuario)
-		mensaje+="\nEnviado por: [b][color=#"+color+"]"+usuario+"[/color][/b]"
+		mensaje+="\nEnviado por: "+bbcode_usuario(usuario)
 		enviar_mensaje(mensaje,sala,hacia)
 		eliminar_mensaje(número,sala)
 	}
@@ -2071,7 +2064,6 @@ function activar_bot_2()
 	{
 		setTimeout(decir_la_hora,aleatorio_hora())
 	}
-	bot_está_activado = 1
 }
 function permanecer_conectado()
 {
@@ -2083,7 +2075,7 @@ function permanecer_conectado()
 	var texto = obtener_nombre_propio()+": "+fecha.getHours()+" "+fecha.getMinutes()+" "+fecha.getSeconds()
 	if(soy_un_bot)
 	{
-		if(puedo_enviar&!bot_está_activado)
+		if(puedo_enviar)
 		{
 			activar_bot_2()
 			insertar_textarea(texto,1)
@@ -2159,7 +2151,7 @@ var valores = [
 	,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
 	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
-	,[0,"bot_está_activado"],[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
+	,[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
 	,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
 	,[0,"esperar_confirmar_patear"]
 ]

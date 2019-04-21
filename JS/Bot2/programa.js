@@ -38,14 +38,15 @@ function activar_bot(){
 	}
 }
 function crear_activar_bot(){
+	window.bot_está_activado = 0
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>activar_bot()
 	var nombre = "activar_bot"
 	var existe_botón = document.querySelector("#"+nombre)!=null
 	span.className = "text"
-	span.innerHTML = "Bot activado"
-	div.style["backgroundColor"]="#117733"
+	span.innerHTML = "Bot desactivado"
+	div.style["backgroundColor"]="#771133"
 	div.id = nombre
 	div.className = "menuItem"
 	div.appendChild(span)
