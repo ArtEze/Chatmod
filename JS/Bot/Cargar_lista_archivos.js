@@ -1,6 +1,6 @@
 ﻿function cargar_lista_archivos()
 {
-	var archivos = ["colores_arcoiris", "fon", "números_hacia_texto", "texto_hacia_número", "programa"]
+	var archivos = ["activar_herramientas", "colores_arcoiris", "fon", "números_hacia_texto", "texto_hacia_número", "programa"]
 	for(var i in archivos)
 	{
 		var actual = archivos[i]

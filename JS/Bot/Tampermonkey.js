@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
-// @name		 Bot Otecald Chatovod
-// @version	  2.7.6
+// @name         Bot Otecald Chatovod
+// @version      2.7.6
 // @description  Cargador del cargador del Bot Otecald para Chatovod.
-// @author	   ArtEze
-// @match		*://*.chatovod.com/*
-// @grant		none
+// @author       ArtEze
+// @match        *://*.chatovod.com/*
+// @grant        none
 // ==/UserScript==
 
 "use strict";
@@ -13,7 +13,7 @@ window.número_aleatorio = hasta=>Math.floor(Math.random()*hasta)
 window.cargar_cargador = function()
 {
 	if(document.querySelector(".chat")==null){return;}
-	window.dirección_bot = "https://github.com/ArtEze/Chatovod_Mod/blob/master/JS/Bot/Activar_Bot.js"
+	window.dirección_bot = "https://github.com/ArtEze/Chatovod_Mod/blob/master/JS/Bot/Tampermonkey.js"
 	window.dir_partes = JSON.parse(window.dirección_bot.replace(
 		/^(.+):\/\/(.+)\.([^/]+)\/(.+)\/(.+)\/blob\/master([^.]+)\/([^.]+)\.(.+)$/gi,'["$1","$2","$3","$4","$5","$6","$7","$8"]')
 	)

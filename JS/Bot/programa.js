@@ -16,7 +16,7 @@ function obtener_nombre_propio()
 }
 function soy_bot()
 {
-	return bot_está_activado==1
+	return window["bot_está_activado"]==1
 }
 function estado_conexión()
 {
