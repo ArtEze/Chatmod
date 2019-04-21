@@ -1734,17 +1734,23 @@ function saludar(datos,nombre)
 	if(no_error)
 	{
 		var tipo = analizado.accountType
+		var nombre_bbcode = bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
+		var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
+		var textos = [nombre_bbcode,nombre_chat_negrita]
+		
+		var usuarios_idos = Object.keys(idos)
+		usuarios_idos.push(textos[1])
+		
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
 		console.log([nombre,bbcode_usuario(nombre)])
-		var mensaje = "¡Bienvenid"
-			+ tipo +" "
-			+ bbcode_usuario(nombre)
-			+ "! ¡Esto es [b][color=#123456]"+nombre_chat+"[/color][/b]!"
+		var mensaje = "¡Bienvenid" + tipo + " "
+			+ textos[0] + "! "
+			+ "¡Esto es "+ elemento_aleatorio(usuarios_idos) +"!"
 		;
 		console.log(mensaje)
 		entrados[nombre] = 1
-		localStorage.setItem("entrados",JSON.stringify("entrados"))
+		localStorage.setItem("entrados",JSON.stringify(entrados))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
 	}
 }
@@ -2142,7 +2148,7 @@ for(var i in objetos)
 	window[actual] = {}
 }
 var arrays = [
-	"votados", "mensajes", "entrar_salir", "entrados"
+	"votados", "mensajes", "entrar_salir",
 	,"mensajes_entra_sale_ban", "baneados", "sospechosos"
 	,"inhabilitado_banear", "votantes", "tiempos_votos", "salas"
 	,"pedidos","mensajes_privados","usuarios_a_patear"
