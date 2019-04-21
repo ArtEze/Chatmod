@@ -1223,6 +1223,8 @@ function agregar_avatar(datos,usuario,hacia,sala,i)
 	var analizado = JSON.parse(datos)
 	var actual = hacia[i]
 	var identidad
+	var hospedaje = "a.chatovod.com"
+	var sitio = location.protocol +"//"+ hospedaje
 	if(analizado.t!="error")
 	{
 		identidad = analizado.nickId
@@ -1231,12 +1233,7 @@ function agregar_avatar(datos,usuario,hacia,sala,i)
 			es_moderador = 1
 			console.log("Se detectó que el bot puede moderar.")
 		}
-		var hospedaje = "a.chatovod.com"
-		var sitio = location.protocol +"//"+ hospedaje
-		if(identidad!=undefined&!avatar_excluidos.includes(actual))
-		{
-			enviar_mensaje("[img]"+sitio+"/n/"+identidad+"/d?"+aleatorio(1000)+"[/img]",sala,[usuario,actual],89*i)
-		}
+
 	}else{
 		var posición = buscar_en_matriz(usuarios,"alias",actual)
 		console.log("nick avatar",actual,posición)
@@ -1247,6 +1244,10 @@ function agregar_avatar(datos,usuario,hacia,sala,i)
 			es_moderador = 0
 			console.log(identidad,"Se detectó que el bot no puede moderar.")
 		}
+	}
+	if(identidad!=undefined&!avatar_excluidos.includes(actual))
+	{
+		enviar_mensaje("[img]"+sitio+"/n/"+identidad+"/d?"+aleatorio(1000)+"[/img]",sala,[usuario,actual],89*i)
 	}
 }
 function mostrar_avatares(entrada,usuario,hacia,sala)
@@ -1743,10 +1744,9 @@ function saludar(datos,nombre)
 		usuarios_idos.push(textos[1])
 		
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-		console.log([nombre,bbcode_usuario(nombre)])
 		var mensaje = "¡Bienvenid" + tipo + " "
-			+ textos[0] + "! "
-			+ "¡Esto es "+ elemento_aleatorio(usuarios_idos) +"!"
+			+ bbcode_usuario(elemento_aleatorio(usuarios_idos)) + "! "
+			+ "¡Esto es "+ textos[0] +"!"
 		;
 		console.log(mensaje)
 		entrados[nombre] = 1
@@ -2177,7 +2177,10 @@ for(var i in valores)
 }
 if(window["usuarios"]==undefined)
 {
-	usuarios = []
+	usuarios = [
+		{alias:"♠~мℓ~♠",id: 5191789}
+		,{alias:"☪~RL~☪",id: 5039037}
+	]
 }
 var chats = [
 	/*
