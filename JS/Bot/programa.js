@@ -14,14 +14,9 @@ function obtener_nombre_propio()
 	}
 	return devuelve
 }
-function es_bot(nombre)
-{
-	return /[áäàâéëèêíïìîóöòôúüùû]/gi.test(nombre)
-}
 function soy_bot()
 {
-	var nombre = obtener_nombre_propio()
-	return es_bot(nombre)
+	return bot_está_activado==1
 }
 function estado_conexión()
 {
@@ -1955,60 +1950,65 @@ function procesar_mensajes(a,b)
 		}
 	}
 }
-function entrar_y_salir (a, b, c)
+function entrar_y_salir(a,b,c)
 {
-	if(b.includes("changed"))
-	{
-		var b_t = b.replace(
-			/^tab changed to (.+)\[(\d+)\], (false|true|undefined), (false|true|undefined)$/gi,"[\"$1\",$2,$3,$4]"
-		)
-		var sala
-		try{
-			sala = eval(b_t)
-		}catch(e){
-			console.log("Error: No se pudo evaluar",b_t)
-		}
-		var nombre = sala[0]
-		var posición = buscar_en_matriz(salas,0,nombre)
-		if(posición==-1)
+	var soy_un_bot = soy_bot()
+	if(soy_un_bot){
+		if(b.includes("changed"))
 		{
-			salas.push(sala.slice(0,2).concat(-1))
-		}else
-		{
-			salas[posición][1]=sala[1]
-		}
-		sala_visible = sala[1]
-	}
-	var info = b.split(" ")
-	var entrada = info[0]
-	entrada = entrada=="enter"?1:entrada=="leave"?0:-1
-	var nombre = info.slice(1).join(" ")
-	var mensaje;
-	if(entrada>=0)
-	{
-		var fecha = new Date()
-		var tiempo = fecha.getHours()
-			+":"+((fecha.getMinutes()+100)+"").slice(1)
-			+":"+((fecha.getSeconds()+100)+"").slice(1)
-		if(entrados[nombre]==undefined){entrados[nombre] = 0}
-		if(idos[nombre]==undefined){idos[nombre] = 0}
-		if(entrada==1)
-		{
-			entrar_salir.push([1,nombre,tiempo])
-			//banear_ip(nombre)
-			//activar_ban(nombre,sala_ban)
-			if(entrados[nombre]==0){
-				moderar_usuario(nombre,x=>saludar(x,nombre))
+			var b_t = b.replace(
+				/^tab changed to (.+)\[(\d+)\], (false|true|undefined), (false|true|undefined)$/gi,"[\"$1\",$2,$3,$4]"
+			)
+			var sala
+			try{
+				sala = eval(b_t)
+			}catch(e){
+				console.log("Error: No se pudo evaluar",b_t)
 			}
-		}else{
-			entrar_salir.push([0,nombre,tiempo])
-			if(idos[nombre]==0)
+			var nombre = sala[0]
+			var posición = buscar_en_matriz(salas,0,nombre)
+			if(posición==-1)
 			{
-				mensaje = "¡Qué mal que te vayas " + nombre + "! ¡Te extrañaremos, vuelve pronto! :3"
-				idos[nombre] = 1
-				setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*3))
+				salas.push(sala.slice(0,2).concat(-1))
+			}else
+			{
+				salas[posición][1]=sala[1]
+			}
+			sala_visible = sala[1]
+		}
+		var info = b.split(" ")
+		var entrada = info[0]
+		entrada = entrada=="enter"?1:entrada=="leave"?0:-1
+		var nombre = info.slice(1).join(" ")
+		var mensaje;
+		if(entrada>=0)
+		{
+			var fecha = new Date()
+			var tiempo = fecha.getHours()
+				+":"+((fecha.getMinutes()+100)+"").slice(1)
+				+":"+((fecha.getSeconds()+100)+"").slice(1)
+			if(entrados[nombre]==undefined){entrados[nombre] = 0}
+			if(idos[nombre]==undefined){idos[nombre] = 0}
+			if(entrada==1)
+			{
+				entrar_salir.push([1,nombre,tiempo])
+				//banear_ip(nombre)
+				//activar_ban(nombre,sala_ban)
+				if(entrados[nombre]==0){
+					moderar_usuario(nombre,x=>saludar(x,nombre))
+				}
+			}else{
+				entrar_salir.push([0,nombre,tiempo])
+				if(idos[nombre]==0)
+				{
+					mensaje = "¡Qué mal que te vayas " + nombre + "! ¡Te extrañaremos, vuelve pronto! :3"
+					idos[nombre] = 1
+					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*3))
+				}
 			}
 		}
+	}else{
+		if(a.value>=lc(this).value)for(a=this.Dq(a,b,c),b="log:"+a.Rn,p.console&&(p.console.timeStamp?p.console.timeStamp(b):p.console.markTimeline&&p.console.markTimeline(b)),p.msWriteProfilerMark&&p.msWriteProfilerMark(b),b=this;b;){c=b;var d=a;if(c.xg)for(var e=0,g=void 0;g=c.xg[e];e++)g(d);b=b.getParent()}
 	}
 }
 function registrar_los_pedidos(a,b)
@@ -2033,31 +2033,42 @@ function activar_bot_2()
 	cc.prototype.log = entrar_y_salir
 	modificar_función(mh,registrar_los_pedidos)
 	modificar_función(yq,procesar_mensajes)
+	
 	ch.prototype.Rj = function ()
 	{
-		// console.log(this,"\n",this.Ak,"\n",this.Ve,"\n",this.rr,"fin")
-		if(this.Ve)
-		{
-			// console.log(this.Cc == Cg.prototype)
-			this.Cc.send(this.Ak + '?_=' + this.rr++, 'GET')
+		var soy_un_bot = soy_bot()
+			if(soy_un_bot){
+			// console.log(this,"\n",this.Ak,"\n",this.Ve,"\n",this.rr,"fin")
+			if(this.Ve)
+			{
+				// console.log(this.Cc == Cg.prototype)
+				this.Cc.send(this.Ak + '?_=' + this.rr++, 'GET')
+			}else{
+				console.log("Error desconocido.")
+			}
 		}else{
-			console.log("Error desconocido.")
+			this.Ve&&this.Cc.send(this.Ak+"?_\x3d"+this.rr++,"GET")
 		}
 	}
 	window.eliminados=[]
 	Bq=function(a,b){
-		if(b.t=="md")
-		{
-			for(var i in b.ts)
+		var soy_un_bot = soy_bot()
+		if(soy_un_bot){
+			if(b.t=="md")
 			{
-				var mensaje = mensajes[mensajes.map(x=>x[1]).indexOf(b.ts[i])]
-				eliminados.push(mensaje)
+				for(var i in b.ts)
+				{
+					var mensaje = mensajes[mensajes.map(x=>x[1]).indexOf(b.ts[i])]
+					eliminados.push(mensaje)
+				}
 			}
+			var c=a.I["room"+b.r],d=b.ts;
+			z(Sd("chatMessage",c),function(a){var b=U(a,"ts");
+			b&&Ta(d,b)&&de(a)});
+			hi(U(c,"chatovodScrollBar"))
+		}else{
+			var c=a.I["room"+b.r],d=b.ts;z(Sd("chatMessage",c),function(a){var b=U(a,"ts");b&&Ta(d,b)&&de(a)});hi(U(c,"chatovodScrollBar"))
 		}
-		var c=a.I["room"+b.r],d=b.ts;
-		z(Sd("chatMessage",c),function(a){var b=U(a,"ts");
-		b&&Ta(d,b)&&de(a)});
-		hi(U(c,"chatovodScrollBar"))
 	}
 	window.elim = ()=>eliminados.filter(x=>x).map(x=>x[2]+": "+x[0]).join("\n")
 	if(id_chat==3)
