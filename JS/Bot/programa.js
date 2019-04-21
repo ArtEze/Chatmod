@@ -2007,7 +2007,7 @@ function entrar_y_salir(a,b,c)
 				entrar_salir.push([0,nombre,tiempo])
 				if(idos[nombre]==0)
 				{
-					mensaje = "¡Qué mal que te vayas " + nombre + "! ¡Te extrañaremos, vuelve pronto! :3"
+					mensaje = "¡Qué mal que te vayas " + bbcode_usuario(nombre) + "! ¡Te extrañaremos, vuelve pronto! :3"
 					idos[nombre] = 1
 					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*3))
 				}
