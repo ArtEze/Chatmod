@@ -554,29 +554,32 @@ function dos_dígitos(número)
 }
 function decir_la_hora()
 {
-	var fecha = new Date()
-	var hora = fecha.getUTCHours()
-	var minutos = dos_dígitos(fecha.getUTCMinutes())
-	// Falta: Bolivia, Costa Rica, Cuba, El Salvador, Honduras
-	var color = "981221"
-	var sp = "\n"
-    var co = "[color=%23"+color+"]"
-    var ci = "[/color]"
-	var v = ""
-	var mensaje = "[color=%23"+color+"]Horas en el mundo: " + ci + sp
-	var array = [
-		 [-3,"Argentina y Uruguay."],[-4,"Chile, Paraguay, República Dominicana y Venezuela"]
-		,[-5,"Colombia, Ecuador, México, Panamá y Perú"],[-6,"Guatemala y Nicaragua"]
-		,[ 1,"España, Islas Canarias"],[ 2,"España, Madrid... Andalucía"],[ 8,"Singapur"]
-	]
-	for(var i in array)
-	{
-		mensaje+=dos_dígitos((hora+24+array[i][0])%24)+":"+minutos+" "+array[i][1]+(i%2==0?(i!=array.length-1?sp+co:""):ci+sp)
+	var soy_un_bot = soy_bot()
+	if(soy_un_bot){
+		var fecha = new Date()
+		var hora = fecha.getUTCHours()
+		var minutos = dos_dígitos(fecha.getUTCMinutes())
+		// Falta: Bolivia, Costa Rica, Cuba, El Salvador, Honduras
+		var color = "981221"
+		var sp = "\n"
+		var co = "[color=%23"+color+"]"
+		var ci = "[/color]"
+		var v = ""
+		var mensaje = "[color=%23"+color+"]Horas en el mundo: " + ci + sp
+		var array = [
+			 [-3,"Argentina y Uruguay."],[-4,"Chile, Paraguay, República Dominicana y Venezuela"]
+			,[-5,"Colombia, Ecuador, México, Panamá y Perú"],[-6,"Guatemala y Nicaragua"]
+			,[ 1,"España, Islas Canarias"],[ 2,"España, Madrid... Andalucía"],[ 8,"Singapur"]
+		]
+		for(var i in array)
+		{
+			mensaje+=dos_dígitos((hora+24+array[i][0])%24)+":"+minutos+" "+array[i][1]+(i%2==0?(i!=array.length-1?sp+co:""):ci+sp)
+		}
+		mensaje+=v
+		enviar_mensaje(mensaje)
+		var tiempo = aleatorio_hora()
+		setTimeout(decir_la_hora,tiempo)
 	}
-	mensaje+=v
-	enviar_mensaje(mensaje)
-	var tiempo = aleatorio_hora()
-	setTimeout(decir_la_hora,tiempo)
 }
 function coinciden_palabras_or(entrada,palabras)
 {
@@ -1885,68 +1888,71 @@ function agregar_mensaje(mensaje)
 }
 function procesar_mensajes(a,b)
 {
-	if(b.t!="m")
-	{
-		console.log(misterio,"Error ultra desconocido.")
-	}
-	var entrada = b.m
-	var número = b.ts
-	var usuario = b.f
-	var sala = b.r
-	var hacia = b.to
-	var es_nuevo = !b.s
-	var es_privado_nuevo = !!b.u
-
-	if(hacia==undefined){hacia=[]}
-	var emisor_no_soy_yo = !regularizar_texto(obtener_nombre_propio()).test(usuario)
-	var mensaje = [entrada,número,usuario,sala,hacia]
-
-	if(es_privado_nuevo)
-	{
-		if(emisor_no_soy_yo)
+	var soy_un_bot = soy_bot()
+	if(soy_un_bot){
+		if(b.t!="m")
 		{
-			var html = document.createElement("div")
-			html.innerHTML = JSON.stringify(mensaje)
-			// document.querySelectorAll(".chatMessages")[0].appendChild(html)			
+			console.log(misterio,"Error ultra desconocido.")
 		}
-		mensajes_privados.push(mensaje)
-		//console.log("Es privado.",es_privado_nuevo,"b.u",b.nh,b.s)
-	}
-	agregar_mensaje(mensaje)
-	if(es_nuevo)
-	{
-		if(emisor_no_soy_yo)
+		var entrada = b.m
+		var número = b.ts
+		var usuario = b.f
+		var sala = b.r
+		var hacia = b.to
+		var es_nuevo = !b.s
+		var es_privado_nuevo = !!b.u
+
+		if(hacia==undefined){hacia=[]}
+		var emisor_no_soy_yo = !regularizar_texto(obtener_nombre_propio()).test(usuario)
+		var mensaje = [entrada,número,usuario,sala,hacia]
+
+		if(es_privado_nuevo)
 		{
-			// Ordenado por prioridad
-			eliminar_y_banear_otro_chat	(entrada,usuario,número,sala)
-			eliminar_y_banear_18		(entrada,usuario,número,sala)
-			eliminar_palabras			(entrada,número,sala)
-			eliminar_banes				(entrada,número,sala)
+			if(emisor_no_soy_yo)
+			{
+				var html = document.createElement("div")
+				html.innerHTML = JSON.stringify(mensaje)
+				// document.querySelectorAll(".chatMessages")[0].appendChild(html)			
+			}
+			mensajes_privados.push(mensaje)
+			//console.log("Es privado.",es_privado_nuevo,"b.u",b.nh,b.s)
+		}
+		agregar_mensaje(mensaje)
+		if(es_nuevo)
+		{
+			if(emisor_no_soy_yo)
+			{
+				// Ordenado por prioridad
+				eliminar_y_banear_otro_chat	(entrada,usuario,número,sala)
+				eliminar_y_banear_18		(entrada,usuario,número,sala)
+				eliminar_palabras			(entrada,número,sala)
+				eliminar_banes				(entrada,número,sala)
 
-			// Segundo orden
-			desbanear					(entrada,número,usuario,sala,hacia)
-			banear_por_votos			(entrada,usuario,hacia,sala)
-			martillo					(entrada,número,sala)
-			patear_a_todos				(entrada,número,usuario,sala,hacia)
-			patear_usuarios				(entrada,número,usuario,sala,hacia)
-			esperar_confirmación_patear	(entrada,número,usuario,sala,hacia)
-			entrar_o_salir				(entrada)
-			interruptor_ban				(entrada,usuario,sala,hacia)
+				// Segundo orden
+				desbanear					(entrada,número,usuario,sala,hacia)
+				banear_por_votos			(entrada,usuario,hacia,sala)
+				martillo					(entrada,número,sala)
+				patear_a_todos				(entrada,número,usuario,sala,hacia)
+				patear_usuarios				(entrada,número,usuario,sala,hacia)
+				esperar_confirmación_patear	(entrada,número,usuario,sala,hacia)
+				entrar_o_salir				(entrada)
+				interruptor_ban				(entrada,usuario,sala,hacia)
 
-			//Tercer orden
-			mostrar_avatares			(entrada,usuario,hacia,sala)
-			obtener_info				(entrada,usuario,sala,hacia)
-			obtener_moderación			(entrada,usuario,sala,hacia)
-			etiquetar_nick				(entrada,usuario,sala,hacia)
-			mostrar_imágenes			(entrada,número,usuario,sala,hacia)
-			color_arcoiris				(entrada,número,usuario,sala,hacia)
-			evaluar_javascript			(entrada,usuario,sala,hacia)
-			pedir_la_hora				(entrada,usuario,sala,hacia)
-			fonetizar_mensaje			(entrada,usuario,sala,hacia)
-			horóscopo					(entrada,usuario,sala,hacia)
-			buscar_google				(entrada,usuario,sala,hacia)
-			descargar_lightshot			(entrada,número,usuario,sala,hacia)
-			definir						(entrada,usuario,sala)
+				//Tercer orden
+				mostrar_avatares			(entrada,usuario,hacia,sala)
+				obtener_info				(entrada,usuario,sala,hacia)
+				obtener_moderación			(entrada,usuario,sala,hacia)
+				etiquetar_nick				(entrada,usuario,sala,hacia)
+				mostrar_imágenes			(entrada,número,usuario,sala,hacia)
+				color_arcoiris				(entrada,número,usuario,sala,hacia)
+				evaluar_javascript			(entrada,usuario,sala,hacia)
+				pedir_la_hora				(entrada,usuario,sala,hacia)
+				fonetizar_mensaje			(entrada,usuario,sala,hacia)
+				horóscopo					(entrada,usuario,sala,hacia)
+				buscar_google				(entrada,usuario,sala,hacia)
+				descargar_lightshot			(entrada,número,usuario,sala,hacia)
+				definir						(entrada,usuario,sala)
+			}
 		}
 	}
 }
@@ -2081,22 +2087,20 @@ function permanecer_conectado()
 	var puedo_enviar = puedo_enviar_mensajes()
 	var está_conectado = estado_conexión()==1
 	var sin_espera = está_listo()
-	var soy_un_bot = soy_bot()
 	var fecha = new Date()
 	var texto = obtener_nombre_propio()+": "+fecha.getHours()+" "+fecha.getMinutes()+" "+fecha.getSeconds()
-	if(soy_un_bot)
+	
+	if(puedo_enviar)
 	{
-		if(puedo_enviar)
-		{
-			activar_bot_2()
-			insertar_textarea(texto,1)
-		}
-		if(está_conectado&sin_espera)
-		{
-			entrar(1)
-			insertar_textarea(texto,1)
-		}
+		activar_bot_2()
+		insertar_textarea(texto,1)
 	}
+	if(está_conectado&sin_espera)
+	{
+		entrar(1)
+		insertar_textarea(texto,1)
+	}
+
 	var es_ventana_propia = estado_conexión()>-1
 	if(es_ventana_propia)
 	{
