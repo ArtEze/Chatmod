@@ -725,7 +725,7 @@ function es_domingo()
 function color_usuario(usuario){
 	var devuelve
 	var divs = Array.from(document.querySelectorAll(".nick[data-nick='"+usuario+"']"))
-	console.log(divs.map(x=>[x,x.attributes["data-nick"].value,x.innerHTML]))
+	//console.log(divs.map(x=>[x,x.attributes["data-nick"].value,x.innerHTML]))
 	if(divs[0]==undefined)
 	{
 		devuelve = "000000"
