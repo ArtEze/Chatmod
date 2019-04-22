@@ -195,7 +195,6 @@ function caracteres_hacia_hexadecimal(texto)
 }
 function banear_según_minutos(nombre,minutos,causa)
 {
-	if(!es_moderador){return;}
 	var chat = location.origin+"/chat/"
 	var modo = minutos>=0?"ban":"signOut"
 	var fin = ""
@@ -220,11 +219,6 @@ function moderar_usuario(nombre,función,error)
 			var no_error = +(analizado.t!="error")
 			if(no_error)
 			{
-				if(!es_moderador)
-				{
-					es_moderador = 1
-					console.log("Se detectó que es moderador.")
-				}
 				console.log(x)
 			}
 		}
@@ -241,13 +235,11 @@ function callback_eliminar(datos)
 	var error = analizado.t=="error"
 	if(error)
 	{
-		es_moderador = 0
 		console.log("Hubo un error al eliminar.")
 	}
 }
 function eliminar_mensaje(número,sala)
 {
-	if(!es_moderador){return;}
 	var chat = location.origin+"/chat/"
 	var modo = "deleteMessages"
 	var fin = "&roomId="+sala+"&messages=" + número
@@ -1228,22 +1220,12 @@ function agregar_avatar(datos,usuario,hacia,sala,i)
 	if(analizado.t!="error")
 	{
 		identidad = analizado.nickId
-		if(!es_moderador)
-		{
-			es_moderador = 1
-			console.log("Se detectó que el bot puede moderar.")
-		}
 
 	}else{
 		var posición = buscar_en_matriz(usuarios,"alias",actual)
 		console.log("nick avatar",actual,posición)
 		var us_pos = usuarios[posición]
 		identidad = us_pos==undefined?"":us_pos.id
-		if(es_moderador)
-		{
-			es_moderador = 0
-			console.log(identidad,"Se detectó que el bot no puede moderar.")
-		}
 	}
 	if(identidad!=undefined&!avatar_excluidos.includes(actual))
 	{
@@ -1728,6 +1710,10 @@ function etiquetar_nick(entrada,usuario,sala,hacia)
 		enviar_mensaje(""+aleatorio(100),sala,[nick],1)
 	}
 }
+function borrar_nombre_de_idos(nombre){
+	delete entrados[nombre]
+	delete idos[nombre]
+}
 function saludar(datos,nombre)
 {
 	var analizado = JSON.parse(datos)
@@ -1744,11 +1730,20 @@ function saludar(datos,nombre)
 		usuarios_idos.push(textos[1])
 		
 		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
+/*	
+nick	ArtEze
+t	ue
+c	176ed7
+tc	75841f
+sx	2
+as	//a.chatovod.com/n/4814889/a?1554177053
+id	4814889
+g	moderator
+*/	
 		var mensaje = "¡Bienvenid" + tipo + " "
 			+ bbcode_usuario(elemento_aleatorio(usuarios_idos)) + "! "
 			+ "¡Esto es "+ textos[0] +"!"
 		;
-		console.log(mensaje)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
 		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
@@ -1837,10 +1832,6 @@ function entrar(es_entrar,nombre,función)
 	if(es_entrar)
 	{
 		fin = "&nick="+nombre
-		if(/b[oòôóö]t/gi.test(nombre))
-		{
-			es_moderador = 1
-		}
 	}else
 	{
 		fin = ""
@@ -2052,11 +2043,22 @@ function activar_bot_2()
 	cc.prototype.log = entrar_y_salir
 	modificar_función(mh,registrar_los_pedidos,false)
 	modificar_función(yq,procesar_mensajes,false)
-	
+
+/*
+nick	ArtEze
+t	ue
+c	176ed7
+tc	75841f
+sx	2
+as	//a.chatovod.com/n/4814889/a?1554177053
+id	4814889
+g	moderator
+*/
+
 	ch.prototype.Rj = function ()
 	{
 		var soy_un_bot = soy_bot()
-			if(soy_un_bot){
+		if(soy_un_bot){
 			// console.log(this,"\n",this.Ak,"\n",this.Ve,"\n",this.rr,"fin")
 			if(this.Ve)
 			{
@@ -2164,7 +2166,7 @@ var valores = [
 	,[4,"votos_necesarios"],[undefined,"privado_moderador"]
 
 	,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
-	,[1,"puede_obtener_info"],[1,"permitir_kendall"],[1,"es_moderador"]
+	,[1,"puede_obtener_info"],[1,"permitir_kendall"]
 	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
 	,[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
 	,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
