@@ -1741,9 +1741,11 @@ function saludar(datos,nombre)
 		id	4814889
 		g	moderator
 	*/
+	/*
 	var analizado = JSON.parse(datos)
 	var no_error = analizado.t!="error"
 	if(no_error)
+	*/
 	{
 		window.tiempo_espera_saludo = 300
 		setTimeout(()=>{
@@ -1754,7 +1756,6 @@ function saludar(datos,nombre)
 			window.mensaje_bienvenida = "¡Bienvenid" + género + " "
 				+ nombre_bbcode + "! "
 				+ "¡Esto es "+ nombre_chat_negrita +"!";
-			console.log(window.mensaje_bienvenida)
 		},window.tiempo_espera_saludo)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
@@ -2020,7 +2021,8 @@ function entrar_y_salir(a,b,c)
 				//banear_ip(nombre)
 				//activar_ban(nombre,sala_ban)
 				if(entrados[nombre]==0){
-					moderar_usuario(nombre,x=>saludar(x,nombre))
+					//moderar_usuario(nombre,x=>saludar(x,nombre))
+					saludar(undefined,nombre)
 				}
 			}else{
 				entrar_salir.push([0,nombre,tiempo])
