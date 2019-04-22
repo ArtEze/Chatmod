@@ -1745,6 +1745,7 @@ function saludar(datos,nombre)
 	var no_error = analizado.t!="error"
 	if(no_error)
 	{
+		window.tiempo_espera_saludo = 300
 		setTimeout(()=>{
 			var género = género_usuario(nombre)
 			var nombre_bbcode = bbcode_usuario(nombre)
@@ -1754,7 +1755,7 @@ function saludar(datos,nombre)
 				+ nombre_bbcode + "! "
 				+ "¡Esto es "+ nombre_chat_negrita +"!";
 			console.log(window.mensaje_bienvenida)
-		},200)
+		},window.tiempo_espera_saludo)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
 		setTimeout(()=>enviar_mensaje(window.mensaje_bienvenida,1),Math.floor(Math.random()*1000*60*3+300))
