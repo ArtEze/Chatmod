@@ -724,24 +724,29 @@ function es_domingo()
 }
 function color_usuario(usuario){
 	var devuelve
-	var div = document.querySelector(".nick[data-nick='"+usuario+"']")
-	if(div==undefined)
+	var divs = Array.from(document.querySelectorAll(".nick[data-nick='"+usuario+"']"))
+	console.log(divs.map(x=>[x,x.attributes["data-nick"].value,x.innerHTML]))
+	if(divs[0]==undefined)
 	{
 		devuelve = "000000"
 	}else{
-		devuelve = div.style.color.split(/[(),]/gi).slice(1,-1).map(x=>("0"+(+x).toString(16)).slice(-2)).join("")
+		devuelve = divs[0].style.color.split(/[(),]/gi).slice(1,-1).map(x=>("0"+(+x).toString(16)).slice(-2)).join("")
 	}
 	return devuelve
 }
 function género_usuario(usuario){
 	var devuelve
-	var div = Array.from(Array.from(document.querySelectorAll(".chatUsers li"))
-		.filter(x=>x.querySelector(".nick").innerHTML==usuario)[0])
-	var clases = div.classList
-	var es_hombre = clases.includes("male")
-	var es_mujer = clases.includes("female")
-	var es_indefinido = !es_hombre && !es_mujer
-	devuelve = es_indefinido?"e":es_hombre?"o":es_mujer?"a":"i"
+	var div =  Array.from(document.querySelectorAll(".chatUsers li"))
+		.filter(x=>x.querySelector(".nick").innerHTML==usuario)[0]
+	if(div==undefined){
+		devuelve = "u"
+	}else{
+		var clases = Array.from(div.classList)
+		var es_hombre = clases.includes("male")
+		var es_mujer = clases.includes("female")
+		var es_indefinido = !es_hombre && !es_mujer
+		devuelve = es_indefinido?"e":es_hombre?"o":es_mujer?"a":"i"
+	}
 	return devuelve
 }
 function bbcode_usuario(usuario){
@@ -1741,14 +1746,14 @@ function saludar(datos,nombre)
 	if(no_error)
 	{
 		setTimeout(()=>{
-			var tipo = analizado.accountType
+			var género = género_usuario(nombre)
 			var nombre_bbcode = bbcode_usuario(nombre)
 			var nombre_chat = document.querySelector(".text").textContent
 			var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
-			tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-			window.mensaje_bienvenida = "¡Bienvenid" + tipo + " "
-			+ nombre_bbcode + "! "
-			+ "¡Esto es "+ nombre_chat_negrita +"!";
+			window.mensaje_bienvenida = "¡Bienvenid" + género + " "
+				+ nombre_bbcode + "! "
+				+ "¡Esto es "+ nombre_chat_negrita +"!";
+			console.log(window.mensaje_bienvenida)
 		},200)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
