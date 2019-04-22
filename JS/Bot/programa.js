@@ -1758,7 +1758,10 @@ function saludar(datos,nombre)
 		},window.tiempo_espera_saludo)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
-		setTimeout(()=>enviar_mensaje(window.mensaje_bienvenida,1),Math.floor(Math.random()*1000*60*3+300))
+		setTimeout(
+			()=>enviar_mensaje(window.mensaje_bienvenida,1),
+			Math.floor(Math.random()*1000*60*3+window.tiempo_espera_saludo)
+		)
 	}
 }
 function buscar_google(entrada,usuario,sala,hacia)
