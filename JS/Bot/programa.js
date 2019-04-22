@@ -733,6 +733,17 @@ function color_usuario(usuario){
 	}
 	return devuelve
 }
+function género_usuario(usuario){
+	var devuelve
+	var div = Array.from(Array.from(document.querySelectorAll(".chatUsers li"))
+		.filter(x=>x.querySelector(".nick").innerHTML==usuario)[0])
+	var clases = div.classList
+	var es_hombre = clases.includes("male")
+	var es_mujer = clases.includes("female")
+	var es_indefinido = !es_hombre && !es_mujer
+	devuelve = es_indefinido?"e":es_hombre?"o":es_mujer?"a":"i"
+	return devuelve
+}
 function bbcode_usuario(usuario){
 	var color = color_usuario(usuario)
 	if(color==undefined){color="000000"}
@@ -1711,42 +1722,37 @@ function etiquetar_nick(entrada,usuario,sala,hacia)
 	}
 }
 function borrar_nombre_de_idos(nombre){
-	delete entrados[nombre]
-	delete idos[nombre]
+	return [delete entrados[nombre],delete idos[nombre]]
 }
 function saludar(datos,nombre)
 {
+	/*	
+		nick	ArtEze
+		t	ue
+		c	176ed7
+		tc	75841f
+		sx	2
+		as	//a.chatovod.com/n/4814889/a?1554177053
+		id	4814889
+		g	moderator
+	*/
 	var analizado = JSON.parse(datos)
 	var no_error = analizado.t!="error"
 	if(no_error)
 	{
-		var tipo = analizado.accountType
-		var nombre_bbcode = bbcode_usuario(nombre)
-		var nombre_chat = document.querySelector(".text").textContent
-		var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
-		var textos = [nombre_bbcode,nombre_chat_negrita]
-		
-		var usuarios_idos = Object.keys(idos)
-		usuarios_idos.push(textos[1])
-		
-		tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
-/*	
-nick	ArtEze
-t	ue
-c	176ed7
-tc	75841f
-sx	2
-as	//a.chatovod.com/n/4814889/a?1554177053
-id	4814889
-g	moderator
-*/	
-		var mensaje = "¡Bienvenid" + tipo + " "
-			+ bbcode_usuario(elemento_aleatorio(usuarios_idos)) + "! "
-			+ "¡Esto es "+ textos[0] +"!"
-		;
+		setTimeout(()=>{
+			var tipo = analizado.accountType
+			var nombre_bbcode = bbcode_usuario(nombre)
+			var nombre_chat = document.querySelector(".text").textContent
+			var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
+			tipo = tipo=="ch"?"o":tipo=="go"?"a":"o"
+			window.mensaje_bienvenida = "¡Bienvenid" + tipo + " "
+			+ nombre_bbcode + "! "
+			+ "¡Esto es "+ nombre_chat_negrita +"!";
+		},200)
 		entrados[nombre] = 1
 		localStorage.setItem("entrados",JSON.stringify(entrados))
-		setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*4))
+		setTimeout(()=>enviar_mensaje(window.mensaje_bienvenida,1),Math.floor(Math.random()*1000*60*3+300))
 	}
 }
 function buscar_google(entrada,usuario,sala,hacia)
@@ -2013,7 +2019,7 @@ function entrar_y_salir(a,b,c)
 				{
 					mensaje = "¡Qué mal que te vayas " + bbcode_usuario(nombre) + "! ¡Te extrañaremos, vuelve pronto! :3"
 					idos[nombre] = 1
-					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*3))
+					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*2))
 				}
 			}
 		}
