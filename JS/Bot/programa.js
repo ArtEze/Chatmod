@@ -1981,7 +1981,7 @@ function entrar_y_salir(a,b,c)
 {
 	var soy_un_bot = soy_bot()
 	if(soy_un_bot){
-		console.log(a,b,c)
+		// console.log(a,b,c)
 		if(b.includes("changed"))
 		{
 			var b_t = b.replace(
@@ -2276,14 +2276,15 @@ var avatar_excluidos = [
 	,"HerbalLove"
 	,"\u2661Luni :3"
 	//,"Loolii/lore"
-	,"yarispanditabebe15"
+	,"yaris"
 ]
 var info_excluidos = [
 	"HerbalLove"
 ]
 var excluidos_patear = [
-	"yarispanditabebe15"
+	"yaris"
 	,"mαdєlínє"
+	,"Atenea"
 	,"ѕσƒι025~\u2661"
 ]
 var desconocimiento = [
