@@ -171,6 +171,7 @@ function descargar_horóscopo()
 		var html = texto_hacia_html(x)
 		console.log(html)
 		var dirección = html.querySelector(".post-column.clearfix a").href
+		"http://enlacevirtualradio.com.ar/eze/redir.php?dir="+dirección.split("//").slice(1).join("//")
 		descargar(dirección,función_2)
 	}
 	var dirección = "http://enlacevirtualradio.com.ar/eze/redir.php?dir=horoscoposocial.com"
