@@ -724,13 +724,23 @@ function es_domingo()
 }
 function color_usuario(usuario){
 	var devuelve
-	var divs = Array.from(document.querySelectorAll(".nick[data-nick='"+usuario+"']"))
-	//console.log(divs.map(x=>[x,x.attributes["data-nick"].value,x.innerHTML]))
+	var divs = Array.from(
+		document.querySelectorAll(".nick[data-nick]")
+	).map(x=>[x,x.attributes["data-nick"].value])
+	.filter(x=>x[1]==usuario).map(x=>x[0]);
+	console.log(divs)
 	if(divs[0]==undefined)
 	{
 		devuelve = "000000"
 	}else{
-		devuelve = divs[0].style.color.split(/[(),]/gi).slice(1,-1).map(x=>("0"+(+x).toString(16)).slice(-2)).join("")
+		devuelve = divs[0]
+			.style
+			.color
+			.split(/[(),]/gi)
+			.slice(1,-1)
+			.map(x=>("0"+(+x).toString(16)).slice(-2))
+			.join("")
+		;
 	}
 	return devuelve
 }
@@ -1729,7 +1739,7 @@ function etiquetar_nick(entrada,usuario,sala,hacia)
 function borrar_nombre_de_idos(nombre){
 	return [delete entrados[nombre],delete idos[nombre]]
 }
-function saludar(datos,nombre)
+function saludar(nombre)
 {
 	/*	
 		nick	ArtEze
@@ -1741,29 +1751,20 @@ function saludar(datos,nombre)
 		id	4814889
 		g	moderator
 	*/
-	/*
-	var analizado = JSON.parse(datos)
-	var no_error = analizado.t!="error"
-	if(no_error)
-	*/
-	{
-		window.tiempo_espera_saludo = 300
-		setTimeout(()=>{
-			var género = género_usuario(nombre)
-			var nombre_bbcode = bbcode_usuario(nombre)
-			var nombre_chat = document.querySelector(".text").textContent
-			var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
-			window.mensaje_bienvenida = "¡Bienvenid" + género + " "
-				+ nombre_bbcode + "! "
-				+ "¡Esto es "+ nombre_chat_negrita +"!";
-		},window.tiempo_espera_saludo)
-		entrados[nombre] = 1
-		localStorage.setItem("entrados",JSON.stringify(entrados))
-		setTimeout(
-			()=>enviar_mensaje(window.mensaje_bienvenida,1),
-			Math.floor(Math.random()*1000*60*3+window.tiempo_espera_saludo)
-		)
-	}
+	console.log(nombre)
+	window.tiempo_espera_saludo = 300 + Math.floor(Math.random()*1000*60*3)
+	setTimeout(()=>{
+		var género = género_usuario(nombre)
+		var nombre_bbcode = bbcode_usuario(nombre)
+		var nombre_chat = document.querySelector(".text").textContent
+		var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
+		window.mensaje_bienvenida = "¡Bienvenid" + género + " "
+			+ nombre_bbcode + "! "
+			+ "¡Esto es "+ nombre_chat_negrita +"!";
+		enviar_mensaje(window.mensaje_bienvenida,1)
+	},window.tiempo_espera_saludo)
+	entrados[nombre] = 1
+	localStorage.setItem("entrados",JSON.stringify(entrados))
 }
 function buscar_google(entrada,usuario,sala,hacia)
 {
@@ -1980,6 +1981,7 @@ function entrar_y_salir(a,b,c)
 {
 	var soy_un_bot = soy_bot()
 	if(soy_un_bot){
+		console.log(a,b,c)
 		if(b.includes("changed"))
 		{
 			var b_t = b.replace(
@@ -2021,8 +2023,7 @@ function entrar_y_salir(a,b,c)
 				//banear_ip(nombre)
 				//activar_ban(nombre,sala_ban)
 				if(entrados[nombre]==0){
-					//moderar_usuario(nombre,x=>saludar(x,nombre))
-					saludar(undefined,nombre)
+					saludar(nombre)
 				}
 			}else{
 				entrar_salir.push([0,nombre,tiempo])
@@ -2057,20 +2058,20 @@ function registrar_los_pedidos(a,b)
 }
 function activar_bot_2()
 {
-	cc.prototype.log = entrar_y_salir
+	cc.prototype.log = (a,b,c)=>entrar_y_salir(a,b,c)
 	modificar_función(mh,registrar_los_pedidos,false)
 	modificar_función(yq,procesar_mensajes,false)
 
-/*
-nick	ArtEze
-t	ue
-c	176ed7
-tc	75841f
-sx	2
-as	//a.chatovod.com/n/4814889/a?1554177053
-id	4814889
-g	moderator
-*/
+	/*
+	nick	ArtEze
+	t	ue
+	c	176ed7
+	tc	75841f
+	sx	2
+	as	//a.chatovod.com/n/4814889/a?1554177053
+	id	4814889
+	g	moderator
+	*/
 
 	ch.prototype.Rj = function ()
 	{
