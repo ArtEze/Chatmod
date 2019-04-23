@@ -169,10 +169,11 @@ function descargar_horóscopo()
 	}
 	var función = x=>{
 		var html = texto_hacia_html(x)
+		console.log(html)
 		var dirección = html.querySelector(".post-column.clearfix a").href
 		descargar(dirección,función_2)
 	}
-	var dirección = "//horoscoposocial.com/#horoscopos"
+	var dirección = "http://enlacevirtualradio.com.ar/eze/redir.php?dir=horoscoposocial.com"
 	descargar(dirección,función)
 }
 function obtener_CSRF()
