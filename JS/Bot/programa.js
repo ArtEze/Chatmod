@@ -286,13 +286,17 @@ function obtener_info(entrada,usuario,sala,hacia)
 {
 	var enviar_información = function(datos){
 		var nombre_info = datos.querySelector(".nick").textContent
-		var mensaje = datos.querySelector(".aboutLine").textContent.split(/Acerca de mí:\n\s+/)[1].split(/\s{4,}/)[0]
-		if(mensaje.length>200){
-			mensaje = mensaje.slice(0,200)
-			mensaje += " (...)"
+		var aboutLine = datos.querySelector(".aboutLine")
+		if(aboutLine!=undefined)
+		{
+			var mensaje = aboutLine.textContent.split(/Acerca de mí:\n\s+/)[1].split(/\s{4,}/)[0]
+			if(mensaje.length>200){
+				mensaje = mensaje.slice(0,200)
+				mensaje += " (...)"
+			}
+			if(!info_excluidos.includes(nombre_info))
+			enviar_mensaje(mensaje,sala,[usuario,nombre_info])
 		}
-		if(!info_excluidos.includes(nombre_info))
-		enviar_mensaje(mensaje,sala,[usuario,nombre_info])
 	}
 	var accionar_desde_html = function(datos,función){
 		var html = texto_hacia_html(datos)
