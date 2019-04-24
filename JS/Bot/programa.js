@@ -160,11 +160,12 @@ function descargar_horóscopo()
 			html.querySelector(".entry-content.clearfix").children
 		).map(x=>x.textContent)
 		var posiciones = nodos.map(x=>x.split(" ").length==1?x:"")
-		var array = signos
+		
+		signos = []
 		for(var i in lista_signos)
 		{
 			var posición = nodos.indexOf(lista_signos[i].toUpperCase())
-			array.push(nodos[posición+1])
+			signos.push(nodos[posición+1]+"%0a%0a"+nodos[posición+2])
 		}
 	}
 	var función = x=>{
