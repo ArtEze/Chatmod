@@ -9,7 +9,9 @@
 
 "use strict";
 
-window.número_aleatorio = hasta=>Math.floor(Math.random()*hasta)
+window.número_aleatorio = function(hasta){
+	return Math.floor(Math.random()*hasta)
+}
 window.cargar_cargador = function()
 {
 	if(document.querySelector(".chat")==null){return;}
