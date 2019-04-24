@@ -376,7 +376,7 @@ function horóscopo(entrada,usuario,sala,hacia)
 			var reg = regularizar_texto(actual)
 			if(reg.test(entrada))
 			{
-				mensaje = signos[i]
+				mensaje = "[img]http://horoscoposocial.com/wp-content/uploads/2018/06/"+actual+".png[/img]" + signos[i]
 			}
 		}
 		var hacia_2 = hacia.slice()
