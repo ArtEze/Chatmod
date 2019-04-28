@@ -154,6 +154,7 @@ function buscar_en_matriz(array,columna,valor)
 }
 function descargar_horóscopo()
 {
+	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
 	var función_2 = x=>{
 		var html = texto_hacia_html(x)
 		var nodos = Array.from(
@@ -172,10 +173,10 @@ function descargar_horóscopo()
 		var html = texto_hacia_html(x)
 		console.log(html)
 		var dirección = html.querySelector(".post-column.clearfix a").href
-		dirección = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="+dirección.split("//").slice(1).join("//")
+		dirección = anticorb+dirección.split("//").slice(1).join("//")
 		descargar(dirección,función_2)
 	}
-	var dirección = "http://enlacevirtualradio.com.ar/eze/redir.php?dir=horoscoposocial.com"
+	var dirección = anticorb+"horoscoposocial.com"
 	descargar(dirección,función)
 }
 function obtener_CSRF()
