@@ -7,8 +7,9 @@ function obtener_nombre(){
 	return document.querySelector("#nickMenu .text").textContent
 }
 function configurar(){
+	var devuelve
 	if(obtener_nombre()=="..."){
-		setTimeout(configurar,1000)
+		devuelve = setTimeout(configurar,1000)
 	}else{
 		window.configuración = localStorage.configuración
 		if(window.configuración==undefined){
@@ -18,8 +19,13 @@ function configurar(){
 				, bot_está_activado: 0
 			}
 			localStorage.configuración = JSON.stringify(window.configuración)
+			devuelve = localStorage.configuración
+		}else{
+			window.configuración = JSON.parse(window.configuración)
+			devuelve = window.configuración
 		}
 	}
+	return devuelve
 }
 function obtener_activado(){
 	return window.configuración[obtener_nombre()].está_activado
