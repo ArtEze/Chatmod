@@ -2,14 +2,48 @@
 
 console.log("Cargado programa.js")
 
+// Configuración
+function obtener_nombre(){
+	return document.querySelector("#nickMenu .text").textContent
+}
+function configurar(){
+	if(obtener_nombre()=="..."){
+		setTimeout(configurar,1000)
+	}else{
+		window.configuración = localStorage.configuración
+		if(window.configuración==undefined){
+			window.configuración = {}
+			window.configuración[obtener_nombre()] = {
+				está_activado: 1
+				, bot_está_activado: 0
+			}
+			localStorage.configuración = JSON.stringify(window.configuración)
+		}
+	}
+}
+function obtener_activado(){
+	return window.configuración[obtener_nombre()].está_activado
+}
+function obtener_bot_activado(){
+	return window.configuración[obtener_nombre()].bot_está_activado
+}
+function cambiar_activado(){
+	window.configuración[obtener_nombre()].está_activado ^= 1
+	localStorage.configuración = JSON.stringify(window.configuración)
+}
+function cambiar_bot_activado(){
+	window.configuración[obtener_nombre()].bot_está_activado ^= 1
+	localStorage.configuración = JSON.stringify(window.configuración)
+}
+// Fin configuración
+
 function crear_activador(){
-	window.está_activado = 1
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>cambiar_color()
 	var existe_botón = document.querySelector("#activador")!=null
 	span.className = "text"
-	if(window.está_activado==1){
+	if(obtener_activado()){
 		span.innerHTML = "Activado"
 		div.style["backgroundColor"]="#23aa34"
 	}else{
@@ -27,8 +61,8 @@ function crear_activador(){
 }
 function activar_bot(){
 	var activador = document.querySelector("#activar_bot")
-	window.bot_está_activado ^= 1
-	if(window.bot_está_activado==1)
+	cambiar_bot_activado()
+	if(obtener_bot_activado())
 	{
 		activador.style["backgroundColor"]="#117733"
 		activador.querySelector(".text").innerHTML = "Bot activado"
@@ -38,7 +72,6 @@ function activar_bot(){
 	}
 }
 function crear_activar_bot(){
-	window.bot_está_activado = 0
 	var span = document.createElement("span")
 	var div = document.createElement("div")
 	var función = x=>activar_bot()
@@ -117,7 +150,7 @@ function cambiar_deslizadores(){
 		var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
 		if(deslizador!=null)
 		{
-			if(window.está_activado==1){
+			if(obtener_activado()){
 				deslizador_nuevo.style["overflow-y"]="scroll"
 				deslizador.style.display="none"
 			}else{
@@ -129,17 +162,20 @@ function cambiar_deslizadores(){
 	Array.from(document.querySelectorAll(".chatUsersTab")).map(x=>{
 		var deslizador = x.querySelector(".chatUsersScrollBar")
 		var deslizador_nuevo = x.querySelector(".chatUsersContainer")
-		if(window.está_activado==1){
-			deslizador_nuevo.style["overflow-y"]="scroll"
-			deslizador.style.display="none"
-		}else{
-			deslizador_nuevo.style["overflow-y"]="hidden"
-			deslizador.style.display="block"
+		if(deslizador!=null)
+		{
+			if(obtener_activado()){
+				deslizador_nuevo.style["overflow-y"]="scroll"
+				deslizador.style.display="none"
+			}else{
+				deslizador_nuevo.style["overflow-y"]="hidden"
+				deslizador.style.display="block"
+			}
 		}
 	})
 }
 function cambiar_botones(){
-	if(window.está_activado==1)
+	if(obtener_activado())
 	{
 		crear_activar_bot()
 		crear_copiador()
@@ -152,8 +188,8 @@ function cambiar_botones(){
 }
 function cambiar_color(){
 	var activador = document.querySelector("#activador")
-	window.está_activado ^= 1
-	if(window.está_activado==1)
+	cambiar_activado()
+	if(obtener_activado())
 	{
 		activador.style["backgroundColor"]="#23aa34"
 		activador.querySelector(".text").innerHTML = "Activado"
@@ -183,14 +219,14 @@ function mostrar_si_no_se_ve(){
 	}
 }
 function deslizar_mensaje(){
-	mensaje.scrollIntoView()
+	window.mensaje.scrollIntoView()
 	setTimeout(mostrar_si_no_se_ve,100)
 }
 function cargar_mensajes(a, b, c, d) {
 	
-	cantidad_carga_mensajes = window.está_activado==1?100:20
-	if(window.está_activado==1){
-		mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+	cantidad_carga_mensajes = obtener_activado()?100:20
+	if(obtener_activado()){
+		window.mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
 	}
 	var e = a.I[b];
 	if (!0 !== U(e, 'lock')) {
@@ -207,7 +243,7 @@ function cargar_mensajes(a, b, c, d) {
 				,function () {
 					W(e, 'lock', !1);
 					N('chatMessagesLoading', this.I[b]).style.display = 'none'
-					if(está_activado==1){
+					if(obtener_activado()){
 						contador_deslizar_mensaje = 0
 						deslizar_mensaje()
 					}
@@ -267,7 +303,7 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 		n = N('chatMessages', b),	W(b, 'cm', n);
 	}else if (h = Math.max(a.j.uh, a.j.jc), !1 !== U(b, 'onBottom') && (t = ee(n).length) > h)
 	{
-		if(está_activado==0){
+		if(!obtener_activado()){
 			for (t -= h; 0 < t; t--) n.removeChild(fe(n));
 		}
 	}
@@ -303,6 +339,7 @@ function ver_cantidad_mensajes(){
 
 function carga()
 {
+	configurar()
 	crear_activador()
 	cambiar_botones()
 	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
