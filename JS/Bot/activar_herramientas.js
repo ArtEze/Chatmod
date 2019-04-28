@@ -28,10 +28,18 @@ function configurar(){
 	return devuelve
 }
 function obtener_activado(){
-	return window.configuración[obtener_nombre()].está_activado
+	var devuelve = true
+	if(window.configuración!=undefined){
+		devuelve = window.configuración[obtener_nombre()].está_activado
+	}
+	return devuelve
 }
 function obtener_bot_activado(){
-	return window.configuración[obtener_nombre()].bot_está_activado
+	var devuelve = false
+	if(window.configuración!=undefined){
+		devuelve = window.configuración[obtener_nombre()].bot_está_activado
+	}
+	return devuelve
 }
 function cambiar_activado(){
 	window.configuración[obtener_nombre()].está_activado ^= 1
