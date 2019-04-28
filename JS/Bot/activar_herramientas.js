@@ -44,23 +44,33 @@ function configuración_predeterminada(opción,valor){
 			window.configuración[nombre][opción] = valor
 			cambiado = true
 		}
-	}
-	if(cambiado){
-		localStorage.configuración = JSON.stringify(window.configuración)
-	}
-	devuelve = window.configuración[nombre][opción]
+		if(cambiado){
+			localStorage.configuración = JSON.stringify(window.configuración)
+		}
+		devuelve = window.configuración[nombre][opción]
+	}	
 	return devuelve
 }
 function obtener_activado(){
 	var devuelve = true
+	var nombre = obtener_nombre()
 	configuración_predeterminada("está_activado",1)
-	devuelve = window.configuración[obtener_nombre()].está_activado
+	if(nombre!="..."){
+		devuelve = window.configuración[nombre].está_activado
+	}else{
+		devuelve = 1
+	}
 	return devuelve
 }
 function obtener_bot_activado(){
 	var devuelve = false
+	var nombre = obtener_nombre()
 	configuración_predeterminada("bot_está_activado",0)
-	devuelve = window.configuración[obtener_nombre()].bot_está_activado
+	if(nombre!="..."){
+		devuelve = window.configuración[nombre].bot_está_activado
+	}else{
+		devuelve = 0
+	}
 	return devuelve
 }
 function cambiar_activado(){
