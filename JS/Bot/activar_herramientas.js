@@ -30,14 +30,20 @@ function configurar(){
 function obtener_activado(){
 	var devuelve = true
 	if(window.configuración!=undefined){
-		devuelve = window.configuración[obtener_nombre()].está_activado
+		var confi_nombre = window.configuración[obtener_nombre()]
+		if(confi_nombre!=undefined){
+			devuelve = window.configuración[obtener_nombre()].está_activado
+		}
 	}
 	return devuelve
 }
 function obtener_bot_activado(){
 	var devuelve = false
 	if(window.configuración!=undefined){
-		devuelve = window.configuración[obtener_nombre()].bot_está_activado
+		var confi_nombre = window.configuración[obtener_nombre()]
+		if(confi_nombre!=undefined){
+			devuelve = window.configuración[obtener_nombre()].bot_está_activado
+		}
 	}
 	return devuelve
 }
