@@ -27,31 +27,46 @@ function configurar(){
 	}
 	return devuelve
 }
+function configuración_predeterminada(valor){
+	var devuelve
+	var cambiado = false
+	if(window.configuración!=undefined){
+		window.configuración = {}
+		cambiado = true
+	}
+	if(window.configuración[obtener_nombre()]==undefined){
+		window.configuración[obtener_nombre()] = {}
+		cambiado = true
+	}
+	if(window.configuración[obtener_nombre()][valor]==undefined){
+		window.configuración[obtener_nombre()][valor] = 1
+		cambiado = true
+	}
+	if(cambiado){
+		localStorage.configuración = JSON.stringify(window.configuración)
+	}
+	devuelve = window.configuración[obtener_nombre()][valor]
+	return devuelve
+}
 function obtener_activado(){
 	var devuelve = true
-	if(window.configuración!=undefined){
-		var confi_nombre = window.configuración[obtener_nombre()]
-		if(confi_nombre!=undefined){
-			devuelve = window.configuración[obtener_nombre()].está_activado
-		}
-	}
+	configuración_predeterminada("está_activado")
+	devuelve = window.configuración[obtener_nombre()].está_activado
 	return devuelve
 }
 function obtener_bot_activado(){
 	var devuelve = false
-	if(window.configuración!=undefined){
-		var confi_nombre = window.configuración[obtener_nombre()]
-		if(confi_nombre!=undefined){
-			devuelve = window.configuración[obtener_nombre()].bot_está_activado
-		}
-	}
+	configuración_predeterminada("bot_está_activado")
+	devuelve = window.configuración[obtener_nombre()].bot_está_activado
 	return devuelve
 }
 function cambiar_activado(){
+	configuración_predeterminada("está_activado")
 	window.configuración[obtener_nombre()].está_activado ^= 1
 	localStorage.configuración = JSON.stringify(window.configuración)
 }
 function cambiar_bot_activado(){
+	configuración_predeterminada("bot_está_activado")
 	window.configuración[obtener_nombre()].bot_está_activado ^= 1
 	localStorage.configuración = JSON.stringify(window.configuración)
 }
