@@ -353,7 +353,7 @@ function actualizar_cantidades(){
 function ver_cantidad_mensajes(){
 	var div = document.querySelector(".chatRoomsButton>a")
 	window.acciones = div.textContent
-	window.int_cantis_salas = setInterval(()=>actualizar_cantidades,1000)
+	window.int_cantis_salas = setInterval(function(){actualizar_cantidades()},1000)
 }
 
 function carga()
