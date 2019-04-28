@@ -27,46 +27,49 @@ function configurar(){
 	}
 	return devuelve
 }
-function configuración_predeterminada(valor){
+function configuración_predeterminada(opción,valor){
 	var devuelve
 	var cambiado = false
+	var nombre = obtener_nombre()
 	if(window.configuración==undefined){
 		window.configuración = {}
 		cambiado = true
 	}
-	if(window.configuración[obtener_nombre()]==undefined){
-		window.configuración[obtener_nombre()] = {}
-		cambiado = true
-	}
-	if(window.configuración[obtener_nombre()][valor]==undefined){
-		window.configuración[obtener_nombre()][valor] = 1
-		cambiado = true
+	if(nombre!="..."){
+		if(window.configuración[nombre]==undefined){
+			window.configuración[nombre] = {}
+			cambiado = true
+		}
+		if(window.configuración[nombre][opción]==undefined){
+			window.configuración[nombre][opción] = valor
+			cambiado = true
+		}
 	}
 	if(cambiado){
 		localStorage.configuración = JSON.stringify(window.configuración)
 	}
-	devuelve = window.configuración[obtener_nombre()][valor]
+	devuelve = window.configuración[nombre][opción]
 	return devuelve
 }
 function obtener_activado(){
 	var devuelve = true
-	configuración_predeterminada("está_activado")
+	configuración_predeterminada("está_activado",1)
 	devuelve = window.configuración[obtener_nombre()].está_activado
 	return devuelve
 }
 function obtener_bot_activado(){
 	var devuelve = false
-	configuración_predeterminada("bot_está_activado")
+	configuración_predeterminada("bot_está_activado",0)
 	devuelve = window.configuración[obtener_nombre()].bot_está_activado
 	return devuelve
 }
 function cambiar_activado(){
-	configuración_predeterminada("está_activado")
+	configuración_predeterminada("está_activado",1)
 	window.configuración[obtener_nombre()].está_activado ^= 1
 	localStorage.configuración = JSON.stringify(window.configuración)
 }
 function cambiar_bot_activado(){
-	configuración_predeterminada("bot_está_activado")
+	configuración_predeterminada("bot_está_activado",0)
 	window.configuración[obtener_nombre()].bot_está_activado ^= 1
 	localStorage.configuración = JSON.stringify(window.configuración)
 }

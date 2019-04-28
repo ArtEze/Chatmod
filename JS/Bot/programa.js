@@ -1842,12 +1842,13 @@ function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 }
 function descargar_lightshot(entrada,número,usuario,sala,hacia)
 {
-	window.regex_lightshot = /(https?:\/\/(prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
+	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
+	window.regex_lightshot = /https?:\/\/((prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
 	if(window.regex_lightshot.test(entrada) & puede_descargar_lightshot )
 	{
 		var salida = []
 		var descargado = 0
-		var cola = entrada.replace(window.regex_lightshot,"{$1}").split(/[{}]/gi)
+		var cola = entrada.replace(window.regex_lightshot,anticorb+"{$1}").split(/[{}]/gi)
 		lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	}
 }
