@@ -338,12 +338,22 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 }
 
 function actualizar_cantidades(){
-	var cantidades = Array.from(document.querySelectorAll(".chatMessagesTab"))
-		.map(x=>x.querySelectorAll(".chatMessage").length).join(" ")
-	document.querySelector(".chatRoomsButton>a").innerHTML = cantidades
+	var div = document.querySelector(".chatRoomsButton>a")
+	if(obtener_activado()){
+		var salas = Array.from(document.querySelectorAll(".chatMessagesTab"))
+		var cantidades = salas.map(x=>x.querySelectorAll(".chatMessage").length).join(" ")
+		div.innerHTML = cantidades
+	}else{
+		if(div.textContent!=window.acciones)
+		{
+			div.innerHTML = window.acciones
+		}
+	}
 }
 function ver_cantidad_mensajes(){
-	setInterval(actualizar_cantidades,1000)
+	var div = document.querySelector(".chatRoomsButton>a")
+	window.acciones = div.textContent
+	window.int_cantis_salas = setInterval(()=>actualizar_cantidades,1000)
 }
 
 function carga()
