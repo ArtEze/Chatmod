@@ -16,7 +16,7 @@ function obtener_nombre_propio()
 }
 function soy_bot()
 {
-	return window["bot_está_activado"]==1
+	return obtener_bot_activado()
 }
 function estado_conexión()
 {
@@ -423,9 +423,19 @@ function patear_futuro(usuarios)
 		var intervalo = setTimeout(funciones[i],2*42*(i+1))
 	}
 }
+function array_eliminar_duplicados(array){
+	var resultado = []
+	for(var i in array){
+		if(!resultado.includes(array[i])){
+			resultado.push(array[i])
+		}
+	}
+	return resultado
+}
 function patear_a_todos(entrada,número,usuario,sala,hacia)
 {
-	var usuarios = Array.from(document.querySelector(".chatUsers").querySelectorAll(".nick")).map(x=>x.textContent)
+	var array_nicks = Array.from(document.querySelectorAll(".chatUsers .nick"))
+	var nicks_textos = array_eliminar_duplicados(array_nicks.map(x=>x.textContent))
 	var soy_un_bot = regularizar_texto(obtener_nombre_propio()).test(hacia)
 	if(soy_un_bot)
 	{
@@ -434,7 +444,7 @@ function patear_a_todos(entrada,número,usuario,sala,hacia)
 			if(entrada.match(/^\s*big\s*bang\s*$/gi)!=null)
 			{
 				setTimeout(()=>enviar_mensaje("[size=30][b]Atención: Todos serán pateados. [/b][/size] >:) ",sala),10000)
-				setTimeout(()=>patear_futuro(usuarios),20000)
+				setTimeout(()=>patear_futuro(nicks_textos),20000)
 				puede_patear = 1
 				eliminar_mensaje(número,sala)
 			}
