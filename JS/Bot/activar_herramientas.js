@@ -30,7 +30,7 @@ function configurar(){
 function configuración_predeterminada(valor){
 	var devuelve
 	var cambiado = false
-	if(window.configuración!=undefined){
+	if(window.configuración==undefined){
 		window.configuración = {}
 		cambiado = true
 	}
