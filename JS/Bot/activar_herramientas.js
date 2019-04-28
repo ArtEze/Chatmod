@@ -65,30 +65,33 @@ function crear_activador(){
 		document.querySelector("#menubar").appendChild(div)
 	}
 }
-function activar_bot(){
-	var activador = document.querySelector("#activar_bot")
-	cambiar_bot_activado()
+function color_activar_bot(div){
+	var span = div.querySelector("span")
 	if(obtener_bot_activado())
 	{
-		activador.style["backgroundColor"]="#117733"
-		activador.querySelector(".text").innerHTML = "Bot activado"
+		div.style["backgroundColor"]="#117733"
+		span.innerHTML = "Bot activado"
 	}else{
-		activador.style["backgroundColor"]="#771133"
-		activador.querySelector(".text").innerHTML = "Bot desactivado"
+		div.style["backgroundColor"]="#771133"
+		span.innerHTML = "Bot desactivado"
 	}
+}
+function cambiar_activar_bot(){
+	var activador = document.querySelector("#activar_bot")
+	cambiar_bot_activado()
+	color_activar_bot(activador)
 }
 function crear_activar_bot(){
 	var span = document.createElement("span")
 	var div = document.createElement("div")
-	var función = x=>activar_bot()
+	var función = x=>cambiar_activar_bot()
 	var nombre = "activar_bot"
 	var existe_botón = document.querySelector("#"+nombre)!=null
 	span.className = "text"
-	span.innerHTML = "Bot desactivado"
-	div.style["backgroundColor"]="#771133"
 	div.id = nombre
 	div.className = "menuItem"
 	div.appendChild(span)
+	color_activar_bot(div)
 	div.addEventListener("click",función)
 	if(!existe_botón)
 	{
