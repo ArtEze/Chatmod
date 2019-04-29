@@ -1818,13 +1818,15 @@ function buscar_google(entrada,usuario,sala,hacia)
 }
 function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 {
+	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
 	if(cola.length>0)
 	{
 		var actual = cola.shift()
+		var nuevo = anticorb + actual.replace(/^https?:\/\//gi,"")
 		if(window.regex_lightshot.test(actual)){
-			descargar(actual,x=>{
+			descargar(nuevo,x=>{
 				var html = texto_hacia_html(x)
-				var resultado = html.querySelectorAll(".image-info-item a")[2].href.split("=")[1]
+				var resultado = html.head.querySelector("meta[property='og:image']").content
 				salida.push("[img]"+resultado+"[/img]")
 				lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 			})
@@ -1842,13 +1844,12 @@ function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 }
 function descargar_lightshot(entrada,número,usuario,sala,hacia)
 {
-	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
-	window.regex_lightshot = /https?:\/\/((prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
+	window.regex_lightshot = /(https?:\/\/(prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
 	if(window.regex_lightshot.test(entrada) & puede_descargar_lightshot )
 	{
 		var salida = []
 		var descargado = 0
-		var cola = entrada.replace(window.regex_lightshot,anticorb+"{$1}").split(/[{}]/gi)
+		var cola = entrada.replace(window.regex_lightshot,"{$1}").split(/[{}]/gi)
 		lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	}
 }
