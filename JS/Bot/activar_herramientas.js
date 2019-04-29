@@ -35,53 +35,49 @@ function configuración_predeterminada(opción,valor){
 		window.configuración = {}
 		cambiado = true
 	}
-	if(nombre!="..."){
-		if(window.configuración[nombre]==undefined){
-			window.configuración[nombre] = {}
-			cambiado = true
-		}
-		if(window.configuración[nombre][opción]==undefined){
-			window.configuración[nombre][opción] = valor
-			cambiado = true
-		}
-		if(cambiado){
-			localStorage.configuración = JSON.stringify(window.configuración)
-		}
-		devuelve = window.configuración[nombre][opción]
-	}	
+	if(window.configuración[nombre]==undefined){
+		window.configuración[nombre] = {}
+		cambiado = true
+	}
+	if(window.configuración[nombre][opción]==undefined){
+		window.configuración[nombre][opción] = valor
+		cambiado = true
+	}
+	if(cambiado){
+		localStorage.configuración = JSON.stringify(window.configuración)
+	}
+	devuelve = window.configuración[nombre][opción]
 	return devuelve
 }
 function obtener_activado(){
 	var devuelve = true
 	var nombre = obtener_nombre()
-	configuración_predeterminada("está_activado",1)
-	if(nombre!="..."){
-		devuelve = window.configuración[nombre].está_activado
-	}else{
-		devuelve = 1
-	}
+	devuelve = configuración_predeterminada("está_activado",1)
 	return devuelve
 }
 function obtener_bot_activado(){
 	var devuelve = false
 	var nombre = obtener_nombre()
-	configuración_predeterminada("bot_está_activado",0)
-	if(nombre!="..."){
-		devuelve = window.configuración[nombre].bot_está_activado
-	}else{
-		devuelve = 0
-	}
+	devuelve = configuración_predeterminada("bot_está_activado",0)
 	return devuelve
 }
 function cambiar_activado(){
+	var devuelve
+	var nombre = obtener_nombre()
 	configuración_predeterminada("está_activado",1)
-	window.configuración[obtener_nombre()].está_activado ^= 1
+	window.configuración[nombre].está_activado ^= 1
+	devuelve = window.configuración[nombre].está_activado
 	localStorage.configuración = JSON.stringify(window.configuración)
+	return devuelve
 }
 function cambiar_bot_activado(){
+	var devuelve
+	var nombre = obtener_nombre()
 	configuración_predeterminada("bot_está_activado",0)
-	window.configuración[obtener_nombre()].bot_está_activado ^= 1
+	window.configuración[nombre].bot_está_activado ^= 1
+	devuelve = window.configuración[nombre].bot_está_activado
 	localStorage.configuración = JSON.stringify(window.configuración)
+	return devuelve
 }
 // Fin configuración
 
