@@ -1769,7 +1769,7 @@ function saludar(nombre)
 		g	moderator
 	*/
 	console.log(nombre)
-	window.tiempo_espera_saludo = 300 + Math.floor(Math.random()*1000*60*3)
+	window.tiempo_espera_saludo = 300 + Math.floor(Math.random()*1000*60*2)
 	setTimeout(()=>{
 		var género = género_usuario(nombre)
 		var nombre_bbcode = bbcode_usuario(nombre)
@@ -2050,7 +2050,7 @@ function entrar_y_salir(a,b,c)
 				{
 					mensaje = "¡Qué mal que te vayas " + bbcode_usuario(nombre) + "! ¡Te extrañaremos, vuelve pronto! :3"
 					idos[nombre] = 1
-					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*2))
+					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*1))
 				}
 			}
 		}
