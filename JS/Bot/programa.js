@@ -154,7 +154,6 @@ function buscar_en_matriz(array,columna,valor)
 }
 function descargar_horóscopo()
 {
-	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
 	var función_2 = x=>{
 		var html = texto_hacia_html(x)
 		var nodos = Array.from(
@@ -173,10 +172,10 @@ function descargar_horóscopo()
 		var html = texto_hacia_html(x)
 		console.log(html)
 		var dirección = html.querySelector(".post-column.clearfix a").href
-		dirección = anticorb+dirección.split("//").slice(1).join("//")
+		dirección = window.anticorb+dirección.split("//").slice(1).join("//")
 		descargar(dirección,función_2)
 	}
-	var dirección = anticorb+"horoscoposocial.com"
+	var dirección = window.anticorb+"horoscoposocial.com"
 	descargar(dirección,función)
 }
 function obtener_CSRF()
@@ -1818,11 +1817,10 @@ function buscar_google(entrada,usuario,sala,hacia)
 }
 function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 {
-	var anticorb = "http://enlacevirtualradio.com.ar/eze/redir.php?dir="
 	if(cola.length>0)
 	{
 		var actual = cola.shift()
-		var nuevo = anticorb + actual.replace(/^https?:\/\//gi,"")
+		var nuevo = window.anticorb + actual.replace(/^https?:\/\//gi,"")
 		if(window.regex_lightshot.test(actual)){
 			descargar(nuevo,x=>{
 				var html = texto_hacia_html(x)
@@ -1844,12 +1842,13 @@ function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 }
 function descargar_lightshot(entrada,número,usuario,sala,hacia)
 {
-	window.regex_lightshot = /(https?:\/\/(prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
+	window.regex_lightshot = /(https?:\/\/)?((prnt.sc|prntscr.com)\/[0-9a-z]{6})/gi
 	if(window.regex_lightshot.test(entrada) & puede_descargar_lightshot )
 	{
 		var salida = []
 		var descargado = 0
-		var cola = entrada.replace(window.regex_lightshot,"{$1}").split(/[{}]/gi)
+		var cola = entrada.replace(window.regex_lightshot,"{$2}").split(/[{}]/gi)
+		console.log("cola",cola)
 		lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	}
 }
@@ -2139,6 +2138,9 @@ function permanecer_conectado()
 {
 	activar_bot_2()
 }
+
+window.anticorb = "http://enlacevirtualradio.com.ar/eze/redir"+6+".php?dir="
+
 var tiempos = {}
 var objetos = ["flood"]
 for(var i in objetos)
