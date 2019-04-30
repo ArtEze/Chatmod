@@ -2139,7 +2139,7 @@ function permanecer_conectado()
 	activar_bot_2()
 }
 
-window.anticorb = "https://arteze.paiza-user.cloud/~ubuntu/redir.php?dir="
+window.anticorb = "http://enlacevirtualradio.com.ar/eze/redir"+6+".php?dir="
 
 var tiempos = {}
 var objetos = ["flood"]
