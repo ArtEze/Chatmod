@@ -2181,13 +2181,19 @@ var ips_ban = [
 	,["185.234","-",44640]
 	//,["186.134.90.106","Agustín",10080]
 ]
-var objetos = [
+
+var objetos_local_storage = [
 	"entrados", "idos"
 ]
-for(var i in objetos)
+for(var i in objetos_local_storage)
 {
-	var actual = objetos[i]
-	window[actual] = {}
+	var actual = objetos_local_storage[i]
+	var local_actual = localStorage[actual]
+	if(local_actual==undefined){
+		window[actual] = {}
+	}else{
+		window[actual] = JSON.parse(local_actual)
+	}
 }
 var arrays = [
 	"votados", "mensajes", "entrar_salir",
