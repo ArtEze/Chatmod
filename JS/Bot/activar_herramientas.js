@@ -4,7 +4,11 @@ console.log("Cargado programa.js")
 
 // Configuración
 function obtener_nombre(){
-	return document.querySelector("#nickMenu .text").textContent
+	var devuelve
+	var usuario = document.querySelector("#nickMenu .text").textContent
+	var cuenta = document.querySelector("#accountMenu .text").textContent
+	devuelve = usuario=="..."?cuenta:usuario
+	return devuelve
 }
 function configurar(){
 	var devuelve
