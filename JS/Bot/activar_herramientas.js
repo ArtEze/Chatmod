@@ -55,15 +55,17 @@ function configuración_predeterminada(opción,valor){
 	return devuelve
 }
 function obtener_activado(){
-	var devuelve = true
-	var nombre = obtener_nombre()
-	devuelve = configuración_predeterminada("está_activado",1)
+	var devuelve = document.querySelector("#activador>.text")
+	if(devuelve!=undefined){
+		devuelve = devuelve.textContent=="Activado"
+	}
 	return devuelve
 }
 function obtener_bot_activado(){
-	var devuelve = false
-	var nombre = obtener_nombre()
-	devuelve = configuración_predeterminada("bot_está_activado",0)
+	var devuelve = document.querySelector("#activar_bot>.text")
+	if(devuelve!=undefined){
+		devuelve = devuelve.textContent=="Bot activado"
+	}
 	return devuelve
 }
 function cambiar_activado(){
@@ -238,6 +240,24 @@ function cambiar_botones(){
 		)).map(x=>x.remove())
 	}
 }
+
+function actualizar_cantidades(){
+	var div = document.querySelector(".chatRoomsButton>a")
+	if(obtener_activado()){
+		var salas = Array.from(document.querySelectorAll(".chatMessagesTab"))
+		var cantidades = salas.map(x=>x.querySelectorAll(".chatMessage").length).join(" ")
+		div.innerHTML = cantidades
+	}else{
+		clearInterval(window.int_cantis_salas)
+		if(div.textContent!=window.acciones)
+		{
+			div.innerHTML = window.acciones
+		}
+	}
+}
+function iniciar_intervalo_cantidades(){
+	window.int_cantis_salas = setInterval(function(){actualizar_cantidades()},1000)
+}
 function cambiar_color(){
 	var activador = document.querySelector("#activador")
 	cambiar_activado()
@@ -245,6 +265,8 @@ function cambiar_color(){
 	{
 		activador.style["backgroundColor"]="#23aa34"
 		activador.querySelector(".text").innerHTML = "Activado"
+		clearInterval(window.int_cantis_salas)
+		iniciar_intervalo_cantidades()
 	}else{
 		activador.style["backgroundColor"]="#000000"
 		activador.querySelector(".text").innerHTML = "Desactivado"
@@ -380,23 +402,10 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
 }
 
-function actualizar_cantidades(){
-	var div = document.querySelector(".chatRoomsButton>a")
-	if(obtener_activado()){
-		var salas = Array.from(document.querySelectorAll(".chatMessagesTab"))
-		var cantidades = salas.map(x=>x.querySelectorAll(".chatMessage").length).join(" ")
-		div.innerHTML = cantidades
-	}else{
-		if(div.textContent!=window.acciones)
-		{
-			div.innerHTML = window.acciones
-		}
-	}
-}
 function ver_cantidad_mensajes(){
 	var div = document.querySelector(".chatRoomsButton>a")
 	window.acciones = div.textContent
-	window.int_cantis_salas = setInterval(function(){actualizar_cantidades()},1000)
+	iniciar_intervalo_cantidades()
 }
 
 function carga()
