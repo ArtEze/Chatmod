@@ -172,10 +172,10 @@ function descargar_horóscopo()
 		var html = texto_hacia_html(x)
 		console.log(html)
 		var dirección = html.querySelector(".post-column.clearfix a").href
-		dirección = window.anticorb+dirección.split("//").slice(1).join("//")
+		dirección = window.anticors+dirección.split("//").slice(1).join("//")
 		descargar(dirección,función_2)
 	}
-	var dirección = window.anticorb+"horoscoposocial.com"
+	var dirección = window.anticors+"horoscoposocial.com"
 	descargar(dirección,función)
 }
 function obtener_CSRF()
@@ -1820,7 +1820,7 @@ function lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	if(cola.length>0)
 	{
 		var actual = cola.shift()
-		var nuevo = window.anticorb + actual.replace(/^https?:\/\//gi,"")
+		var nuevo = window.anticors + actual.replace(/^https?:\/\//gi,"")
 		if(window.regex_lightshot.test(actual)){
 			descargar(nuevo,x=>{
 				var html = texto_hacia_html(x)
@@ -2139,7 +2139,7 @@ function permanecer_conectado()
 	activar_bot_2()
 }
 
-window.anticorb = "http://enlacevirtualradio.com.ar/eze/redir"+6+".php?dir="
+window.anticors = "https://cors-anywhere.herokuapp.com/"
 
 var tiempos = {}
 var objetos = ["flood"]
