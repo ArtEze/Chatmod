@@ -2139,6 +2139,16 @@ function permanecer_conectado()
 	activar_bot_2()
 }
 
+function unir_array_palabras(array){
+	var devuelve = array
+	if(array.length>=2){
+		devuelve = devuelve.slice(0,-1).join(", ")+" y "+devuelve.slice(-1)
+	}else{
+		devuelve = devuelve.toString()
+	}
+	return devuelve
+}
+
 window.anticors = "https://cors-anywhere.herokuapp.com/"
 
 var tiempos = {}

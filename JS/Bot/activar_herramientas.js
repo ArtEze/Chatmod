@@ -8,6 +8,7 @@ function obtener_nombre(){
 	var usuario = document.querySelector("#nickMenu .text").textContent
 	var cuenta = document.querySelector("#accountMenu .text").textContent
 	devuelve = usuario=="..."?cuenta:usuario
+	console.log(devuelve)
 	return devuelve
 }
 function configurar(){
