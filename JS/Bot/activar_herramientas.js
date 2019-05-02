@@ -204,7 +204,7 @@ window.obtener = filtrar_definidos({"":""
 		,herramientas: function(){
 			var devuelve
 			if(window.es!=undefined){
-				devuelve = window.es.activado.función("activador","Activado")
+				devuelve = window.es.activado.función("activar_herramientas","Activado")
 			}
 			return devuelve
 		}
