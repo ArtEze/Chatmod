@@ -16,7 +16,7 @@ function obtener_nombre_propio()
 }
 function soy_bot()
 {
-	return obtener_bot_activado()
+	return obtener.activado.bot()
 }
 function estado_conexión()
 {
