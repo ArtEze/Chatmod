@@ -137,7 +137,7 @@ function tipo(elemento){
 		if(elemento===null)                                {devuelve="nulo"}
 	}else{                                                 ;
 		var llamada = (elemento+"")                        ;
-		console.log(el_constructor,llamada)                ;
+		//console.log(el_constructor,llamada)              ;
 		if(llamada.split(" ")[0].slice(1)=="object"){      ;
 			devuelve = llamada                             ;
 			if(llamada=="[object Object]")                 {devuelve="objeto"}
@@ -368,7 +368,6 @@ function borrar_todo(){
 	segundo_elemento.scrollIntoView()
 	mensajes.slice(30).map(x=>x.remove())
 }
-window.obtener={activado:{herramientas:()=>true,bot:()=>true}}
 function separar_variable(nombre_variable){
 	return JSON.parse("["+nombre_variable.replace(/(([A-Z]|[a-z])[a-z]+)/g,",\"$1\"").slice(1)+"]")
 }
@@ -401,8 +400,6 @@ function cambiar_deslizadores(){
 	}
 	return devuelve
 }
-cambiar_deslizadores()
-
 function cambiar_botones(){
 	var devuelve
 	var está_activado_herramientas = window.obtener.activado.herramientas()
