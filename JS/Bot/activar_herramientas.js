@@ -2,6 +2,22 @@
 
 console.log("Cargado programa.js")
 
+window.tiempos = {}
+
+function agregar_tiempo(nombre){
+	var devuelve
+	if(tiempos==undefined){
+		window.tiempos = {}
+	}
+	if(window.tiempos[nombre]==undefined){
+		window.tiempos[nombre] = []
+	}
+	var tiempo = setTimeout(window[nombre],1000)
+	window.tiempos[nombre].push(tiempo)
+	devuelve = [window.tiempos,window.tiempos[nombre],tiempo]
+	return devuelve
+}
+
 // Configuración
 function obtener_nombre(){
 	var devuelve
@@ -11,26 +27,20 @@ function obtener_nombre(){
 	console.log(devuelve)
 	return devuelve
 }
-function configurar(){
-	var devuelve
-	if(obtener_nombre()=="..."){
-		devuelve = setTimeout(configurar,1000)
+function es_activado(nombre_div,texto){
+	var devuelve = document.querySelector("#"+nombre_div+">.text")
+	if(devuelve!=undefined){
+		devuelve = devuelve.textContent==texto
 	}else{
-		window.configuración = localStorage.configuración
-		if(window.configuración==undefined){
-			window.configuración = {}
-			window.configuración[obtener_nombre()] = {
-				está_activado: 1
-				, bot_está_activado: 0
-			}
-			localStorage.configuración = JSON.stringify(window.configuración)
-			devuelve = localStorage.configuración
-		}else{
-			window.configuración = JSON.parse(window.configuración)
-			devuelve = window.configuración
-		}
+		devuelve = false
 	}
 	return devuelve
+}
+function obtener_activado(){
+	return es_activado("activador","Activado")
+}
+function obtener_bot_activado(){
+	return es_activado("activar_bot","Bot activado")
 }
 function configuración_predeterminada(opción,valor){
 	var devuelve
@@ -54,29 +64,6 @@ function configuración_predeterminada(opción,valor){
 	devuelve = window.configuración[nombre][opción]
 	return devuelve
 }
-function obtener_activado(){
-	var devuelve = document.querySelector("#activador>.text")
-	if(devuelve!=undefined){
-		devuelve = devuelve.textContent=="Activado"
-	}
-	return devuelve
-}
-function obtener_bot_activado(){
-	var devuelve = document.querySelector("#activar_bot>.text")
-	if(devuelve!=undefined){
-		devuelve = devuelve.textContent=="Bot activado"
-	}
-	return devuelve
-}
-function cambiar_activado(){
-	var devuelve
-	var nombre = obtener_nombre()
-	configuración_predeterminada("está_activado",1)
-	window.configuración[nombre].está_activado ^= 1
-	devuelve = window.configuración[nombre].está_activado
-	localStorage.configuración = JSON.stringify(window.configuración)
-	return devuelve
-}
 function cambiar_bot_activado(){
 	var devuelve
 	var nombre = obtener_nombre()
@@ -87,11 +74,52 @@ function cambiar_bot_activado(){
 	return devuelve
 }
 // Fin configuración
-
-function crear_activador(){
+function crear_botón(callback,nombre,texto){
 	var span = document.createElement("span")
 	var div = document.createElement("div")
-	var función = x=>cambiar_color()
+	var función = x=>callback()
+	var existe_botón = document.querySelector("#"+nombre)!=null
+	span.className = "text"
+	if(obtener_activado()){
+		span.innerHTML = "Activado"
+		div.style["backgroundColor"]="#23aa34"
+	}else{
+		span.innerHTML = "Desactivado"
+		div.style["backgroundColor"]="#000000"
+	}
+	div.id = nombre
+	div.className = "menuItem"
+	div.appendChild(span)
+	div.addEventListener("click",función)
+	if(!existe_botón)
+	{
+		document.querySelector("#menubar").appendChild(div)
+	}
+}
+function cambiar_activado(){
+	var activador = document.querySelector("#activador")
+	var nombre = obtener_nombre()
+	configuración_predeterminada("está_activado",1)
+	window.configuración[nombre].está_activado ^= 1
+	devuelve = window.configuración[nombre].está_activado
+	localStorage.configuración = JSON.stringify(window.configuración)
+	if(obtener_activado())
+	{
+		activador.style["backgroundColor"]="#23aa34"
+		activador.querySelector(".text").innerHTML = "Activado"
+		clearInterval(window.int_cantis_salas)
+		iniciar_intervalo_cantidades()
+	}else{
+		activador.style["backgroundColor"]="#000000"
+		activador.querySelector(".text").innerHTML = "Desactivado"
+	}
+	cambiar_deslizadores()
+	cambiar_botones()
+}
+function crear_activador(callback){
+	var span = document.createElement("span")
+	var div = document.createElement("div")
+	var función = x=>callback()
 	var existe_botón = document.querySelector("#activador")!=null
 	span.className = "text"
 	if(obtener_activado()){
@@ -109,6 +137,9 @@ function crear_activador(){
 	{
 		document.querySelector("#menubar").appendChild(div)
 	}
+	
+	
+	crear_botón(callback,nombre,"+")
 }
 function color_activar_bot(div){
 	var span = div.querySelector("span")
@@ -258,22 +289,6 @@ function actualizar_cantidades(){
 function iniciar_intervalo_cantidades(){
 	window.int_cantis_salas = setInterval(function(){actualizar_cantidades()},1000)
 }
-function cambiar_color(){
-	var activador = document.querySelector("#activador")
-	cambiar_activado()
-	if(obtener_activado())
-	{
-		activador.style["backgroundColor"]="#23aa34"
-		activador.querySelector(".text").innerHTML = "Activado"
-		clearInterval(window.int_cantis_salas)
-		iniciar_intervalo_cantidades()
-	}else{
-		activador.style["backgroundColor"]="#000000"
-		activador.querySelector(".text").innerHTML = "Desactivado"
-	}
-	cambiar_deslizadores()
-	cambiar_botones()
-}
 
 function borrar_activador()
 {
@@ -408,14 +423,50 @@ function ver_cantidad_mensajes(){
 	iniciar_intervalo_cantidades()
 }
 
-function carga()
-{
-	configurar()
-	crear_activador()
+function iniciar_herramientas(){
+	crear_activador(cambiar_activado)
 	cambiar_botones()
 	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
 	xq = (a,b,c,d,e)=>quitar_eliminado_mensajes(a,b,c,d,e)
 	cambiar_deslizadores()
 	ver_cantidad_mensajes()
 }
-carga()
+function cargar_local_storage(){
+	var devuelve
+	var nombre = obtener_nombre()
+	window.configuración = localStorage.configuración
+	if(window.configuración==undefined){
+		window.configuración = {}
+		window.configuración[nombre] = {
+			está_activado: 1
+			, bot_está_activado: 0
+		}
+		localStorage.configuración = JSON.stringify(window.configuración)
+		devuelve = localStorage.configuración
+	}else{
+		window.configuración = JSON.parse(window.configuración)
+		devuelve = window.configuración[nombre]
+	}
+	return devuelve
+}
+function cambiar_estado(){
+	
+}
+function cargar_configuración(){
+	var devuelve
+	var nombre = obtener_nombre()
+	if(nombre=="..."){
+		var tiempo = agregar_tiempo("cargar_configuración")
+		devuelve = tiempo[2]
+	}else{
+		iniciar_herramientas()
+		cargar_local_storage()
+		devuelve = cambiar_estado()
+	}
+	return devuelve
+}
+function carga()
+{
+	return cargar_configuración()
+}
+window.estado_carga = carga()
