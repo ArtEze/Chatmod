@@ -201,13 +201,13 @@ function cambiar_activación(div_nombre,opción,callback){
 	callback()
 	return devuelve
 }
-function callback_activar(){
+function callback_activar_herramientas(){
 	cambiar_deslizadores()
 	cambiar_botones()
 }
 function cambiar_activado_herramientas(){
 	var devuelve
-	cambiar_activación("activador","está_activado_herramientas",callback_activar)
+	cambiar_activación("activador","está_activado_herramientas",()=>callback_activar_herramientas())
 	return devuelve
 }
 function cambiar_activado_bot(){
@@ -215,6 +215,7 @@ function cambiar_activado_bot(){
 	cambiar_activación("activador","está_activado_bot",()=>true)
 	return devuelve
 }
+
 // Fin configuración
 
 window.crear = {"":""
@@ -239,10 +240,10 @@ window.crear = {"":""
 	}
 	,activador: {"":""
 		,herramientas: function(){
-			return window.crear.botón(cambiar_activado,"activador","Desactivado","000000")
+			return window.crear.botón(cambiar_activado_herramientas,"activar_herramientas","Desactivado","000000")
 		}
 		,bot: function(){
-			return window.crear.botón(cambiar_activar_bot,"activar_bot","Bot desactivado","771133")
+			return window.crear.botón(cambiar_activado_bot,"activar_bot","Bot desactivado","771133")
 		}
 	}
 	,utilidades:{"":""
@@ -267,12 +268,6 @@ function cambiar_color(div,color_desactivado,color_activado,texto_desactivado,te
 		span.innerHTML = texto_desactivado
 	}
 }
-function cambiar_activar_bot(){
-	var activador = document.querySelector("#activar_bot")
-	cambiar_color(activador,"771133","117733","Bot desactivado","Bot activado")
-	cambiar_bot_activado()
-}
-
 function copiar_todo(){
 	var contenedor = document.querySelector(".chatMessagesTab.active .chatMessages")
 	var range = document.createRange(contenedor)
