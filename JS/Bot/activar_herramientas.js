@@ -52,7 +52,8 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 		n = N('chatMessages', b),	W(b, 'cm', n);
 	}else if (h = Math.max(a.j.uh, a.j.jc), !1 !== U(b, 'onBottom') && (t = ee(n).length) > h)
 	{
-		if(!window.obtener.activado.herramientas()){
+		var está_activado_herramientas = window.obtener.activado.herramientas()
+		if(!está_activado_herramientas){
 			for (t -= h; 0 < t; t--) n.removeChild(fe(n));
 		}
 	}
@@ -229,8 +230,25 @@ window.local_storage = filtrar_definidos({"":""
 		}
 		return devuelve
 	}
+	,asignar: function(){
+		var devuelve
+		if(window.configuración!=undefined){
+			var nombre = window.obtener.nombre()
+			window.configuración[nombre] = {
+				activado: filtrar_definidos({"":""
+					,"herramientas": window.obtener.activado.herramientas()
+					,"bot": window.obtener.activado.bot()
+				})
+			}
+		}else{
+			console.error("No hay configuración. No se puede asignar.")
+		}
+		devuelve = window.configuración
+		return devuelve
+	}	
 	,guardar: function(){
 		var devuelve
+		window.local_storage.asignar()
 		localStorage.configuración = JSON.stringify(window.configuración)
 		devuelve = localStorage.configuración
 		return devuelve
@@ -244,14 +262,6 @@ function determinar_configuración_usuario(nombre){
 	var devuelve
 	if(window.configuración!=undefined){
 		var configuración_nombre = window.configuración[nombre]
-		if(configuración_nombre==undefined){
-			window.configuración[nombre] = {
-				activado: filtrar_definidos({"":""
-					,"herramientas": window.obtener.activado.herramientas()
-					,"bot": window.obtener.activado.bot()
-				})
-			}
-		}
 		devuelve = window.configuración[nombre]
 		window.local_storage.guardar()
 	}else{
@@ -287,6 +297,7 @@ function cambiar_activación(div_nombre,opción,callback){
 function callback_activar_herramientas(){
 	cambiar_deslizadores()
 	cambiar_botones()
+	window.local_storage.guardar()
 }
 function cambiar_activado_herramientas(){
 	var devuelve
@@ -472,22 +483,21 @@ function iniciar_herramientas(){
 	cambiar_deslizadores()
 	ver_cantidad_mensajes()
 }
-function establecer_configuración_predeterminada(){
-	
-}
 function determinar_local_storage(){
 	var devuelve
 	var nombre = window.obtener.nombre()
 	window.local_storage.cargar()
 	if(window.configuración==undefined){
 		window.configuración = {}
-		window.configuración[nombre] = filtrar_definidos({"":""
-			,activado: filtrar_definidos({"":""
-				,"herramientas":1
-				,"bot":0
+		if(window.configuración[nombre]==undefined){
+			window.configuración[nombre] = filtrar_definidos({"":""
+				,activado: filtrar_definidos({"":""
+					,"herramientas":1
+					,"bot":0
+				})
 			})
-		})
-		window.local_storage.guardar()
+			window.local_storage.guardar()
+		}
 	}
 	devuelve = window.configuración[nombre]
 	return devuelve
