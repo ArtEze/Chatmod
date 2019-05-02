@@ -338,7 +338,8 @@ window.crear = filtrar_definidos({"":""
 	})
 })
 
-function cambiar_color(div,color_desactivado,color_activado,texto_desactivado,texto_activado){
+function cambiar_color(nombre,color_desactivado,color_activado,texto_desactivado,texto_activado){
+	var div = document.querySelector("#"+nombre)
 	var span = div.querySelector("span")
 	var texto = span.textContent
 	if(texto==texto_desactivado)
