@@ -216,37 +216,41 @@ function cambiar_activado_bot(){
 	return devuelve
 }
 // Fin configuración
-function crear_botón(callback,nombre,texto,color){
-	var devuelve
-	var existe_botón = document.querySelector("#"+nombre)!=null
-	if(!existe_botón){
-		var div = document.createElement("div")
-		var span = document.createElement("span")
-		var función = x=>callback()	
-		span.className = "text"
-		span.innerHTML = texto
-		div.style["backgroundColor"]="#"+color
-		div.id = nombre
-		div.className = "menuItem"
-		div.appendChild(span)
-		div.addEventListener("click",función)	
-		document.querySelector("#menubar").appendChild(div)
-		devuelve = div
-	}
-	return devuelve
-}
+
 window.crear = {"":""
+	,botón: function(callback,nombre,texto,color){
+		var devuelve
+		var existe_botón = document.querySelector("#"+nombre)!=null
+		if(!existe_botón){
+			var div = document.createElement("div")
+			var span = document.createElement("span")
+			var función = x=>callback()	
+			span.className = "text"
+			span.innerHTML = texto
+			div.style["backgroundColor"]="#"+color
+			div.id = nombre
+			div.className = "menuItem"
+			div.appendChild(span)
+			div.addEventListener("click",función)	
+			document.querySelector("#menubar").appendChild(div)
+			devuelve = div
+		}
+		return devuelve
+	}
 	,activador: {"":""
 		,herramientas: function(){
-			return crear_botón(cambiar_activado,"activador","Desactivado","000000")
+			return window.crear.botón(cambiar_activado,"activador","Desactivado","000000")
 		}
 		,bot: function(){
-			return crear_botón(cambiar_activar_bot,"activar_bot","Bot desactivado","771133")
+			return window.crear.botón(cambiar_activar_bot,"activar_bot","Bot desactivado","771133")
 		}
 	}
 	,utilidades:{"":""
 		,copiador: function(){
-			return crear_botón(copiar_todo,"copiador","Copiar","012345")
+			return window.crear.botón(copiar_todo,"copiador","Copiar","012345")
+		}
+		,borrador: function(){
+			return window.crear.botón(borrar_todo,"borrador","Borrar","543210")
 		}
 	}
 }
@@ -287,24 +291,6 @@ function borrar_todo(){
 	segundo_elemento.scrollIntoView()
 	mensajes.slice(30).map(x=>x.remove())
 }
-function crear_borrador(){
-	var span = document.createElement("span")
-	var div = document.createElement("div")
-	var función = x=>borrar_todo()
-	var nombre = "borrador"
-	var existe_botón = document.querySelector("#"+nombre)!=null
-	span.className = "text"
-	span.innerHTML = "Borrar"
-	div.style["backgroundColor"]="#543210"
-	div.id = nombre
-	div.className = "menuItem"
-	div.appendChild(span)
-	div.addEventListener("click",función)
-	if(!existe_botón)
-	{
-		document.querySelector("#menubar").appendChild(div)
-	}
-}
 
 function cambiar_deslizadores(){
 	["Messages","Users"].map(y=>{
@@ -329,18 +315,21 @@ function cambiar_deslizadores(){
 	}
 }
 function cambiar_botones(){
+	var devuelve
 	var está_activado_herramientas = window.obtener.activado.herramientas()
-	if(está_activado)
+	if(está_activado_herramientas)
 	{
-		crear_activar_bot()
-		crear_copiador(copiar_todo)
-		crear_borrador()
+		devuelve = [""
+			,window.crear.activador.bot()
+			,window.crear.utilidades.copiador()
+			,window.crear.utilidades.borrador()
+		]
 	}else{
-		var herramientas = 
-		Array.from(document.querySelectorAll(
+		devuelve = Array.from(document.querySelectorAll(
 			"#activar_bot,#copiador,#borrador"
 		)).map(x=>x.remove())
 	}
+	return devuelve
 }
 
 function actualizar_cantidades(){
