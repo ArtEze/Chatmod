@@ -188,9 +188,22 @@ window.local_storage = {"":""
 
 function cambiar_activación(div_nombre,opción,callback){
 	var devuelve
+	var filtrar_definidos = y=>y.filter(x=>x!=undefined)
 	var opciones = {"":""
-		,herramientas:["activar_herramientas","000000","23aa34","Desactivado","Activado"]
-		,bot:["activar_bot","771133","117733","Bot desactivado","Bot activado"]
+		,herramientas: filtrar_definidos([
+			,"activar_herramientas"
+			,"000000"
+			,"23aa34"
+			,"Desactivado"
+			,"Activado"
+		])
+		,bot: filtrar_definidos([
+			,"activar_bot"
+			,"771133"
+			,"117733"
+			,"Bot desactivado"
+			,"Bot activado"
+		])
 	}	
 	var div = document.querySelector("#"+div_nombre)
 	var nombre = window.obtener.nombre()
@@ -207,12 +220,12 @@ function callback_activar_herramientas(){
 }
 function cambiar_activado_herramientas(){
 	var devuelve
-	cambiar_activación("activador","está_activado_herramientas",()=>callback_activar_herramientas())
+	cambiar_activación("activador","herramientas",()=>callback_activar_herramientas())
 	return devuelve
 }
 function cambiar_activado_bot(){
 	var devuelve
-	cambiar_activación("activador","está_activado_bot",()=>true)
+	cambiar_activación("activador","bot",()=>true)
 	return devuelve
 }
 
@@ -225,14 +238,13 @@ window.crear = {"":""
 		if(!existe_botón){
 			var div = document.createElement("div")
 			var span = document.createElement("span")
-			var función = x=>callback()	
 			span.className = "text"
 			span.innerHTML = texto
 			div.style["backgroundColor"]="#"+color
 			div.id = nombre
 			div.className = "menuItem"
 			div.appendChild(span)
-			div.addEventListener("click",función)	
+			div.addEventListener("click",callback)	
 			document.querySelector("#menubar").appendChild(div)
 			devuelve = div
 		}
@@ -240,10 +252,10 @@ window.crear = {"":""
 	}
 	,activador: {"":""
 		,herramientas: function(){
-			return window.crear.botón(cambiar_activado_herramientas,"activar_herramientas","Desactivado","000000")
+			return window.crear.botón(()=>cambiar_activado_herramientas(),"activar_herramientas","Desactivado","000000")
 		}
 		,bot: function(){
-			return window.crear.botón(cambiar_activado_bot,"activar_bot","Bot desactivado","771133")
+			return window.crear.botón(()=>cambiar_activado_bot(),"activar_bot","Bot desactivado","771133")
 		}
 	}
 	,utilidades:{"":""
