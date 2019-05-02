@@ -380,7 +380,7 @@ function ver_cantidad_mensajes(){
 function iniciar_herramientas(){
 	xq = (a,b,c,d,e)=>quitar_eliminado_mensajes(a,b,c,d,e)
 	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
-	crear_activador()
+	window.crear.activador.herramientas()
 	cambiar_botones()
 	cambiar_deslizadores()
 	ver_cantidad_mensajes()
