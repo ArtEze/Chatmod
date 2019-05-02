@@ -321,8 +321,8 @@ function cambiar_deslizadores(){
 					deslizador.style.display="block"
 				}
 			}
-		}))
-	}
+		})
+	})
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
 		setTimeout(cambiar_deslizadores,1000)
