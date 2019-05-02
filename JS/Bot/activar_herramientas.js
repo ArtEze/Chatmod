@@ -165,8 +165,10 @@ function filtrar_definidos(elemento){
 		devuelve = elemento.slice(1)
 	}
 	if(tipo(elemento)=="objeto"){
-		devuelve = JSON.parse(JSON.stringify(elemento))
-		delete devuelve[Object.keys(devuelve)[0]]
+		var destino = {}
+		Object.assign(destino,elemento)
+		delete destino[Object.keys(elemento)[0]]
+		devuelve = destino
 	}
 	return devuelve
 }
@@ -276,7 +278,7 @@ function cambiar_activación(div_nombre,opción,callback){
 		])
 	})
 	var div = document.querySelector("#"+div_nombre)
-	var nombre = window.obtener.nombre()
+	var nombre = window.obtener.opción()
 	cambiar_color(...opciones[opción])
 	determinar_configuración_usuario(nombre)
 	callback()
