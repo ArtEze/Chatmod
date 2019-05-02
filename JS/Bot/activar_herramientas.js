@@ -125,19 +125,71 @@ function agregar_tiempo(nombre){
 	devuelve = [window.tiempos,window.tiempos[nombre],tiempo]
 	return devuelve
 }
-
-window.es = {"":""
-	,activado: function(nombre_div,texto){
-		var devuelve = document.querySelector("#"+nombre_div+">.text")
-		if(devuelve!=undefined){
-			devuelve = devuelve.textContent==texto
-		}else{
-			devuelve = false
-		}
-		return devuelve
-	}
+function osrever(texto){
+	var a = []
+	var f = "esrever".split("").map(x=>a.unshift(x))
+	return texto.split("")[a.join("")]().join("")
 }
-window.obtener = {"":""
+function tipo(elemento){
+	var devuelve
+	if(elemento==undefined){
+		if(elemento===undefined)                           {devuelve="indefinido"}
+		if(elemento===null)                                {devuelve="nulo"}
+	}else{                                                 ;
+		var llamada = (elemento+"")                        ;
+		console.log(el_constructor,llamada)                ;
+		if(llamada.split(" ")[0].slice(1)=="object"){      ;
+			devuelve = llamada                             ;
+			if(llamada=="[object Object]")                 {devuelve="objeto"}
+			if(llamada=="[object Arguments]")              {devuelve="argumentos"}
+			if(llamada=="[object JSON]")                   {devuelve="notación de objetos"}
+			if(llamada=="[object Math]")                   {devuelve="matemática"}
+		}else{                                             ;
+			var el_constructor = elemento.constructor.name ;
+			devuelve = el_constructor                      ;
+			if(el_constructor=="Array")                    {devuelve="array"}
+			if(el_constructor==osrever("naelo"+"oB"))      {devuelve="proposición"}
+			if(el_constructor=="String")                   {devuelve="texto"}
+			if(el_constructor=="Number")                   {devuelve="número"}
+			if(el_constructor=="Date")                     {devuelve="fecha"}
+			if(el_constructor=="Error")                    {devuelve="error"}
+			if(el_constructor=="Function")                 {devuelve="función"}
+		}
+	}
+	return devuelve
+}
+function filtrar_definidos(elemento){
+	var devuelve
+	var función
+	if(tipo(elemento)=="array"){
+		devuelve = elemento.slice(1)
+	}
+	if(tipo(elemento)=="objeto"){
+		devuelve = JSON.parse(JSON.stringify(elemento))
+		delete devuelve[Object.keys(devuelve)[0]]
+	}
+	return devuelve
+}
+window.es = filtrar_definidos({"":""
+	,activado: filtrar_definidos({"":""
+		,función: function(nombre_div,texto){
+			var devuelve = document.querySelector("#"+nombre_div+">.text")
+			if(devuelve!=undefined){
+				devuelve = devuelve.textContent==texto
+			}else{
+				devuelve = false
+			}
+			return devuelve
+		}
+		,herramientas: function(){ // Equivalente función herramientas
+			return window.obtener.activado.herramientas
+		}
+		,bot: function(){ // Equivalente función bot
+			return window.obtener.activado.bot
+		}
+	})
+})
+window.obtener = filtrar_definidos({"":""
 	,nombre: function(){
 		var devuelve
 		var usuario = document.querySelector("#nickMenu .text").textContent
@@ -146,24 +198,24 @@ window.obtener = {"":""
 		console.log(devuelve)
 		return devuelve
 	}
-	,activado: {"":""
+	,activado: filtrar_definidos({"":""
 		,herramientas: function(){
 			var devuelve
 			if(window.es!=undefined){
-				devuelve = window.es.activado("activador","Activado")
+				devuelve = window.es.activado.función("activador","Activado")
 			}
 			return devuelve
 		}
 		,bot: function(){
 			var devuelve
 			if(window.es!=undefined){
-				devuelve = window.es.activado("activar_bot","Bot activado")
+				devuelve = window.es.activado.función("activar_bot","Bot activado")
 			}
 			return devuelve
 		}
-	}
-}
-window.local_storage = {"":""
+	})
+})
+window.local_storage = filtrar_definidos({"":""
 	,cargar: function(){
 		var devuelve
 		var local_storage_configurar = localStorage.configuración
@@ -184,12 +236,30 @@ window.local_storage = {"":""
 	,borrar: function(){
 		return delete localStorage.configuración
 	}
-}
+})
 
+function determinar_configuración_usuario(nombre){
+	var devuelve
+	if(window.configuración!=undefined){
+		var configuración_nombre = window.configuración[nombre]
+		if(configuración_nombre==undefined){
+			window.configuración[nombre] = {
+				activado: filtrar_definidos({"":""
+					,"herramientas": window.obtener.activado.herramientas()
+					,"bot": window.obtener.activado.bot()
+				})
+			}
+		}
+		devuelve = window.configuración[nombre]
+		window.local_storage.guardar()
+	}else{
+		devuelve = console.error("No hay configuración")
+	}
+	return devuelve
+}
 function cambiar_activación(div_nombre,opción,callback){
 	var devuelve
-	var filtrar_definidos = y=>y.filter(x=>x!=undefined)
-	var opciones = {"":""
+	var opciones = filtrar_definidos({"":""
 		,herramientas: filtrar_definidos([
 			,"activar_herramientas"
 			,"000000"
@@ -204,13 +274,11 @@ function cambiar_activación(div_nombre,opción,callback){
 			,"Bot desactivado"
 			,"Bot activado"
 		])
-	}	
+	})
 	var div = document.querySelector("#"+div_nombre)
 	var nombre = window.obtener.nombre()
-	window.configuración[nombre].activado[opción] ^= 1
-	devuelve = window.configuración[nombre].activado[opción]
-	window.local_storage.guardar()
 	cambiar_color(...opciones[opción])
+	determinar_configuración_usuario(nombre)
 	callback()
 	return devuelve
 }
@@ -231,7 +299,7 @@ function cambiar_activado_bot(){
 
 // Fin configuración
 
-window.crear = {"":""
+window.crear = filtrar_definidos({"":""
 	,botón: function(callback,nombre,texto,color){
 		var devuelve
 		var existe_botón = document.querySelector("#"+nombre)!=null
@@ -250,23 +318,23 @@ window.crear = {"":""
 		}
 		return devuelve
 	}
-	,activador: {"":""
+	,activador: filtrar_definidos({"":""
 		,herramientas: function(){
 			return window.crear.botón(()=>cambiar_activado_herramientas(),"activar_herramientas","Desactivado","000000")
 		}
 		,bot: function(){
 			return window.crear.botón(()=>cambiar_activado_bot(),"activar_bot","Bot desactivado","771133")
 		}
-	}
-	,utilidades:{"":""
+	})
+	,utilidades: filtrar_definidos({"":""
 		,copiador: function(){
 			return window.crear.botón(copiar_todo,"copiador","Copiar","012345")
 		}
 		,borrador: function(){
 			return window.crear.botón(borrar_todo,"borrador","Borrar","543210")
 		}
-	}
-}
+	})
+})
 
 function cambiar_color(div,color_desactivado,color_activado,texto_desactivado,texto_activado){
 	var span = div.querySelector("span")
@@ -298,29 +366,41 @@ function borrar_todo(){
 	segundo_elemento.scrollIntoView()
 	mensajes.slice(30).map(x=>x.remove())
 }
-
+window.obtener={activado:{herramientas:()=>true,bot:()=>true}}
+function separar_variable(nombre_variable){
+	return JSON.parse("["+nombre_variable.replace(/(([A-Z]|[a-z])[a-z]+)/g,",\"$1\"").slice(1)+"]")
+}
 function cambiar_deslizadores(){
-	["Messages","Users"].map(y=>{
-		return Array.from(document.querySelectorAll(".chat"+y+"Tab")).map(x=>{
-			var deslizador = x.querySelector(".chatMessagesScrollBar")
-			var deslizador_nuevo = x.querySelector(".chatMessagesContainer")
-			if(deslizador!=null)
-			{
-				if(window.obtener.activado.herramientas()){
-					deslizador_nuevo.style["overflow-y"]="scroll"
-					deslizador.style.display="none"
-				}else{
-					deslizador_nuevo.style["overflow-y"]="hidden"
-					deslizador.style.display="block"
+	var devuelve
+	var está_activado_herramientas = window.obtener.activado.herramientas()
+	devuelve = ["chatMessagesTab","chatUsersTab","contentWrapper"].map(y=>
+		Array.from(document.querySelectorAll("."+y)).map(x=>{
+			var clase = separar_variable(y).slice(0,-1).join("")
+			var antiguo = x.querySelector("."+clase+"ScrollBar")
+			var nuevo = x.querySelector("."+clase+"Container")
+			var estilo_nuevo = nuevo.style
+			var estilo_antiguo = antiguo.style
+			//console.log(está_activado_herramientas,antiguo,nuevo)
+			if(está_activado_herramientas){
+				if(estilo_antiguo.display!="none"){
+					estilo_antiguo.display="none"
+					estilo_nuevo["overflow-y"]="scroll"
+				}
+			}else{
+				if(estilo_antiguo.display!="block"){
+					estilo_antiguo.display="block"
+					estilo_nuevo["overflow-y"]="hidden"
 				}
 			}
 		})
-	})
-	var está_activado_herramientas = window.obtener.activado.herramientas()
+	)
 	if(está_activado_herramientas){
-		setTimeout(cambiar_deslizadores,1000)
+		devuelve.unshift(setTimeout(cambiar_deslizadores,1000))
 	}
+	return devuelve
 }
+cambiar_deslizadores()
+
 function cambiar_botones(){
 	var devuelve
 	var está_activado_herramientas = window.obtener.activado.herramientas()
@@ -401,12 +481,12 @@ function determinar_local_storage(){
 	window.local_storage.cargar()
 	if(window.configuración==undefined){
 		window.configuración = {}
-		window.configuración[nombre] = {"":""
-			,activado: {"":""
+		window.configuración[nombre] = filtrar_definidos({"":""
+			,activado: filtrar_definidos({"":""
 				,"herramientas":1
 				,"bot":0
-			}
-		}
+			})
+		})
 		window.local_storage.guardar()
 	}
 	devuelve = window.configuración[nombre]
