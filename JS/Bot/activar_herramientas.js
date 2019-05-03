@@ -101,7 +101,8 @@ function cargar_mensajes(a, b, c, d) {
 					N('chatMessagesLoading', this.I[b]).style.display = 'none'
 					if(está_activado_herramientas){
 						window.contador_deslizar_mensaje = 0
-						deslizar_mensaje()
+						window.mensaje = window.obtener.primer_mensaje()
+						setTimeout(()=>deslizar_mensaje(),100)
 					}
 				}
 				,a
@@ -536,14 +537,14 @@ function borrar_activador()
 	document.querySelector("#activador").remove()
 }
 function deslizar_mensaje(){
-	var mensaje = window.obtener.primer_mensaje()
-	mensaje.scrollIntoView()
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
-	var no_se_ve = Math.abs(mensaje.offsetTop-contenedor.scrollTop)>=mensaje.scrollHeight
+	var no_se_ve = Math.abs(window.mensaje.offsetTop-contenedor.scrollTop)>=window.mensaje.scrollHeight
 	if(no_se_ve)
 	{
+		window.mensaje.scrollIntoView()
 		++window.contador_deslizar_mensaje
+		console.log("intentando")
 		if(window.contador_deslizar_mensaje<50)
 		{
 			setTimeout(deslizar_mensaje,100)
