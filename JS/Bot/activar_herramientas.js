@@ -380,26 +380,58 @@ window.crear = filtrar_definidos({"":""
 	}
 	,activador: filtrar_definidos({"":""
 		,herramientas: function(){ // Dir: crear.activador.herramientas
+			var devuelve
 			var nombre = window.obtener.nombre()
-			var está_activado = window.configuración[nombre].activado.herramientas
-			console.log("Está activado herramientas: ",está_activado)
-			return window.crear.botón(
-				()=>cambiar_activado_herramientas()
-				,"activar_herramientas"
-				,está_activado?"Activado":"Desactivado"
-				,está_activado?"23aa34":"000000"
-			)
+			if(nombre!="..."){
+				if(window.configuración!=undefined){
+					if(window.configuración[nombre]!=undefined){
+						if(window.configuración[nombre].activado!=undefined){
+							var está_activado = window.configuración[nombre].activado.herramientas
+							console.log("Está activado herramientas: ",está_activado)
+							devuelve = window.crear.botón(
+								()=>cambiar_activado_herramientas()
+								,"activar_herramientas"
+								,está_activado?"Activado":"Desactivado"
+								,está_activado?"23aa34":"000000"
+							)
+						}
+					}
+				}else{
+					console.info("Advertencia: No hay configuración.")
+					devuelve = "error_2"
+				}
+			}else{
+				console.info("El usuario no ingresó.")
+				devuelve = "error_1"
+			}
+			return devuelve
 		}
 		,bot: function(){ // Dir: crear.activador.bot
+			var devuelve
 			var nombre = window.obtener.nombre()
-			var está_activado = window.configuración[nombre].activado.bot
-			console.log("Está activado bot: ",está_activado)			
-			return window.crear.botón(
-				()=>cambiar_activado_bot()
-				,"activar_bot"
-				,"Bot "+(está_activado?"":"des")+"activado"
-				,está_activado?"117733":"771133"
-			)
+			if(nombre!="..."){
+				if(window.configuración!=undefined){
+					if(window.configuración[nombre]!=undefined){
+						if(window.configuración[nombre].activado!=undefined){
+							var está_activado = window.configuración[nombre].activado.bot
+							console.log("Está activado bot: ",está_activado)			
+							devuelve = window.crear.botón(
+								()=>cambiar_activado_bot()
+								,"activar_bot"
+								,"Bot "+(está_activado?"":"des")+"activado"
+								,está_activado?"117733":"771133"
+							)
+						}
+					}
+				}else{
+					console.info("Advertencia 22: No hay configuración.")
+					devuelve = "error_22"
+				}
+			}else{
+				console.info("Advertencia 21: El usuario no ingresó.")
+				devuelve = "error_21"
+			}
+			return devuelve
 		}
 	})
 	,utilidades: filtrar_definidos({"":""
