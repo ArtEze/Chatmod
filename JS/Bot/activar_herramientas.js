@@ -274,7 +274,6 @@ window.local_storage = filtrar_definidos({"":""
 		var devuelve
 		var nombre = window.obtener.nombre()
 		if(nombre!="..."){
-			window.local_storage.guardar_predeterminado()
 			if(window.configuración==undefined){window.configuración = {}}
 			if(window.configuración[nombre]==undefined){
 				window.configuración[nombre]=filtrar_definidos({"":""
@@ -285,8 +284,11 @@ window.local_storage = filtrar_definidos({"":""
 				})
 				localStorage.configuración = JSON.stringify(window.configuración)
 			}
+			devuelve = window.configuración
+		}else{
+			console.info("El usuario no ingresó.")
+			devuelve = ["no ingresado",nombre]
 		}
-		devuelve = window.configuración
 		return devuelve
 	}
 })
