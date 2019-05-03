@@ -176,19 +176,25 @@ function filtrar_definidos(elemento){
 window.es = filtrar_definidos({"":""
 	,activado: filtrar_definidos({"":""
 		,función: function(nombre_div,texto){
-			var devuelve = document.querySelector("#"+nombre_div+">.text")
-			if(devuelve!=undefined){
-				devuelve = devuelve.textContent==texto
+			var devuelve
+			var div = document.querySelector("#"+nombre_div+">.text")
+			if(div!=undefined){
+				devuelve = div.textContent==texto
 			}else{
-				devuelve = false
+				var nombre = window.obtener.nombre()
+				if(window.configuración!=undefined){
+					devuelve = window.configuración[nombre].activado[nombre_div.split("_")[1]]
+				}else{
+					devuelve = false
+				}
 			}
 			return devuelve
 		}
 		,herramientas: function(){ // Equivalente función herramientas
-			return window.obtener.activado.herramientas
+			return window.obtener.activado.herramientas()
 		}
 		,bot: function(){ // Equivalente función bot
-			return window.obtener.activado.bot
+			return window.obtener.activado.bot()
 		}
 	})
 })
@@ -256,6 +262,10 @@ window.local_storage = filtrar_definidos({"":""
 	,borrar: function(){
 		return delete localStorage.configuración
 	}
+	,ver_usuario_actual: function(){
+		var nombre = window.obtener.nombre()
+		return JSON.parse(localStorage.configuración)[nombre].activado
+	}
 })
 
 function determinar_configuración_usuario(nombre){
@@ -269,7 +279,7 @@ function determinar_configuración_usuario(nombre){
 	}
 	return devuelve
 }
-function cambiar_activación(div_nombre,opción,callback){
+function cambiar_activación(opción,callback){
 	var devuelve
 	var opciones = filtrar_definidos({"":""
 		,herramientas: filtrar_definidos([
@@ -287,7 +297,6 @@ function cambiar_activación(div_nombre,opción,callback){
 			,"Bot activado"
 		])
 	})
-	var div = document.querySelector("#"+div_nombre)
 	var nombre = window.obtener.nombre()
 	cambiar_color(...opciones[opción])
 	determinar_configuración_usuario(nombre)
@@ -301,12 +310,12 @@ function callback_activar_herramientas(){
 }
 function cambiar_activado_herramientas(){
 	var devuelve
-	cambiar_activación("activador","herramientas",()=>callback_activar_herramientas())
+	cambiar_activación("herramientas",()=>callback_activar_herramientas())
 	return devuelve
 }
 function cambiar_activado_bot(){
 	var devuelve
-	cambiar_activación("activador","bot",()=>true)
+	cambiar_activación("bot",()=>true)
 	return devuelve
 }
 
@@ -333,10 +342,26 @@ window.crear = filtrar_definidos({"":""
 	}
 	,activador: filtrar_definidos({"":""
 		,herramientas: function(){
-			return window.crear.botón(()=>cambiar_activado_herramientas(),"activar_herramientas","Desactivado","000000")
+			var nombre = window.obtener.nombre()
+			var está_activado = window.configuración[nombre].activado.herramientas
+			console.log("Está activado herramientas: ",está_activado)
+			return window.crear.botón(
+				()=>cambiar_activado_herramientas()
+				,"activar_herramientas"
+				,está_activado?"Activado":"Desactivado"
+				,está_activado?"23aa34":"000000"
+			)
 		}
 		,bot: function(){
-			return window.crear.botón(()=>cambiar_activado_bot(),"activar_bot","Bot desactivado","771133")
+			var nombre = window.obtener.nombre()
+			var está_activado = window.configuración[nombre].activado.bot
+			console.log("Está activado bot: ",está_activado)			
+			return window.crear.botón(
+				()=>cambiar_activado_bot()
+				,"activar_bot"
+				,"Bot "+(está_activado?"":"des")+"activado"
+				,está_activado?"117733":"771133"
+			)
 		}
 	})
 	,utilidades: filtrar_definidos({"":""
@@ -502,19 +527,6 @@ function determinar_local_storage(){
 	devuelve = window.configuración[nombre]
 	return devuelve
 }
-function cambiar_estado(){
-	var nombre = window.obtener.nombre()
-	if(window.configuración[nombre]!=undefined){
-		if(window.configuración[nombre].activado.herramientas){
-			cambiar_activado_herramientas()
-		}
-		if(window.configuración[nombre].activado.bot){
-			cambiar_activado_bot()
-		}
-	}else{
-		console.error("Falta configuración.")
-	}
-}
 function cargar_configuración(){
 	var devuelve
 	var nombre = window.obtener.nombre()
@@ -524,7 +536,6 @@ function cargar_configuración(){
 	}else{
 		iniciar_herramientas()
 		determinar_local_storage()
-		devuelve = cambiar_estado()
 	}
 	return devuelve
 }
