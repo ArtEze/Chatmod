@@ -182,14 +182,19 @@ window.es = filtrar_definidos({"":""
 				devuelve = div.textContent==texto
 			}else{
 				var nombre = window.obtener.nombre()
-				if(window.configuración!=undefined){
-					if(window.configuración[nombre]==undefined){devuelve = window.configuración[nombre]={}}
-					if(window.configuración[nombre].activado==undefined){window.configuración[nombre].activado={}}
-					
+				if(nombre!="..."){
+					if(window.configuración!=undefined){
+						if(window.configuración[nombre]==undefined){devuelve = window.configuración[nombre]={}}
+						if(window.configuración[nombre].activado==undefined){window.configuración[nombre].activado={}}
+						
+					}else{
+						window.local_storage.guardar_predeterminado()
+					}
+					devuelve = window.configuración[nombre].activado[nombre_div.split("_")[1]]
 				}else{
-					window.local_storage.guardar_predeterminado()
+					console.info("El usuario no ha ingresado.")
+					devuelve = false
 				}
-				devuelve = window.configuración[nombre].activado[nombre_div.split("_")[1]]
 			}
 			return devuelve
 		}
