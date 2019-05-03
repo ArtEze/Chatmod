@@ -277,6 +277,7 @@ window.local_storage = filtrar_definidos({"":""
 					,bot: false
 				})
 			})
+			localStorage.configuración = JSON.stringify(window.configuración)
 		}
 		devuelve = window.configuración
 		return devuelve
