@@ -85,10 +85,9 @@ function deslizar_mensaje(){
 	if(no_se_ve && window.logo_cargango.style.display != "none")
 	{
 		++window.contador_deslizar_mensaje
-		console.log("intentando")
 		if(window.contador_deslizar_mensaje<50)
 		{
-			setTimeout(deslizar_mensaje,20)
+			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 		}
 	}else{
 		console.log(444)
@@ -99,7 +98,6 @@ function cargar_mensajes(a, b, c, d) {
 	if(está_activado_herramientas){
 		cantidad_carga_mensajes = 100
 		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-		console.log(333,[window.primer_mensaje,window.primer_mensaje.textContent])
 	}else{
 		cantidad_carga_mensajes = 20
 	}
@@ -127,7 +125,8 @@ function cargar_mensajes(a, b, c, d) {
 	}
 	if(está_activado_herramientas){
 		window.contador_deslizar_mensaje=0
-		setTimeout(deslizar_mensaje,1000)
+		window.tiempo_espera_carga = 15
+		setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 	}
 }
 
