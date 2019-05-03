@@ -287,6 +287,7 @@ window.local_storage = filtrar_definidos({"":""
 						,bot: false
 					})
 				})
+				console.log("Usuario actual: ",nombre,window.local_storage.usuario_actual)
 				localStorage.configuración = JSON.stringify(window.configuración)
 			}
 			devuelve = window.configuración
