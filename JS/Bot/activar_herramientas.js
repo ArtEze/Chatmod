@@ -175,7 +175,7 @@ function filtrar_definidos(elemento){
 }
 window.es = filtrar_definidos({"":""
 	,activado: filtrar_definidos({"":""
-		,función: function(nombre_div,texto){
+		,función: function(nombre_div,texto){ // Dir: es.activado.función
 			var devuelve
 			var div = document.querySelector("#"+nombre_div+">.text")
 			if(div!=undefined){
@@ -190,16 +190,16 @@ window.es = filtrar_definidos({"":""
 			}
 			return devuelve
 		}
-		,herramientas: function(){ // Equivalente función herramientas
+		,herramientas: function(){ // Dir: es.activado.herramientas | es equivalente
 			return window.obtener.activado.herramientas()
 		}
-		,bot: function(){ // Equivalente función bot
+		,bot: function(){ // Dir: es.activado.bot | es equivalente
 			return window.obtener.activado.bot()
 		}
 	})
 })
 window.obtener = filtrar_definidos({"":""
-	,nombre: function(){
+	,nombre: function(){ // Dir: obtener.nombre
 		var devuelve
 		var usuario = document.querySelector("#nickMenu .text").textContent
 		var cuenta = document.querySelector("#accountMenu .text").textContent
@@ -208,14 +208,14 @@ window.obtener = filtrar_definidos({"":""
 		return devuelve
 	}
 	,activado: filtrar_definidos({"":""
-		,herramientas: function(){
+		,herramientas: function(){ // Dir: obtener.activado.herramientas
 			var devuelve
 			if(window.es!=undefined){
 				devuelve = window.es.activado.función("activar_herramientas","Activado")
 			}
 			return devuelve
 		}
-		,bot: function(){
+		,bot: function(){ // Dir: obtener.activado.bot
 			var devuelve
 			if(window.es!=undefined){
 				devuelve = window.es.activado.función("activar_bot","Bot activado")
@@ -225,7 +225,7 @@ window.obtener = filtrar_definidos({"":""
 	})
 })
 window.local_storage = filtrar_definidos({"":""
-	,cargar: function(){
+	,cargar: function(){ // Dir: local_storage.cargar
 		var devuelve
 		var local_storage_configurar = localStorage.configuración
 		if(local_storage_configurar!=undefined){
@@ -236,7 +236,7 @@ window.local_storage = filtrar_definidos({"":""
 		}
 		return devuelve
 	}
-	,asignar: function(){
+	,asignar: function(){ // Dir: local_storage.asignar
 		var devuelve
 		if(window.configuración!=undefined){
 			var nombre = window.obtener.nombre()
@@ -251,18 +251,18 @@ window.local_storage = filtrar_definidos({"":""
 		}
 		devuelve = window.configuración
 		return devuelve
-	}	
-	,guardar: function(){
+	}
+	,guardar: function(){ // Dir: local_storage.guardar
 		var devuelve
 		window.local_storage.asignar()
 		localStorage.configuración = JSON.stringify(window.configuración)
 		devuelve = localStorage.configuración
 		return devuelve
 	}
-	,borrar: function(){
+	,borrar: function(){ // Dir: local_storage.borrar
 		return delete localStorage.configuración
 	}
-	,ver_usuario_actual: function(){
+	,usuario_actual: function(){ // Dir: local_storage.usuario_actual
 		var nombre = window.obtener.nombre()
 		return JSON.parse(localStorage.configuración)[nombre].activado
 	}
@@ -322,7 +322,7 @@ function cambiar_activado_bot(){
 // Fin configuración
 
 window.crear = filtrar_definidos({"":""
-	,botón: function(callback,nombre,texto,color){
+	,botón: function(callback,nombre,texto,color){ // Dir: crear.botón
 		var devuelve
 		var existe_botón = document.querySelector("#"+nombre)!=null
 		if(!existe_botón){
@@ -341,7 +341,7 @@ window.crear = filtrar_definidos({"":""
 		return devuelve
 	}
 	,activador: filtrar_definidos({"":""
-		,herramientas: function(){
+		,herramientas: function(){ // Dir: crear.activador.herramientas
 			var nombre = window.obtener.nombre()
 			var está_activado = window.configuración[nombre].activado.herramientas
 			console.log("Está activado herramientas: ",está_activado)
@@ -352,7 +352,7 @@ window.crear = filtrar_definidos({"":""
 				,está_activado?"23aa34":"000000"
 			)
 		}
-		,bot: function(){
+		,bot: function(){ // Dir: crear.activador.bot
 			var nombre = window.obtener.nombre()
 			var está_activado = window.configuración[nombre].activado.bot
 			console.log("Está activado bot: ",está_activado)			
@@ -365,10 +365,10 @@ window.crear = filtrar_definidos({"":""
 		}
 	})
 	,utilidades: filtrar_definidos({"":""
-		,copiador: function(){
+		,copiador: function(){ // Dir: crear.utilidades.copiador
 			return window.crear.botón(copiar_todo,"copiador","Copiar","012345")
 		}
-		,borrador: function(){
+		,borrador: function(){ // Dir: crear.utilidades.borrador
 			return window.crear.botón(borrar_todo,"borrador","Borrar","543210")
 		}
 	})
@@ -534,6 +534,7 @@ function cargar_configuración(){
 		var tiempo = agregar_tiempo("cargar_configuración")
 		devuelve = tiempo[2]
 	}else{
+		window.local_storage.cargar()
 		iniciar_herramientas()
 		determinar_local_storage()
 	}
