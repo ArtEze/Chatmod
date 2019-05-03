@@ -503,7 +503,17 @@ function determinar_local_storage(){
 	return devuelve
 }
 function cambiar_estado(){
-	
+	var nombre = window.obtener.nombre()
+	if(window.configuración[nombre]==undefined){
+		if(window.configuración[nombre].activado.herramientas){
+			cambiar_activado_herramientas()
+		}
+		if(window.configuración[nombre].activado.bot){
+			cambiar_activado_bot()
+		}
+	}else{
+		console.error("Falta configuración.")
+	}
 }
 function cargar_configuración(){
 	var devuelve
