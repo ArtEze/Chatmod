@@ -81,7 +81,6 @@ function cargar_mensajes(a, b, c, d) {
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
 		cantidad_carga_mensajes = 100
-		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
 	}else{
 		cantidad_carga_mensajes = 20
 	}
@@ -230,6 +229,9 @@ window.obtener = filtrar_definidos({"":""
 			return devuelve
 		}
 	})
+	,primer_mensaje: function(){ // Dir: obtener.primer_mensaje
+		return document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+	}
 })
 window.local_storage = filtrar_definidos({"":""
 	,cargar: function(){ // Dir: local_storage.cargar
@@ -534,7 +536,8 @@ function borrar_activador()
 	document.querySelector("#activador").remove()
 }
 function deslizar_mensaje(){
-	window.primer_mensaje.scrollIntoView()
+	var mensaje = window.obtener.primer_mensaje()
+	mensaje.scrollIntoView()
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
 	var no_se_ve = Math.abs(mensaje.offsetTop-contenedor.scrollTop)>=mensaje.scrollHeight
