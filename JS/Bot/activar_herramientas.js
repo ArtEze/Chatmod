@@ -81,6 +81,8 @@ function cargar_mensajes(a, b, c, d) {
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
 		cantidad_carga_mensajes = 100
+		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+		console.log(333,[window.primer_mensaje,window.primer_mensaje.textContent])
 	}else{
 		cantidad_carga_mensajes = 20
 	}
@@ -98,11 +100,9 @@ function cargar_mensajes(a, b, c, d) {
 				rl(a.jb, g, h, k, void 0 !== d ? d : cantidad_carga_mensajes)
 				,function () {
 					W(e, 'lock', !1);
-					N('chatMessagesLoading', this.I[b]).style.display = 'none'
+					var cargango = N('chatMessagesLoading', this.I[b])
+					cargango.style.display = 'none';
 					if(está_activado_herramientas){
-						window.contador_deslizar_mensaje = 0
-						window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-						console.log(window.primer_mensaje,window.primer_mensaje.textContent)
 						deslizar_mensaje()
 					}
 				}
