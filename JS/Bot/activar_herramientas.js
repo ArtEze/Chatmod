@@ -504,7 +504,7 @@ function determinar_local_storage(){
 }
 function cambiar_estado(){
 	var nombre = window.obtener.nombre()
-	if(window.configuración[nombre]==undefined){
+	if(window.configuración[nombre]!=undefined){
 		if(window.configuración[nombre].activado.herramientas){
 			cambiar_activado_herramientas()
 		}
