@@ -2035,7 +2035,10 @@ function entrar_y_salir(a,b,c)
 				+":"+((fecha.getMinutes()+100)+"").slice(1)
 				+":"+((fecha.getSeconds()+100)+"").slice(1)
 			if(entrados[nombre]==undefined){entrados[nombre] = 0}
-			if(idos[nombre]==undefined){idos[nombre] = 0}
+			if(idos[nombre]==undefined){
+				idos[nombre] = 0
+				localStorage.setItem("entrados",JSON.stringify(idos))
+			}
 			if(entrada==1)
 			{
 				entrar_salir.push([1,nombre,tiempo])
@@ -2048,8 +2051,9 @@ function entrar_y_salir(a,b,c)
 				entrar_salir.push([0,nombre,tiempo])
 				if(idos[nombre]==0)
 				{
-					mensaje = "¡Qué mal que te vayas " + bbcode_usuario(nombre) + "! ¡Te extrañaremos, vuelve pronto! :3"
+					mensaje = "¡Te extrañaremos, " + bbcode_usuario(nombre) + "! ¡vuelve pronto! :3"
 					idos[nombre] = 1
+					localStorage.setItem("entrados",JSON.stringify(idos))
 					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*1))
 				}
 			}
