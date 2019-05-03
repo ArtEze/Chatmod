@@ -77,6 +77,7 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 	K(b, 'active') || t && mq(a.kb, c, d);
 	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
 }
+window.tiempo_espera_carga = 100
 function deslizar_mensaje(){
 	window.primer_mensaje.scrollIntoView()
 	var activo = document.querySelector(".chatMessagesTab.active")
@@ -96,10 +97,10 @@ function deslizar_mensaje(){
 function cargar_mensajes(a, b, c, d) {
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
-		cantidad_carga_mensajes = 100
+		window.cantidad_carga_mensajes = 100
 		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
 	}else{
-		cantidad_carga_mensajes = 20
+		window.cantidad_carga_mensajes = 20
 	}
 	var e = a.I[b];
 	if (!0 !== U(e, 'lock')) {
@@ -113,7 +114,7 @@ function cargar_mensajes(a, b, c, d) {
 			window.logo_cargango = N("chatMessagesLoading", e),
 			window.logo_cargango.style.display = 'block',
 			xd(
-				rl(a.jb, g, h, k, void 0 !== d ? d : cantidad_carga_mensajes)
+				rl(a.jb, g, h, k, void 0 !== d ? d : window.cantidad_carga_mensajes)
 				,function () {
 					W(e, 'lock', !1)
 					window.logo_cargango = N("chatMessagesLoading", this.I[b])
@@ -125,7 +126,6 @@ function cargar_mensajes(a, b, c, d) {
 	}
 	if(está_activado_herramientas){
 		window.contador_deslizar_mensaje=0
-		window.tiempo_espera_carga = 15
 		setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 	}
 }
