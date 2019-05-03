@@ -88,8 +88,11 @@ function deslizar_mensaje(){
 		++window.contador_deslizar_mensaje
 		if(window.contador_deslizar_mensaje<50)
 		{
-			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
+			setTimeout(deslizar_mensaje,window.tiempo_espera_carga*4)
 		}
+	}
+	if(window.logo_cargango.style.display == "none"){
+		setTimeout(window.primer_mensaje.scrollIntoView,window.tiempo_espera_carga*2)
 	}
 }
 function cargar_mensajes(a, b, c, d) {
