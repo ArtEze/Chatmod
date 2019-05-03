@@ -77,13 +77,13 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 	K(b, 'active') || t && mq(a.kb, c, d);
 	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
 }
-window.tiempo_espera_carga = 100
+window.tiempo_espera_carga = 15
 function deslizar_mensaje(){
 	window.primer_mensaje.scrollIntoView()
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
-	var no_se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)>=window.primer_mensaje.scrollHeight
-	if(no_se_ve && window.logo_cargango.style.display != "none")
+	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
+	if(!se_ve || window.logo_cargango.style.display == "block")
 	{
 		++window.contador_deslizar_mensaje
 		if(window.contador_deslizar_mensaje<50)
@@ -91,7 +91,7 @@ function deslizar_mensaje(){
 			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 		}
 	}else{
-		console.log(444)
+		console.log(444,[se_ve,window.logo_cargango.style.display])
 	}
 }
 function cargar_mensajes(a, b, c, d) {
