@@ -92,7 +92,7 @@ function deslizar_mensaje(){
 		}
 	}
 	if(window.logo_cargango.style.display == "none"){
-		setTimeout(window.primer_mensaje.scrollIntoView,window.tiempo_espera_carga*2)
+		setTimeout(()=>window.primer_mensaje.scrollIntoView(),window.tiempo_espera_carga*2)
 	}
 }
 function cargar_mensajes(a, b, c, d) {
