@@ -90,8 +90,6 @@ function deslizar_mensaje(){
 		{
 			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 		}
-	}else{
-		console.log(444,[se_ve,window.logo_cargango.style.display])
 	}
 }
 function cargar_mensajes(a, b, c, d) {
