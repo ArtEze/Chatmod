@@ -2315,7 +2315,6 @@ var avatar_excluidos = [
 	,"\u2661Luni :3"
 	//,"Loolii/lore"
 	,"yaris"
-	,"Anthony."
 ]
 var info_excluidos = [
 	"HerbalLove"
