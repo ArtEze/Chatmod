@@ -283,7 +283,7 @@ window.local_storage = filtrar_definidos({"":""
 			if(window.configuración[nombre]==undefined){
 				window.configuración[nombre]=filtrar_definidos({"":""
 					,activado: filtrar_definidos({"":""
-						,herramientas: false
+						,herramientas: true
 						,bot: false
 					})
 				})
