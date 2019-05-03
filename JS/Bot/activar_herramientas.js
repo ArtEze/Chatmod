@@ -77,6 +77,23 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 	K(b, 'active') || t && mq(a.kb, c, d);
 	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
 }
+function deslizar_mensaje(){
+	window.primer_mensaje.scrollIntoView()
+	var activo = document.querySelector(".chatMessagesTab.active")
+	var contenedor = activo.querySelector(".chatMessagesContainer")
+	var no_se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)>=window.primer_mensaje.scrollHeight
+	if(no_se_ve && window.logo_cargango.style.display != "none")
+	{
+		++window.contador_deslizar_mensaje
+		console.log("intentando")
+		if(window.contador_deslizar_mensaje<50)
+		{
+			setTimeout(deslizar_mensaje,20)
+		}
+	}else{
+		console.log(444)
+	}
+}
 function cargar_mensajes(a, b, c, d) {
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
@@ -95,20 +112,22 @@ function cargar_mensajes(a, b, c, d) {
 		c = U(e, 'oldestTime');
 		void 0 !== c && k <= c || (
 			W(e, 'lock', !0),
-			N('chatMessagesLoading', e).style.display = 'block',
+			window.logo_cargango = N("chatMessagesLoading", e),
+			window.logo_cargango.style.display = 'block',
 			xd(
 				rl(a.jb, g, h, k, void 0 !== d ? d : cantidad_carga_mensajes)
 				,function () {
-					W(e, 'lock', !1);
-					var cargango = N('chatMessagesLoading', this.I[b])
-					cargango.style.display = 'none';
-					if(está_activado_herramientas){
-						deslizar_mensaje()
-					}
+					W(e, 'lock', !1)
+					window.logo_cargango = N("chatMessagesLoading", this.I[b])
+					window.logo_cargango.style.display = "none"
 				}
 				,a
 			)
 		)
+	}
+	if(está_activado_herramientas){
+		window.contador_deslizar_mensaje=0
+		setTimeout(deslizar_mensaje,1000)
 	}
 }
 
@@ -541,22 +560,6 @@ function borrar_activador()
 {
 	document.querySelector("#activador").remove()
 }
-function deslizar_mensaje(){
-	window.primer_mensaje.scrollIntoView()
-	var activo = document.querySelector(".chatMessagesTab.active")
-	var contenedor = activo.querySelector(".chatMessagesContainer")
-	var no_se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)>=window.primer_mensaje.scrollHeight
-	if(no_se_ve)
-	{
-		++window.contador_deslizar_mensaje
-		console.log("intentando")
-		if(window.contador_deslizar_mensaje<50)
-		{
-			setTimeout(deslizar_mensaje,1000)
-		}
-	}
-}
-
 function ver_cantidad_mensajes(){
 	var div = document.querySelector(".chatRoomsButton>a")
 	window.acciones = div.textContent
