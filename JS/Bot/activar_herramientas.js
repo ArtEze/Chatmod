@@ -271,9 +271,15 @@ window.local_storage = filtrar_definidos({"":""
 		return delete localStorage.configuración
 	}
 	,usuario_actual: function(){ // Dir: local_storage.usuario_actual
+		var devuelve
 		var nombre = window.obtener.nombre()
 		window.local_storage.guardar_predeterminado()
-		return JSON.parse(localStorage.configuración)[nombre].activado
+		if(localStorage.configuración!=undefined){
+			if(localStorage.configuración[nombre]!=undefined){
+				devuelve = JSON.parse(localStorage.configuración)[nombre].activado
+			}
+		}
+		return devuelve
 	}
 	,guardar_predeterminado: function(){ // Dir: local_storage.guardar_predeterminado
 		var devuelve
@@ -567,7 +573,6 @@ function cargar_configuración(){
 		var tiempo = agregar_tiempo("cargar_configuración")
 		devuelve = tiempo[2]
 	}else{
-		window.local_storage.guardar_predeterminado()
 		window.local_storage.cargar()
 		iniciar_herramientas()
 		determinar_local_storage()
