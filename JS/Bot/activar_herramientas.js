@@ -102,7 +102,7 @@ function cargar_mensajes(a, b, c, d) {
 					if(está_activado_herramientas){
 						window.contador_deslizar_mensaje = 0
 						window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-						console.log(window.primer_mensaje.textContent)
+						console.log(window.primer_mensaje,window.primer_mensaje.textContent)
 						deslizar_mensaje()
 					}
 				}
@@ -191,7 +191,11 @@ window.es = filtrar_definidos({"":""
 					}else{
 						window.local_storage.guardar_predeterminado()
 					}
-					devuelve = window.configuración[nombre].activado[nombre_div.split("_")[1]]
+					var opción = nombre_div.split("_")[1]
+					devuelve = window.configuración[nombre].activado[opción]
+					if(opción=="bot" && !window.obtener.activado.herramientas()){
+						devuelve = false
+					}
 				}else{
 					console.info("El usuario no ha ingresado.")
 					devuelve = false
@@ -548,7 +552,7 @@ function deslizar_mensaje(){
 		console.log("intentando")
 		if(window.contador_deslizar_mensaje<50)
 		{
-			setTimeout(deslizar_mensaje,100)
+			setTimeout(deslizar_mensaje,1000)
 		}
 	}
 }
