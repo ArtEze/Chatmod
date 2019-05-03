@@ -745,7 +745,7 @@ function color_usuario(usuario){
 		document.querySelectorAll(".nick[data-nick]")
 	).map(x=>[x,x.attributes["data-nick"].value])
 	.filter(x=>x[1]==usuario).map(x=>x[0]);
-	console.log(divs)
+	//console.log(divs)
 	if(divs[0]==undefined)
 	{
 		devuelve = "000000"
