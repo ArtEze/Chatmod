@@ -383,23 +383,15 @@ window.crear = filtrar_definidos({"":""
 			var devuelve
 			var nombre = window.obtener.nombre()
 			if(nombre!="..."){
-				if(window.configuración!=undefined){
-					if(window.configuración[nombre]!=undefined){
-						if(window.configuración[nombre].activado!=undefined){
-							var está_activado = window.configuración[nombre].activado.herramientas
-							console.log("Está activado herramientas: ",está_activado)
-							devuelve = window.crear.botón(
-								()=>cambiar_activado_herramientas()
-								,"activar_herramientas"
-								,está_activado?"Activado":"Desactivado"
-								,está_activado?"23aa34":"000000"
-							)
-						}
-					}
-				}else{
-					console.info("Advertencia: No hay configuración.")
-					devuelve = "error_2"
-				}
+				window.local_storage.guardar_predeterminado()
+				var está_activado = window.configuración[nombre].activado.herramientas
+				console.log("Está activado herramientas: ",está_activado)
+				devuelve = window.crear.botón(
+					()=>cambiar_activado_herramientas()
+					,"activar_herramientas"
+					,está_activado?"Activado":"Desactivado"
+					,está_activado?"23aa34":"000000"
+				)
 			}else{
 				console.info("El usuario no ingresó.")
 				devuelve = "error_1"
@@ -410,26 +402,18 @@ window.crear = filtrar_definidos({"":""
 			var devuelve
 			var nombre = window.obtener.nombre()
 			if(nombre!="..."){
-				if(window.configuración!=undefined){
-					if(window.configuración[nombre]!=undefined){
-						if(window.configuración[nombre].activado!=undefined){
-							var está_activado = window.configuración[nombre].activado.bot
-							console.log("Está activado bot: ",está_activado)			
-							devuelve = window.crear.botón(
-								()=>cambiar_activado_bot()
-								,"activar_bot"
-								,"Bot "+(está_activado?"":"des")+"activado"
-								,está_activado?"117733":"771133"
-							)
-						}
-					}
-				}else{
-					console.info("Advertencia 22: No hay configuración.")
-					devuelve = "error_22"
-				}
+				window.local_storage.guardar_predeterminado()
+				var está_activado = window.configuración[nombre].activado.bot
+				console.log("Está activado bot: ",está_activado)			
+				devuelve = window.crear.botón(
+					()=>cambiar_activado_bot()
+					,"activar_bot"
+					,"Bot "+(está_activado?"":"des")+"activado"
+					,está_activado?"117733":"771133"
+				)
 			}else{
-				console.info("Advertencia 21: El usuario no ingresó.")
-				devuelve = "error_21"
+				console.info("El usuario no ingresó.")
+				devuelve = "error_1"
 			}
 			return devuelve
 		}
