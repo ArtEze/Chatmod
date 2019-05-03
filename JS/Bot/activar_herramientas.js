@@ -77,9 +77,9 @@ function quitar_eliminado_mensajes(a, b, c, d, e) {
 	K(b, 'active') || t && mq(a.kb, c, d);
 	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
 }
-window.tiempo_espera_carga = 15
+window.tiempo_espera_carga = 50
 function deslizar_mensaje(){
-	window.primer_mensaje.scrollIntoView()
+	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
 	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
@@ -88,14 +88,20 @@ function deslizar_mensaje(){
 		++window.contador_deslizar_mensaje
 		if(window.contador_deslizar_mensaje<50)
 		{
-			setTimeout(deslizar_mensaje,window.tiempo_espera_carga*4)
+			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 		}
 	}
-	if(window.logo_cargango.style.display == "none"){
-		setTimeout(()=>window.primer_mensaje.scrollIntoView(),window.tiempo_espera_carga*2)
+	var últimas_dos_cantidades = window.cantidad_mensajes.slice(-2)
+	if(window.logo_cargango.style.display == "none" &&
+		últimas_dos_cantidades[0]==últimas_dos_cantidades[1]
+		&&últimas_dos_cantidades[1]!=window.cantidad_mensajes[0]
+	){
+		setTimeout(()=>window.primer_mensaje.scrollIntoView(),window.tiempo_espera_carga)
 	}
 }
 function cargar_mensajes(a, b, c, d) {
+	window.cantidad_mensajes = []
+	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
 		window.cantidad_carga_mensajes = 100
