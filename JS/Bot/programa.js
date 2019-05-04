@@ -1756,8 +1756,28 @@ function etiquetar_nick(entrada,usuario,sala,hacia)
 function borrar_nombre_de_idos(nombre){
 	return [delete entrados[nombre],delete idos[nombre]]
 }
-function saludar(nombre)
-{
+function determinar_color_texto(nombre_chat){
+	var octal = nombre_chat.split("").map(x=>
+		x.charCodeAt().toString(16).slice(-1)
+	).join("")
+	var longitud = octal.length
+	var i=0;
+	devuelve = [...Array(6)].map(
+		x=>{
+			var pos = Math.round((++i)/7*longitud)
+			var num = octal[pos]
+			if(num>="a"){
+				num = 10+num.charCodeAt()-"a".charCodeAt()
+			}else{
+				num = num.charCodeAt()-"0".charCodeAt()
+			}
+			num = num%(num,(i%2==0)?16:8)
+			return num.toString(16)
+		}
+	).join("")
+	return devuelve
+}
+function saludar(nombre){
 	/*	
 		nick	ArtEze
 		t	ue
@@ -1774,7 +1794,7 @@ function saludar(nombre)
 		var género = género_usuario(nombre)
 		var nombre_bbcode = bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
-		var color_chat = "012345"
+		var color_chat = determinar_color_texto(nombre_chat)
 		var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 		window.mensaje_bienvenida = "¡Bienvenid" + género + " "
 			+ nombre_bbcode + "! "
