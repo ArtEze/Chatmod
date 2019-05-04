@@ -15,7 +15,11 @@ window.número_aleatorio = function(hasta){
 window.cargar_cargador = function()
 {
 	if(document.querySelector(".chat")==null){return;}
+
+	// Tampermonkey RAW
+	//	https://raw.githubusercontent.com/ArtEze/Chatovod_Mod/master/JS/Bot/Tampermonkey.js
 	window.dirección_bot = "https://github.com/ArtEze/Chatovod_Mod/blob/master/JS/Bot/Tampermonkey.js"
+
 	window.dir_partes = JSON.parse(window.dirección_bot.replace(
 		/^(.+):\/\/(.+)\.([^/]+)\/(.+)\/(.+)\/blob\/master([^.]+)\/([^.]+)\.(.+)$/gi,'["$1","$2","$3","$4","$5","$6","$7","$8"]')
 	)

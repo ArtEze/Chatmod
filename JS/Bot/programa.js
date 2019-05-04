@@ -1774,7 +1774,8 @@ function saludar(nombre)
 		var género = género_usuario(nombre)
 		var nombre_bbcode = bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
-		var nombre_chat_negrita = "[b][color=#123456]"+nombre_chat+"[/color][/b]"
+		var color_chat = "012345"
+		var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 		window.mensaje_bienvenida = "¡Bienvenid" + género + " "
 			+ nombre_bbcode + "! "
 			+ "¡Esto es "+ nombre_chat_negrita +"!";

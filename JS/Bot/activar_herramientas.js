@@ -83,7 +83,8 @@ function deslizar_mensaje(){
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
 	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
-	if(!se_ve || window.logo_cargango.style.display == "block")
+	if()
+	if(!se_ve || window.logo_cargando.style.display == "block")
 	{
 		++window.contador_deslizar_mensaje
 		if(window.contador_deslizar_mensaje<50)
@@ -92,7 +93,7 @@ function deslizar_mensaje(){
 		}
 	}
 	var últimas_dos_cantidades = window.cantidad_mensajes.slice(-2)
-	if(window.logo_cargango.style.display == "none" &&
+	if(window.logo_cargando.style.display == "none" &&
 		últimas_dos_cantidades[0]==últimas_dos_cantidades[1]
 		&&últimas_dos_cantidades[1]!=window.cantidad_mensajes[0]
 	){
@@ -100,17 +101,17 @@ function deslizar_mensaje(){
 	}
 }
 function cargar_mensajes(a, b, c, d) {
-	window.cantidad_mensajes = []
-	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
-	var está_activado_herramientas = window.obtener.activado.herramientas()
-	if(está_activado_herramientas){
-		window.cantidad_carga_mensajes = 100
-		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-	}else{
-		window.cantidad_carga_mensajes = 20
-	}
 	var e = a.I[b];
 	if (!0 !== U(e, 'lock')) {
+		window.cantidad_mensajes = []
+		window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
+		var está_activado_herramientas = window.obtener.activado.herramientas()
+		if(está_activado_herramientas){
+			window.cantidad_carga_mensajes = 100
+			window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+		}else{
+			window.cantidad_carga_mensajes = 20
+		}
 		var g = U(e, 'type'),
 		h = U(e, 'id'),
 		k = 0;
@@ -118,22 +119,22 @@ function cargar_mensajes(a, b, c, d) {
 		c = U(e, 'oldestTime');
 		void 0 !== c && k <= c || (
 			W(e, 'lock', !0),
-			window.logo_cargango = N("chatMessagesLoading", e),
-			window.logo_cargango.style.display = 'block',
+			window.logo_cargando = N("chatMessagesLoading", e),
+			window.logo_cargando.style.display = 'block',
 			xd(
 				rl(a.jb, g, h, k, void 0 !== d ? d : window.cantidad_carga_mensajes)
 				,function () {
 					W(e, 'lock', !1)
-					window.logo_cargango = N("chatMessagesLoading", this.I[b])
-					window.logo_cargango.style.display = "none"
+					window.logo_cargando = N("chatMessagesLoading", this.I[b])
+					window.logo_cargando.style.display = "none"
 				}
 				,a
 			)
 		)
-	}
-	if(está_activado_herramientas){
-		window.contador_deslizar_mensaje=0
-		setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
+		if(está_activado_herramientas){
+			window.contador_deslizar_mensaje=0
+			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
+		}
 	}
 }
 
