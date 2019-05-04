@@ -83,7 +83,6 @@ function deslizar_mensaje(){
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
 	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
-	if()
 	if(!se_ve || window.logo_cargando.style.display == "block")
 	{
 		++window.contador_deslizar_mensaje
