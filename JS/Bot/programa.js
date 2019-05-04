@@ -1781,7 +1781,7 @@ function saludar(nombre)
 		enviar_mensaje(window.mensaje_bienvenida,1)
 	},window.tiempo_espera_saludo)
 	entrados[nombre] = 1
-	localStorage.setItem("entrados",JSON.stringify(entrados))
+	localStorage.entrados = JSON.stringify(entrados)
 }
 function buscar_google(entrada,usuario,sala,hacia)
 {
@@ -2034,10 +2034,13 @@ function entrar_y_salir(a,b,c)
 			var tiempo = fecha.getHours()
 				+":"+((fecha.getMinutes()+100)+"").slice(1)
 				+":"+((fecha.getSeconds()+100)+"").slice(1)
-			if(entrados[nombre]==undefined){entrados[nombre] = 0}
+			if(entrados[nombre]==undefined){
+				entrados[nombre] = 0
+				localStorage.entrados = JSON.stringify(entrados)
+			}
 			if(idos[nombre]==undefined){
 				idos[nombre] = 0
-				localStorage.setItem("entrados",JSON.stringify(idos))
+				localStorage.idos = JSON.stringify(idos)
 			}
 			if(entrada==1)
 			{
@@ -2053,7 +2056,7 @@ function entrar_y_salir(a,b,c)
 				{
 					mensaje = "¡Te extrañaremos, " + bbcode_usuario(nombre) + "! ¡vuelve pronto! :3"
 					idos[nombre] = 1
-					localStorage.setItem("entrados",JSON.stringify(idos))
+					localStorage.idos = JSON.stringify(idos)
 					setTimeout(()=>enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*1))
 				}
 			}
