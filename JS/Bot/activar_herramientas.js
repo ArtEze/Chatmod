@@ -83,7 +83,8 @@ function deslizar_mensaje(){
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
 	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
-	if(!se_ve || window.logo_cargando.style.display == "block")
+	var se_ve_el_logo_cargando = window.logo_cargando!=undefined && window.logo_cargando.style.display == "block"
+	if(!se_ve || se_ve_el_logo_cargando )
 	{
 		++window.contador_deslizar_mensaje
 		if(window.contador_deslizar_mensaje<50)
@@ -100,17 +101,17 @@ function deslizar_mensaje(){
 	}
 }
 function cargar_mensajes(a, b, c, d) {
+	window.cantidad_mensajes = []
+	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
+	var está_activado_herramientas = window.obtener.activado.herramientas()
+	if(está_activado_herramientas){
+		window.cantidad_carga_mensajes = 100
+		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
+	}else{
+		window.cantidad_carga_mensajes = 20
+	}
 	var e = a.I[b];
 	if (!0 !== U(e, 'lock')) {
-		window.cantidad_mensajes = []
-		window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
-		var está_activado_herramientas = window.obtener.activado.herramientas()
-		if(está_activado_herramientas){
-			window.cantidad_carga_mensajes = 100
-			window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
-		}else{
-			window.cantidad_carga_mensajes = 20
-		}
 		var g = U(e, 'type'),
 		h = U(e, 'id'),
 		k = 0;
@@ -130,10 +131,10 @@ function cargar_mensajes(a, b, c, d) {
 				,a
 			)
 		)
-		if(está_activado_herramientas){
-			window.contador_deslizar_mensaje=0
-			setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
-		}
+	}
+	if(está_activado_herramientas){
+		window.contador_deslizar_mensaje=0
+		setTimeout(deslizar_mensaje,window.tiempo_espera_carga)
 	}
 }
 
