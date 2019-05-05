@@ -637,7 +637,7 @@ function martillo(entrada,número,sala)
 function eliminar_y_banear_18(entrada,usuario,número,sala)
 {
 	if(!puede_banear_18){return;}
-	var palabras_or = ["sexy?","adult","fuck","video chat","rape"]
+	var palabras_or = ["sexy?","adult","fuck","video chat","rape","dating site"]
 	if(coinciden_palabras_or(entrada,palabras_or)&/https?:\/{2}/gi.test(entrada))
 	{
 		eliminar_mensaje(número,sala)
