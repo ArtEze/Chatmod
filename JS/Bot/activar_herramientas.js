@@ -93,7 +93,9 @@ function deslizar_mensaje(){
 		}
 	}
 	var últimas_dos_cantidades = window.cantidad_mensajes.slice(-2)
-	if(window.logo_cargando.style.display == "none" &&
+	if(
+		window.logo_cargando &&
+		window.logo_cargando.style.display == "none" &&
 		últimas_dos_cantidades[0]==últimas_dos_cantidades[1]
 		&&últimas_dos_cantidades[1]!=window.cantidad_mensajes[0]
 	){
