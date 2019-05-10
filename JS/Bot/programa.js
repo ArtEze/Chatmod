@@ -2176,6 +2176,13 @@ function unir_array_palabras(array){
 	}
 	return devuelve
 }
+function bloquear_nick(y){
+	return Array.from(document.querySelectorAll(".chatPrivate .nick"))
+		.map(x=>[x,x.textContent])
+		.filter(x=>x[1]==y)
+		.map(x=>x[0].parentElement.parentElement.remove())
+	;
+}
 
 window.anticors = "https://cors-anywhere.herokuapp.com/"
 
