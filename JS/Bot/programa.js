@@ -2184,224 +2184,229 @@ function bloquear_nick(y){
 	;
 }
 
-window.anticors = "https://cors-anywhere.herokuapp.com/"
+function programa_bot()
+{
+	window.anticors = "https://cors-anywhere.herokuapp.com/"
 
-var tiempos = {}
-var objetos = ["flood"]
-for(var i in objetos)
-{
-	var actual = objetos[i]
-	window[actual] = {}
-}
-var navegadores = [
-	/*
-	[
-		"Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Mobile/15E148 Safari/604.1"
-		,".."
-		,1000
-	]
-	[
-		"Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0"
-		,"Posible intruso"
-		,1777
-	],
-	*/
-	[
-		"Mozilla/5.0 (Linux; Android 5.1.1; SM-J200M Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.137 Mobile Safari/537.36"
-		,"Sea bienvenido, espere un minuto"
-		,1
-	]
-	/*
-	,[
-		"SM-J200M Build/LMY47X"
-		,"Bienvenido, espere un minuto"
-		,1
-	]
-	*/
-]
-var ips_ban = [
-	["23.27.45","San José",100]
-	,["190.183.212","BUDIN CON CHISPAS",44640]
-	,["185.233","-",44640]
-	,["185.234","-",44640]
-	//,["186.134.90.106","Agustín",10080]
-]
-
-var objetos_local_storage = [
-	"entrados", "idos"
-]
-for(var i in objetos_local_storage)
-{
-	var actual = objetos_local_storage[i]
-	var local_actual = localStorage[actual]
-	if(local_actual==undefined){
-		window[actual] = {}
-	}else{
-		window[actual] = JSON.parse(local_actual)
-	}
-}
-var arrays = [
-	"votados", "mensajes", "entrar_salir",
-	,"mensajes_entra_sale_ban", "baneados", "sospechosos"
-	,"inhabilitado_banear", "votantes", "tiempos_votos", "salas"
-	,"pedidos","mensajes_privados","usuarios_a_patear"
-]
-for(var i in arrays)
-{
-	var actual = arrays[i]
-	window[actual] = []
-}
-var valores = [
-	 [0,"id_votación"],[1,"sala"]
-	,[1,"sala_ban"],[1,"sala_visible"],[0,"id_chat"]
-	,[4,"votos_necesarios"],[undefined,"privado_moderador"]
-
-	,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
-	,[1,"puede_obtener_info"],[1,"permitir_kendall"]
-	,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
-	,[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
-	,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
-	,[0,"esperar_confirmar_patear"]
-]
-for(var i in valores)
-{
-	var actual = valores[i]
-	window[actual[1]] = actual[0]
-}
-if(window["usuarios"]==undefined)
-{
-	usuarios = [
-		{alias:"♠~мℓ~♠",id: 5191789}
-		,{alias:"☪~RL~☪",id: 5039037}
-	]
-}
-var chats = [
-	/*
-		sala | sala_ban | puede_banear_votos
-		ban_heurístico | puede_obtener_info | puede_banear_18
-		título
-	*/
-	 [1, 2,0,0,1,1,"CHAT Argentina - SimpleCHAT"]
-	,[1, 3,1,0,1,1,"Sala LIBRE"]
-	,[1,11,1,0,1,1,"40 o más"]
-	,[1, 1,1,1,1,1,"Neko7w7"]
-	,[1, 1,1,0,1,0,"Vamoz Lo' Pibe' Chorro'..!"]
-]
-for(var i in chats)
-{
-	var actual = chats[i]
-	if(actual[6]==document.title)
+	var tiempos = {}
+	var objetos = ["flood"]
+	for(var i in objetos)
 	{
-		id_chat = i
-		sala = actual[0]
-		sala_ban = actual[1]
-		puede_banear_votos = actual[2]
-		ban_heurístico = actual[3]
-		puede_obtener_info = actual[4]
-		puede_banear_18 = actual[5]
+		var actual = objetos[i]
+		window[actual] = {}
 	}
+	var navegadores = [
+		/*
+		[
+			"Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Mobile/15E148 Safari/604.1"
+			,".."
+			,1000
+		]
+		[
+			"Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0"
+			,"Posible intruso"
+			,1777
+		],
+		*/
+		[
+			"Mozilla/5.0 (Linux; Android 5.1.1; SM-J200M Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.137 Mobile Safari/537.36"
+			,"Sea bienvenido, espere un minuto"
+			,1
+		]
+		/*
+		,[
+			"SM-J200M Build/LMY47X"
+			,"Bienvenido, espere un minuto"
+			,1
+		]
+		*/
+	]
+	var ips_ban = [
+		["23.27.45","San José",100]
+		,["190.183.212","BUDIN CON CHISPAS",44640]
+		,["185.233","-",44640]
+		,["185.234","-",44640]
+		//,["186.134.90.106","Agustín",10080]
+	]
+
+	var objetos_local_storage = [
+		"entrados", "idos"
+	]
+	for(var i in objetos_local_storage)
+	{
+		var actual = objetos_local_storage[i]
+		var local_actual = localStorage[actual]
+		if(local_actual==undefined){
+			window[actual] = {}
+		}else{
+			window[actual] = JSON.parse(local_actual)
+		}
+	}
+	var arrays = [
+		"votados", "mensajes", "entrar_salir",
+		,"mensajes_entra_sale_ban", "baneados", "sospechosos"
+		,"inhabilitado_banear", "votantes", "tiempos_votos", "salas"
+		,"pedidos","mensajes_privados","usuarios_a_patear"
+	]
+	for(var i in arrays)
+	{
+		var actual = arrays[i]
+		window[actual] = []
+	}
+	var valores = [
+		 [0,"id_votación"],[1,"sala"]
+		,[1,"sala_ban"],[1,"sala_visible"],[0,"id_chat"]
+		,[4,"votos_necesarios"],[undefined,"privado_moderador"]
+
+		,[0,"puede_patear"],[0,"puede_banear_votos"],[0,"ban_heurístico"]
+		,[1,"puede_obtener_info"],[1,"permitir_kendall"]
+		,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
+		,[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
+		,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
+		,[0,"esperar_confirmar_patear"]
+	]
+	for(var i in valores)
+	{
+		var actual = valores[i]
+		window[actual[1]] = actual[0]
+	}
+	if(window["usuarios"]==undefined)
+	{
+		usuarios = [
+			{alias:"♠~мℓ~♠",id: 5191789}
+			,{alias:"☪~RL~☪",id: 5039037}
+		]
+	}
+	var chats = [
+		/*
+			sala | sala_ban | puede_banear_votos
+			ban_heurístico | puede_obtener_info | puede_banear_18
+			título
+		*/
+		 [1, 2,0,0,1,1,"CHAT Argentina - SimpleCHAT"]
+		,[1, 3,1,0,1,1,"Sala LIBRE"]
+		,[1,11,1,0,1,1,"40 o más"]
+		,[1, 1,1,1,1,1,"Neko7w7"]
+		,[1, 1,1,0,1,0,"Vamoz Lo' Pibe' Chorro'..!"]
+	]
+	for(var i in chats)
+	{
+		var actual = chats[i]
+		if(actual[6]==document.title)
+		{
+			id_chat = i
+			sala = actual[0]
+			sala_ban = actual[1]
+			puede_banear_votos = actual[2]
+			ban_heurístico = actual[3]
+			puede_obtener_info = actual[4]
+			puede_banear_18 = actual[5]
+
+		}
+	}
+	var inbaneables = [
+		"181.230.209.30" // ArtEze
+		,"186.18.124.193" // Linka\u2606
+		,"190.105.47.16" // Dipper
+		,"181.14.239.38" // Leandro
+		,"186.128.20.169" // Paula
+		,"186.128.20.169" // Paula
+	]
+	var lugares_ban = [
+		["Fremont","San José",100]
+		,["French"         ,"F",500]
+		,["United"         ,"N",500]
+		,["Republic of"    ,"P",500]
+		,["Romania"        ,"O",500]
+		,["Canada"         ,"C",500]
+		,["Switzerland"    ,"W",500]
+		,["Slovakia"       ,"V",500]
+		,["Ukraine"        ,"E",500]
+		,["Netherlands"    ,"T",500]
+		,["Liberia"        ,"I",500]
+		,["Munich"         ,"H",500]
+		,["Germany"        ,"M",500]
+		,["Sweden"         ,"S",500]
+		,["France"         ,"R",500]
+		,["Buffalo"        ,"B",500]
+		,["Anonymous Proxy","X",500]
+		,["Hungary"        ,"Y",500]
+		,["Czech"          ,"Z",500]
+		,["Austria"        ,"A",500]
+		,["Winnipeg"       ,"G",500]
+		,["Chisinau"       ,"U",500]
+		,["Japan"          ,"J",500]
+		,["Australia"      ,"L",500]
+		,["Korea"          ,"K",500]
+		,["Dearborn"       ,"D",500]
+		,["Vietnam"        ,"Q",500]
+		,["Albania"        ,"Ñ",500]
+		,["Tbilisi"        ,"Tbilisi",500]
+	]
+	var avatar_excluidos = [
+		"Genciita*_*"
+		,"nadia"
+		,"Maria Luz"
+		//,"\u265a\u15ab\u2623\u004c\u03b1\u0443\u006c\u03b1\u2623\u15ad\u265a\u1d60\u1d58\u1d49\u1d49\u1db0" // Layla
+		,"OdiosaA"
+		,"HerbalLove"
+		,"\u2661Luni :3"
+		//,"Loolii/lore"
+		,"yaris"
+	]
+	var info_excluidos = [
+		"HerbalLove"
+	]
+	var excluidos_patear = [
+		"yaris"
+		,"mαdєlínє"
+		,"Atenea"
+		,"ѕσƒι025~\u2661"
+	]
+	var desconocimiento = [
+		"No lo sé.",
+		"No tengo idea.",
+		"Realmente yo no lo sé.",
+		"¿y yo qué voy a saber?",
+		"Solo soy un programa, no me pregunte eso.",
+		"Quizás lo sepa otra persona.",
+		"No tengo ese conocimiento.",
+		"No sé de dónde obtener esa información.",
+		"Esa pregunta me parece complicada de responder.",
+		"No me programaron para responder eso.",
+		"Si tuviera la bola de cristal te lo diría."
+	]
+	var error_de_cálculo = [
+		"No se ha podido calcular correctamente.",
+		"Tuve problemas al realizar la operación que has pedido.",
+		"Usted me ha pedido algo que me parece imposible de resolver.",
+		"Perdone, pero esa pregunta me parece algo compleja.",
+		"Se me dificultó un poco resolver eso, por lo que me he rendido."
+	]
+	var no_patear = [
+		"Al cabo que ni quería."
+		,"Mejor así."
+		,"Menos trabajo para mí."
+		,"Simón, mejor Nelson."
+	]
+	var no_patear_excluido = [
+		"Error desconocido."
+		,"Circuito desconectado."
+		,"El sistema falló."
+	]
+	var madre = [ "vieja", "viejo", "madre", "padre", "papá", "mamá", "madrastra", "padrastro", "zorra", "novia", "perrita", "novio", "abuela", "futuro hijo", "futura hija", "amigo de la esquina", "jefe", "jefa", "prima", "abuela", "tía", "tío", "esposa", "esposo", "nieto", "nieta", "tatarabuela", "tatarabuelo", "sobrino", "sobrina", "mujer", "hombre", "bisabuelo", "bisabuela" ]
+
+	var sexo = [ "garché", "cojí", "emperné", "empomaba", "empomé", "entubaba", "culeaba", "trinqué", "encamé", "acosté", "conejeaba", "daba matraca", "le estaba enterrando la batata", "mojé el bizcocho", "soplaba la cañita", "sobaba el pirulín", "le regaba la lechuga", "le divertía el pelado", "le germinaba el poroto", "le sacaba las telarañas", "me enflautaba", "fui a echarle un fierro", "le mojé la chaucha", "le pintaba el templo", "le regué la lechuga", "le lustraba la manija", "le destapaba las cloacas", "le limpié el horno" ]
+
+	var chats_pablo = [
+		"40omas","salalibre","sala50omas","cibersexoo"
+	]
+	var lista_signos = [
+		"aries","tauro","géminis","cáncer","leo","virgo","libra","escorpio","sagitario","capricornio","acuario","piscis"
+	]
+	var signos = []
+	descargar_votantes()
+	descargar_horóscopo()
+	permanecer_conectado()
 }
-var inbaneables = [
-	"181.230.209.30" // ArtEze
-	,"186.18.124.193" // Linka\u2606
-	,"190.105.47.16" // Dipper
-	,"181.14.239.38" // Leandro
-	,"186.128.20.169" // Paula
-	,"186.128.20.169" // Paula
-]
-var lugares_ban = [
-	["Fremont","San José",100]
-	,["French"         ,"F",500]
-	,["United"         ,"N",500]
-	,["Republic of"    ,"P",500]
-	,["Romania"        ,"O",500]
-	,["Canada"         ,"C",500]
-	,["Switzerland"    ,"W",500]
-	,["Slovakia"       ,"V",500]
-	,["Ukraine"        ,"E",500]
-	,["Netherlands"    ,"T",500]
-	,["Liberia"        ,"I",500]
-	,["Munich"         ,"H",500]
-	,["Germany"        ,"M",500]
-	,["Sweden"         ,"S",500]
-	,["France"         ,"R",500]
-	,["Buffalo"        ,"B",500]
-	,["Anonymous Proxy","X",500]
-	,["Hungary"        ,"Y",500]
-	,["Czech"          ,"Z",500]
-	,["Austria"        ,"A",500]
-	,["Winnipeg"       ,"G",500]
-	,["Chisinau"       ,"U",500]
-	,["Japan"          ,"J",500]
-	,["Australia"      ,"L",500]
-	,["Korea"          ,"K",500]
-	,["Dearborn"       ,"D",500]
-	,["Vietnam"        ,"Q",500]
-	,["Albania"        ,"Ñ",500]
-	,["Tbilisi"        ,"Tbilisi",500]
-]
-var avatar_excluidos = [
-	"Genciita*_*"
-	,"nadia"
-	,"Maria Luz"
-	//,"\u265a\u15ab\u2623\u004c\u03b1\u0443\u006c\u03b1\u2623\u15ad\u265a\u1d60\u1d58\u1d49\u1d49\u1db0" // Layla
-	,"OdiosaA"
-	,"HerbalLove"
-	,"\u2661Luni :3"
-	//,"Loolii/lore"
-	,"yaris"
-]
-var info_excluidos = [
-	"HerbalLove"
-]
-var excluidos_patear = [
-	"yaris"
-	,"mαdєlínє"
-	,"Atenea"
-	,"ѕσƒι025~\u2661"
-]
-var desconocimiento = [
-	"No lo sé.",
-	"No tengo idea.",
-	"Realmente yo no lo sé.",
-	"¿y yo qué voy a saber?",
-	"Solo soy un programa, no me pregunte eso.",
-	"Quizás lo sepa otra persona.",
-	"No tengo ese conocimiento.",
-	"No sé de dónde obtener esa información.",
-	"Esa pregunta me parece complicada de responder.",
-	"No me programaron para responder eso.",
-	"Si tuviera la bola de cristal te lo diría."
-]
-var error_de_cálculo = [
-	"No se ha podido calcular correctamente.",
-	"Tuve problemas al realizar la operación que has pedido.",
-	"Usted me ha pedido algo que me parece imposible de resolver.",
-	"Perdone, pero esa pregunta me parece algo compleja.",
-	"Se me dificultó un poco resolver eso, por lo que me he rendido."
-]
-var no_patear = [
-	"Al cabo que ni quería."
-	,"Mejor así."
-	,"Menos trabajo para mí."
-	,"Simón, mejor Nelson."
-]
-var no_patear_excluido = [
-	"Error desconocido."
-	,"Circuito desconectado."
-	,"El sistema falló."
-]
-var madre = [ "vieja", "viejo", "madre", "padre", "papá", "mamá", "madrastra", "padrastro", "zorra", "novia", "perrita", "novio", "abuela", "futuro hijo", "futura hija", "amigo de la esquina", "jefe", "jefa", "prima", "abuela", "tía", "tío", "esposa", "esposo", "nieto", "nieta", "tatarabuela", "tatarabuelo", "sobrino", "sobrina", "mujer", "hombre", "bisabuelo", "bisabuela" ]
 
-var sexo = [ "garché", "cojí", "emperné", "empomaba", "empomé", "entubaba", "culeaba", "trinqué", "encamé", "acosté", "conejeaba", "daba matraca", "le estaba enterrando la batata", "mojé el bizcocho", "soplaba la cañita", "sobaba el pirulín", "le regaba la lechuga", "le divertía el pelado", "le germinaba el poroto", "le sacaba las telarañas", "me enflautaba", "fui a echarle un fierro", "le mojé la chaucha", "le pintaba el templo", "le regué la lechuga", "le lustraba la manija", "le destapaba las cloacas", "le limpié el horno" ]
-
-var chats_pablo = [
-	"40omas","salalibre","sala50omas","cibersexoo"
-]
-var lista_signos = [
-	"aries","tauro","géminis","cáncer","leo","virgo","libra","escorpio","sagitario","capricornio","acuario","piscis"
-]
-var signos = []
-descargar_votantes()
-descargar_horóscopo()
-permanecer_conectado()
