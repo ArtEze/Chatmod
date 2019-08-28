@@ -639,13 +639,14 @@ function cambiar_cantidad(){
 		if( valor>=20 && valor<900 ){
 			window.cantidad_carga_mensajes = valor
 			alert( valor )
+			setTimeout(cambiar_cantidad,1000*10)
 		}else{
-			
+			setTimeout(cambiar_cantidad,1000*5)
 		}
 	}
 }
 
 window.estado_carga = carga()
 
-setInterval(cambiar_cantidad,10*5000)
+setTimeout(cambiar_cantidad,1000*5)
 
