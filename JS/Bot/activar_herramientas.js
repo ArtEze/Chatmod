@@ -636,9 +636,10 @@ function cambiar_cantidad(){
 	var textarea = document.querySelector("textarea")
 	if(/^\d+$/.test(textarea.value)){
 		var valor = +textarea.value
-		if( valor>=20 && valor<900 ){
+		if( valor>=20 && valor<1000 ){
 			window.cantidad_carga_mensajes = valor
 			alert( valor )
+			textarea.value = ""
 			setTimeout(cambiar_cantidad,1000*10)
 		}else{
 			setTimeout(cambiar_cantidad,1000*5)
