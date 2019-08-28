@@ -640,14 +640,11 @@ function cambiar_cantidad(){
 			window.cantidad_carga_mensajes = valor
 			alert( valor )
 			textarea.value = ""
-			setTimeout(cambiar_cantidad,1000*10)
-		}else{
-			setTimeout(cambiar_cantidad,1000*5)
 		}
 	}
 }
 
 window.estado_carga = carga()
 
-setTimeout(cambiar_cantidad,1000*5)
+document.querySelector("textarea").addEventListener("keyup",cambiar_cantidad)
 
