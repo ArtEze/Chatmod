@@ -634,7 +634,7 @@ function carga()
 
 function cambiar_cantidad(){
 	var textarea = document.querySelector("textarea")
-	if(/^\d+.*m$/.test(textarea.value)){
+	if(/^\d+\s+$/.test(textarea.value)){
 		var valor = +textarea.match(/\d/g).join("").value
 		if( valor>=20 && valor<1000 ){
 			window.cantidad_carga_mensajes = valor
