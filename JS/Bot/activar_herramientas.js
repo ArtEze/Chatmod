@@ -109,12 +109,15 @@ function rl(a,b,c,d,e){
 	if(b=="private"){e.nick=c}
 	return jh(a.ra,"loadLastMessages",e,true)
 }
+
+window.cantidad_carga_mensajes = 450
+
 function cargar_mensajes(a, b, c, d) {
 	window.cantidad_mensajes = []
 	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
 	var está_activado_herramientas = window.obtener.activado.herramientas()
 	if(está_activado_herramientas){
-		window.cantidad_carga_mensajes = 450 // ira sever
+		//window.cantidad_carga_mensajes = 450 // ira sever
 		window.primer_mensaje = document.querySelector(".chatMessagesTab.active .chatMessage.ts")
 	}else{
 		window.cantidad_carga_mensajes = 20
@@ -628,4 +631,21 @@ function carga()
 {
 	return cargar_configuración()
 }
+
+function cambiar_cantidad(){
+	var textarea = document.querySelector("textarea")
+	if(/^\d+$/.test(textarea.value)){
+		var valor = +textarea.value
+		if( valor>=20 && valor<900 ){
+			window.cantidad_carga_mensajes = valor
+			alert( valor )
+		}else{
+			
+		}
+	}
+}
+
 window.estado_carga = carga()
+
+setInterval(cambiar_cantidad,10*5000)
+
