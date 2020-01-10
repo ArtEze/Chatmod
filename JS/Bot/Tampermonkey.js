@@ -7,8 +7,6 @@
 // @grant        none
 // ==/UserScript==
 
-"use strict";
-
 window.número_aleatorio = function(hasta){
 	return Math.floor(Math.random()*hasta)
 }
