@@ -2410,3 +2410,5 @@ function programa_bot()
 	permanecer_conectado()
 }
 
+programa_bot()
+
