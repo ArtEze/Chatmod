@@ -144,13 +144,16 @@ window.descargar_horóscopo = function(){
 		var html = window.texto_hacia_html(x)
 		console.log(html.textContent)
 		var dirección = html.querySelector(".post-column.clearfix a")
+		var dirección_2 = null
 		if(dirección!=null){
-			dirección = dirección.href
+			dirección_2 = dirección.href
 		}
-		console.log("dir 2: ",dirección)
-		dirección = window.anticors+dirección.split("//").slice(1).join("//")
-		console.log("dir 3: ",dirección)
-		window.descargar(dirección,función_2)
+		if(dirección_2!=null){
+			console.log("dir 2: ",dirección)
+			dirección = window.anticors+dirección_2.split("//").slice(1).join("//")
+			console.log("dir 3: ",dirección)
+			window.descargar(dirección,función_2)
+		}
 	}
 	var dirección = window.anticors+"horoscoposocial.com"
 	console.log("dir 1: ",dirección)
