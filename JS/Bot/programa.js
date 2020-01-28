@@ -1671,7 +1671,9 @@ window.agregar_mensaje = function(mensaje){
 		mensajes.push(mensaje)
 	}
 }
-window.procesar_mensajes = function(a,b){
+
+// Absolutamente necesario mantener el nombre de la función.
+window.procesar_mensajes = function procesar_mensajes(a,b){
 	var soy_un_bot = window.soy_bot()
 	if(soy_un_bot){
 		if(b.t!="m"){
@@ -1797,7 +1799,9 @@ window.entrar_y_salir = function(a,b,c){
 		if(a.value>=lc(this).value)for(a=this.Dq(a,b,c),b="log:"+a.Rn,p.console&&(p.console.timeStamp?p.console.timeStamp(b):p.console.markTimeline&&p.console.markTimeline(b)),p.msWriteProfilerMark&&p.msWriteProfilerMark(b),b=this;b;){c=b;var d=a;if(c.xg)for(var e=0,g=void 0;g=c.xg[e];e++)g(d);b=b.getParent()}
 	}
 }
-window.registrar_los_pedidos = function(a,b){
+
+// Absolutamente necesario mantener el nombre de la función.
+window.registrar_los_pedidos = function registrar_los_pedidos(a,b){
 	var pedido = [a,b]
 	pedidos.push(pedido)
 	if(a.url=="/chat/openPrivate2"){
