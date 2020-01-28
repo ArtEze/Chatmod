@@ -968,12 +968,13 @@ window.banear_por_votos = function(entrada,usuario,hacia,sala){
 		sala = sala_ban
 	}
 	if(entrada.match(/(^\s*ban\s*\s*\d*$)|(^\[b]ban\s*\d*\[\/b]$)/gi)!=null & hacia!=undefined){
-		/*
-		if(!puede_banear_votos){
+	
+		// && 2==3 inhabilita el condicional
+	
+		if(!puede_banear_votos && 2==3 ){
 			window.enviar_mensaje("El baneo por votos está desactivado.",sala)
 		}
-		*/
-		//if(puede_banear_votos){
+		if(puede_banear_votos && 2==3 ){
 			window.votar_ban(usuario,hacia,sala)
 		}
 	}
