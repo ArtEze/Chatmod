@@ -1523,9 +1523,9 @@ window.determinar_color_texto = function(nombre_chat){
 	return devuelve
 }
 
-window.tiempo_total_saludo = 0
+window.tiempo_total_saludo = 21*1000
 window.tiempo_espera_saludo = function(){
-	return 20*1000 + Math.floor(Math.random()*1000*60*2)
+	return 21*1000 + Math.floor(Math.random()*1000*60)
 }
 
 window.saludar = function(nombre){
@@ -1553,6 +1553,9 @@ window.saludar = function(nombre){
 			+ "¡Esto es "+ nombre_chat_negrita +"!";
 		window.enviar_mensaje(window.mensaje_bienvenida,1)
 		window.tiempo_total_saludo -= window.espera_actual
+		if(window.tiempo_total_saludo<21*1000){
+			window.tiempo_total_saludo = 21*1000
+		}
 	},window.tiempo_total_saludo)
 	entrados[nombre] = 1
 	localStorage.entrados = JSON.stringify(entrados)
@@ -1804,6 +1807,9 @@ window.entrar_y_salir = function(a,b,c){
 					setTimeout(()=>{
 						window.enviar_mensaje(mensaje,1)
 						window.tiempo_total_saludo -= window.espera_actual
+						if(window.tiempo_total_saludo<21*1000){
+							window.tiempo_total_saludo = 21*1000
+						}
 					},window.tiempo_total_saludo)
 				}
 			}
