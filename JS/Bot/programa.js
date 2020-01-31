@@ -1311,7 +1311,7 @@ window.pedir_la_hora = function(entrada,usuario,sala,hacia){
 		mensaje = "La hora en la que " + window.elemento_aleatorio(sexo) + " a tu " + window.elemento_aleatorio(madre)+"."
 		window.enviar_mensaje(mensaje,sala,[usuario])
 	}else{
-		if(!hecho&entrada.match(/(([qk]u?)|k)h?[eé]?h? h?ora (e[hs]|son)?/gi)!=null){
+		if(!hecho&entrada.match(/(([qk]u?)|k)h?[eiéí]?h?\x20?h?ora (e[hs]|son)?/gi)!=null){
 			mensaje = ""
 			var fecha = new Date()
 			var hora = fecha.getUTCHours()
