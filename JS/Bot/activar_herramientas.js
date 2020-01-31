@@ -82,7 +82,7 @@ function deslizar_mensaje(){
 	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
 	var activo = document.querySelector(".chatMessagesTab.active")
 	var contenedor = activo.querySelector(".chatMessagesContainer")
-	var se_ve = Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight
+	var se_ve = window.primer_mensaje && ( Math.abs(window.primer_mensaje.offsetTop-contenedor.scrollTop)<window.primer_mensaje.scrollHeight )
 	var se_ve_el_logo_cargando = window.logo_cargando!=undefined && window.logo_cargando.style.display == "block"
 	if(!se_ve || se_ve_el_logo_cargando )
 	{
