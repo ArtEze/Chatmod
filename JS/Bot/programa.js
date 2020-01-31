@@ -1522,6 +1522,12 @@ window.determinar_color_texto = function(nombre_chat){
 	).join("")
 	return devuelve
 }
+
+window.tiempo_total_saludo = 0
+window.tiempo_espera_saludo = function(){
+	return 20*1000 + Math.floor(Math.random()*1000*60*2)
+}
+
 window.saludar = function(nombre){
 	/*	
 		nick	ArtEze
@@ -1534,7 +1540,8 @@ window.saludar = function(nombre){
 		g	moderator
 	*/
 	console.log(nombre)
-	window.tiempo_espera_saludo = 300 + Math.floor(Math.random()*1000*60*2)
+	window.espera_actual = tiempo_espera_saludo()
+	window.tiempo_total_saludo += window.espera_actual
 	setTimeout(()=>{
 		var género = window.género_usuario(nombre)
 		var nombre_bbcode = window.bbcode_usuario(nombre)
@@ -1545,7 +1552,8 @@ window.saludar = function(nombre){
 			+ nombre_bbcode + "! "
 			+ "¡Esto es "+ nombre_chat_negrita +"!";
 		window.enviar_mensaje(window.mensaje_bienvenida,1)
-	},window.tiempo_espera_saludo)
+		window.tiempo_total_saludo -= window.espera_actual
+	},window.tiempo_total_saludo)
 	entrados[nombre] = 1
 	localStorage.entrados = JSON.stringify(entrados)
 }
@@ -1791,7 +1799,12 @@ window.entrar_y_salir = function(a,b,c){
 					mensaje = "¡Te extrañaremos, " + window.bbcode_usuario(nombre) + "! ¡vuelve pronto! :3"
 					idos[nombre] = 1
 					localStorage.idos = JSON.stringify(idos)
-					setTimeout(()=>window.enviar_mensaje(mensaje,1),Math.floor(Math.random()*1000*60*1))
+					window.espera_actual = window.tiempo_espera_saludo()
+					window.tiempo_total_saludo += window.espera_actual
+					setTimeout(()=>{
+						window.enviar_mensaje(mensaje,1)
+						window.tiempo_total_saludo -= window.espera_actual
+					},window.tiempo_total_saludo)
 				}
 			}
 		}
