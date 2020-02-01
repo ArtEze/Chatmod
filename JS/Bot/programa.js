@@ -1543,15 +1543,22 @@ window.saludar = function(nombre){
 	window.espera_actual = tiempo_espera_saludo()
 	window.tiempo_total_saludo += window.espera_actual
 	setTimeout(()=>{
+		var bienvenidas = []
+
 		var género = window.género_usuario(nombre)
 		var nombre_bbcode = window.bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
 		var color_chat = window.determinar_color_texto(nombre_chat)
 		var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
-		window.mensaje_bienvenida = "¡Bienvenid" + género + " "
-			+ nombre_bbcode + "! "
-			+ "¡Esto es "+ nombre_chat_negrita +"!";
-		window.enviar_mensaje(window.mensaje_bienvenida,1)
+
+		bienvenidas.push( "¡Bienvenid"+género + " " + nombre_bbcode + "! " + "¡Esto es "+ nombre_chat_negrita +"!" );
+		bienvenidas.push( "¡Bienvenid"+género + " a " + nombre_chat_negrita + ", " + nombre_bbcode + "!" );
+		bienvenidas.push( "¡Esto es "+ nombre_chat_negrita +"! ¡Bienvenid"+género + " " + nombre_bbcode + "!" );
+		bienvenidas.push( "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombre_bbcode + "!" );
+
+		var mensaje = window.elemento_aleatorio(bienvenidas)
+
+		window.enviar_mensaje(mensaje,1)
 		window.tiempo_total_saludo -= window.espera_actual
 		if(window.tiempo_total_saludo<21*1000){
 			window.tiempo_total_saludo = 21*1000
