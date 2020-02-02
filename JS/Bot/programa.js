@@ -1806,7 +1806,16 @@ window.entrar_y_salir = function(a,b,c){
 			}else{
 				entrar_salir.push([0,nombre,tiempo])
 				if(idos[nombre]==0){
-					mensaje = "¡Te extrañaremos, " + window.bbcode_usuario(nombre) + "! ¡vuelve pronto! :3"
+					var nombre_negrita = window.bbcode_usuario(nombre)
+
+					var mensajes = []
+
+					mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
+					mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
+					mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
+
+					mensaje = window.elemento_aleatorio(mensajes)
+
 					idos[nombre] = 1
 					localStorage.idos = JSON.stringify(idos)
 					window.espera_actual = window.tiempo_espera_saludo()
