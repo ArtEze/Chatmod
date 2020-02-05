@@ -1527,6 +1527,9 @@ window.tiempo_total_saludo = 21*1000
 window.tiempo_espera_saludo = function(){
 	return 21*1000 + Math.floor(Math.random()*1000*15) // 15 segundos de espera.
 }
+window.tiempo_espera = function(){
+	return Math.floor(Math.random()*21*1000)
+}
 window.enviar_saludo = function(nombre,sala){
 	var bienvenidas = []
 
@@ -1542,9 +1545,21 @@ window.enviar_saludo = function(nombre,sala){
 	bienvenidas.push( "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombre_bbcode + "!" );
 
 	var mensaje = window.elemento_aleatorio(bienvenidas)
-
-	window.enviar_mensaje(mensaje,sala)
+	window.enviar_mensaje(mensaje,sala,[],window.tiempo_espera())
 }
+window.enviar_despedida = function(nombre,sala){
+	var mensajes = []
+
+	var nombre_negrita = window.bbcode_usuario(nombre)
+	mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
+	mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
+	mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
+
+	mensaje = window.elemento_aleatorio(mensajes)
+
+	window.enviar_mensaje(mensaje,sala,[],window.tiempo_espera())
+}
+
 window.saludar = function(nombre){
 	/*	
 		nick	ArtEze
@@ -1630,12 +1645,18 @@ window.descargar_lightshot = function(entrada,número,usuario,sala,hacia){
 		window.lightshot_cola_asíncrona(salida,cola,número,usuario,sala,hacia)
 	}
 }
-window.saludame = function(entrada,número,usuario,sala,hacia){
+window.saludame_y_despedime = function(entrada,número,usuario,sala,hacia){
 	var regex_saludar = /saluda/gi
 	if(regex_saludar.test(entrada) & window.puede_saludarlos ){
 		window.idos[usuario] = 0
 		window.entrados[usuario] = 0
 		window.enviar_saludo(usuario,sala)
+	}
+	var regex_despedir = /despide/gi
+	if(regex_despedir.test(entrada) & window.puede_despedirlos ){
+		window.idos[usuario] = 0
+		window.entrados[usuario] = 0
+		window.enviar_despedida(usuario,sala)
 	}
 }
 window.entrar = function(es_entrar,nombre,función){
@@ -1763,7 +1784,7 @@ window.procesar_mensajes = function procesar_mensajes(a,b){
 				window.definir						(entrada,usuario,sala)
 				
 				// Cuarto orden
-				window.saludame						(entrada,número,usuario,sala,hacia)
+				window.saludame_y_despedime			(entrada,número,usuario,sala,hacia)
 			}
 		}
 	}
@@ -1819,22 +1840,12 @@ window.entrar_y_salir = function(a,b,c){
 			}else{
 				entrar_salir.push([0,nombre,tiempo])
 				if(idos[nombre]==0){
-					var nombre_negrita = window.bbcode_usuario(nombre)
-
-					var mensajes = []
-
-					mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
-					mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
-					mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
-
-					mensaje = window.elemento_aleatorio(mensajes)
-
 					idos[nombre] = 1
 					localStorage.idos = JSON.stringify(idos)
 					window.espera_actual = window.tiempo_espera_saludo()
 					window.tiempo_total_saludo += window.espera_actual
 					setTimeout(()=>{
-						window.enviar_mensaje(mensaje,1)
+						window.enviar_despedida(nombre,1)
 						window.tiempo_total_saludo -= window.espera_actual
 						if(window.tiempo_total_saludo<21*1000){
 							window.tiempo_total_saludo = 21*1000
@@ -2009,7 +2020,7 @@ window.programa_bot = function(){
 		,[1,"puede_banear_18"],[1,"puede_buscar_google"],[1,"puede_descargar_lightshot"],[new DOMParser(),"domparser"]
 		,[1,"puede_entrar"],[1,"puede_mostrar_imágenes"]
 		,[1,"puede_mostrar_avatar"],[1,"puede_patear_usuarios"],[0,"big_bang_activado"]
-		,[0,"esperar_confirmar_patear"],[1,"puede_saludarlos"]
+		,[0,"esperar_confirmar_patear"],[1,"puede_saludarlos"],[1,"puede_despedirlos"]
 	]
 	for(var i in valores){
 		var actual = valores[i]
