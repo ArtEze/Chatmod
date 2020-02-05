@@ -1525,7 +1525,7 @@ window.determinar_color_texto = function(nombre_chat){
 
 window.tiempo_total_saludo = 21*1000
 window.tiempo_espera_saludo = function(){
-	return 21*1000 + Math.floor(Math.random()*1000*30) // 30 segundos de espera.
+	return 21*1000 + Math.floor(Math.random()*1000*15) // 15 segundos de espera.
 }
 
 window.saludar = function(nombre){
