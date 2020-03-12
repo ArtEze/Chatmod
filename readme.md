@@ -1,5 +1,5 @@
-# Chatovod_Mod
+# Charlavod
+
+Modificaciones JS y CSS para Chatovod... Además hay un bot.
 
 https://arteze.github.io/Chatovod_Mod/
-
-Chatovod CSS y un bot.
