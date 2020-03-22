@@ -1,7 +1,7 @@
 /*
 Descargar analizador_html desde:
-	https://github.com/ArtEze/arteze.github.io/Lenguajes/NodeJS/analizador_html/index.js
-
+	Archivo en proyecto: https://github.com/arteze/arteze.github.io/blob/master/lenguaje/node_js/analizador_html/index.js
+	Ruta en GitHub Pages: https://arteze.github.io/lenguaje/node_js/analizador_html/index.js
 */
 
 var html = require("analizador_html")
