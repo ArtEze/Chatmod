@@ -1,7 +1,9 @@
 /*
 Descargar http_otecald desde:
-	https://github.com/ArtEze/arteze.github.io/Lenguajes/NodeJS/http_otecald/index.js
+	Archivo en proyecto: https://github.com/ArtEze/arteze.github.io/blob/master/lenguaje/node_js/http_otecald/index.js
+	Ruta en GitHub Pages: https://arteze.github.io/lenguaje/node_js/http_otecald/index.js
 
+Ruta Node usada por ArtEze:
 node "/eze/Node/BotsVsBots/NodeChatovod_BotsVsBots_2.js" nekonwn 0
 */
 
