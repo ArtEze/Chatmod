@@ -1,6 +1,6 @@
 /*
 Descargar http_otecald desde:
-	Archivo en proyecto: https://github.com/ArtEze/arteze.github.io/blob/master/lenguaje/node_js/http_otecald/index.js
+	Archivo en proyecto: https://github.com/arteze/arteze.github.io/blob/master/lenguaje/node_js/http_otecald/index.js
 	Ruta en GitHub Pages: https://arteze.github.io/lenguaje/node_js/http_otecald/index.js
 
 Ruta Node usada por ArtEze:
