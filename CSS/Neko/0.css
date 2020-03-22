@@ -3,7 +3,7 @@ body {
 	text-shadow: 1px 1px 2px #bbb;
 }
 .chatRoomsAndMessages{
-	background-image:url("https://raw.githubusercontent.com/ArtEze/Otecald/master/CSS/Chatovod/Neko/Neko_5.png");
+	background-image:url("https://arteze.github.io/charlavod/CSS/Neko/Neko_5.png");
 	border: 2px solid #828effee;
 }
 .chatMessagesScrollBar div {
