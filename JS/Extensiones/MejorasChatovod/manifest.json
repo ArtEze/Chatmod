@@ -6,7 +6,7 @@
 	"manifest_version": 2,
 	"minimum_chrome_version": "32",
 	"update_url": "https://clients2.google.com/service/update2/crx",
-	"homepage_url": "http://otecald.atspace.com/Javascript/Paginas/MejorasChatovod/MejorasChatovod.html",
+	"homepage_url": "https://otecald.github.io/js/proyecto/OtecaldBot/Bot.html",
 	"icons": {
 		"128": "imagenes/iconos/128.png",
 		"16": "imagenes/iconos/16.png",
