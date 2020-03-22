@@ -1,6 +1,7 @@
 /*
 Descargar http_otecald desde:
-	https://github.com/ArtEze/arteze.github.io/Lenguajes/NodeJS/http_otecald/index.js
+	RAW en GitHub Pages: https://arteze.github.io/lenguaje/node_js/http_otecald/index.js
+	Archivo en proyecto: https://github.com/arteze/arteze.github.io/blob/master/lenguaje/node_js/http_otecald/index.js
 */
 
 var http_otecald = require("http_otecald")
