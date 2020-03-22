@@ -2,14 +2,14 @@
 	background-attachment:fixed;
 }
 .chatRoomsAndMessages{
-	background-image:url("https://raw.githubusercontent.com/ArtEze/Otecald/master/CSS/Chatovod/RadioDeLaDiscoteca/kurt_guitarra_2.jpg");
+	background-image:url("https://arteze.github.io/charlavod/CSS/RadioDeLaDiscoteca/kurt_guitarra_2.jpg");
 }
 .chatSendControlsWrapper{
-	background-image:url("https://raw.githubusercontent.com/ArtEze/Otecald/master/CSS/Chatovod/RadioDeLaDiscoteca/emoticones_1.jpg");
+	background-image:url("https://arteze.github.io/charlavod/CSS/RadioDeLaDiscoteca/emoticones_1.jpg");
 }
 .chatUsersAndFilter{
 	background-position:right;
-	background-image:url("https://raw.githubusercontent.com/ArtEze/Otecald/master/CSS/Chatovod/RadioDeLaDiscoteca/caritas_usuarios.jpg");
+	background-image:url("https://arteze.github.io/charlavod/CSS/RadioDeLaDiscoteca/caritas_usuarios.jpg");
 }
 .hl{
 	background-color:#FFF3DA88 !important;
