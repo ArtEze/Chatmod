@@ -13,7 +13,7 @@ window.cargar_cargador = function()
 
 	window.dirección_bot = "https://arteze.github.io/charlavod/JS/Bot/tampermonkey.js"
 	window.raw_dir = window.dirección_bot.split("/").slice(0,-1).concat("").join("/")
-	var archivo = "Cargar_lista_archivos"
+	var archivo = "cargar_lista_archivos"
 	var interrogación = "?"
 	var ruta = window.raw_dir + archivo + ".js" + interrogación + Date.now()
 	var b = document.createElement("script")
