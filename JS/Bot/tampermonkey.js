@@ -4,13 +4,13 @@
 // @description  Cargador del cargador del Bot Otecald para Chatovod.
 // @author       ArtEze
 // @match        *://*.chatovod.com/*
+// @exclude      *://*.chatovod.com/widget/rpframe
+// @exclude      *://account.chatovod.com/*
 // @grant        none
 // ==/UserScript==
 
 window.cargar_cargador = function()
 {
-	if(document.querySelector(".chat")==null){return;}
-
 	window.dirección_bot = "https://arteze.github.io/charlavod/JS/Bot/tampermonkey.js"
 	window.raw_dir = window.dirección_bot.split("/").slice(0,-1).concat("").join("/")
 	var archivo = "cargar_lista_archivos"
