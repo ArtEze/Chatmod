@@ -1,5 +1,6 @@
 var archivos = [
-	"activar_herramientas",
+	"utilidades"
+	,"activar_herramientas",
 	"colores_arcoiris",
 	"fon",
 	"números_hacia_texto",
