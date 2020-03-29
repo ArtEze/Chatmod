@@ -1,0 +1,104 @@
+.moderator .groupIcon {
+	background-image: url("https://static.xx.fbcdn.net/images/emoji.php/v9/f8/1/16/2694.png");
+	display: inline-block;
+}
+.admin .groupIcon {
+	background-image: url("https://static.xx.fbcdn.net/images/emoji.php/v9/fb7/1/16/269c.png");
+	display: inline-block;
+}
+.chat {
+	position:absolute;
+	left:0;
+	top:0;
+	right: 0;
+	bottom: 0;
+	background-image: url("http://www.gatehouselive.com/expos/uploads/features/582668227_BlackPatternforWomenofDistinction.jpg");
+}
+li.admin {
+	background: -o-linear-gradient(top, #000000 5%, #000000 100%) !important;
+	background: -ms-linear-gradient(top, #000000 5%, #000000 100%) !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#000000',GradientType=0) !important;
+	-moz-border-radius: 28px !important;
+	font-family: Arial !important;
+	padding: 3px 3px !important;
+	font-weight: bold !important;
+	background-position: center !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	text-decoration: none !important;
+}
+li.moderator {
+	background: -o-linear-gradient(top, #336666 5%, #336666 100%) !important;
+	background: -ms-linear-gradient(top, #336666 5%, #336666 100%) !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#336666', endColorstr='#336666',GradientType=0) !important;
+	-moz-border-radius: 28px !important;
+	font-family: Arial !important;
+	padding: 3px 3px !important;
+	font-weight: bold !important;
+	background-position: center !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	text-decoration: none !important;
+}
+.chatUsersAndFilter {
+	text-align: left;
+	background-image: url("https://image.freepik.com/vector-gratis/fondo-artistico-color-pastel-acuarela_1116-207.jpg");
+}
+.chatHeaderWrapper .goog-menu-button-open, .chatHeaderWrapper .goog-menu-button-hover {
+    background-color: #000000;
+
+}
+.chatHeaderWrapper, .chatRooms ul li.active a, .chatRooms ul li.blink a, .chatRooms ul li:hover a,
+.chatRoomsButton a:hover, .closeIconWrapper > .closeIconColor, .chatWindow .header,
+.chatSendControlsWrapper div.buttonWrapper a.sendMessageButton, .chatSendControlsWrapper .buttons a.register,
+.nickIcon .filler {
+    background-color:#000000;
+    color: #9090ff;
+}
+.chatRooms ul li a {
+    display:block;
+    text-decoration:none;
+    /*color:#000;*/
+    height:25px;
+    line-height:25px;
+    padding:0 8px;
+    background-color:#000000;
+    outline:0;
+    position:relative;
+    cursor: pointer;
+}
+body {
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    margin:0;
+    padding:0;
+    overflow: hidden;
+    background-color: #9090ff;
+    
+    font-family: Arial black;
+    font-size: 13px;
+    font-weight: bold !important;;
+}
+a {
+    color:#9090ff;
+    text-decoration: none;
+}
+.chatRoomsScrollBar > div.left > div {
+    left: 6px;
+    border-width: 5px 5px 5px 0;
+    border-color: transparent #000000 transparent transparent;
+}
+.chatRoomsScrollBar > div.right > div {
+    right: 6px;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent #000000;
+}
+.chatMessage.ts>.text {
+	background: linear-gradient(to right, #f00 , #ff0, #0f0, #0ff, #00f, #f0f, #f00) !important;
+	font-weight:bold !important;
+	-webkit-background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+}

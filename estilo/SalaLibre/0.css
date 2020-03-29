@@ -1,0 +1,25 @@
+﻿.chatMessage {
+    background-color: ; /* MARCO DE LINEA DE LAS CHARLAS */
+    margin-top: 6px; /* ?????? ????? ??????????? */
+}
+.chatHeaderWrapper {
+	background-color: #020004  /* PONE COLOR  DEL CHAT */
+}
+.chatMessages {
+	background-color: #F9F4F7  /* PONE COLOR LISTA DEL CHAT */ 
+}
+
+.chatUsersTab  {
+	background-color: #FAF8FD  /* PONE EN NEGRO EL MARCO SUP DEL CHAT */
+}
+/* ++++++++PRUEVAS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+.chatUsers ul li nick {
+	color: #FAF8FD
+}
+/*
+.chatPeople ul.chatPeopleList li a.chatUser {
+	background: transparent url('www,algo.com') no-repeat 0px 0px / 16px 16px;
+	padding-left: 20px;
+	padding-bottom: 0px;
+}
+*/
