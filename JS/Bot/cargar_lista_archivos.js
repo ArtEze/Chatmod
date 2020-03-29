@@ -9,13 +9,13 @@ var archivos = [
 ]
 
 function cargar_lista_archivos(archivos){
-	for(var i in archivos){
-		var actual = archivos[i]
+	return archivos.map(x=>{
 		var a = document.createElement("script")
 		var directorio = window.raw_dir
-		var extensión = ".js?" + Date.now()
-		a.src = directorio + actual + extensión
+		var extensión = "." + "js"
+		var anticache = "?" + Date.now()
+		a.src = directorio + x + extensión + anticache
 		document.head.appendChild(a)
-	}
+	})
 }
 cargar_lista_archivos(archivos)
