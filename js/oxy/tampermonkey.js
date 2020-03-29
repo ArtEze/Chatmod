@@ -11,7 +11,7 @@
 
 window.cargar_cargador = function()
 {
-	window.dirección_bot = "https://arteze.github.io/charlavod/JS/Bot/tampermonkey.js"
+	window.dirección_bot = "https://arteze.github.io/charlavod/js/oxy/tampermonkey.js"
 	window.raw_dir = window.dirección_bot.split("/").slice(0,-1).concat("").join("/")
 	var archivo = "cargar_lista_archivos"
 	var interrogación = "?"
@@ -21,3 +21,4 @@ window.cargar_cargador = function()
 	document.head.appendChild(b)
 }
 window.cargar_cargador()
+
