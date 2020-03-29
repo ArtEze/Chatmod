@@ -9,7 +9,7 @@
 	color: #ffffff;
 }
 .chatSendControlsWrapper div.textareaWrapper {
-	background-image: url(https://imgur.com/a/6NTpY);
+	background-image: url("https://imgur.com/a/6NTpY");
 }
 .chatMessage.hl {
 	background-color: #ffd966;
@@ -48,12 +48,12 @@
     height: 18px;
     right: -5px;
     top: 5px;
-    background-image: url(http://st1.chatovod.com/u/cs/2016/05_26/61/798561/1465049703_0.gif);
+    background-image: url("http://st1.chatovod.com/u/cs/2016/05_26/61/798561/1465049703_0.gif");
     background-size: contain;
 }
 .chatUsersTab {
 	background-position: center;
-	background-image: url(https://vignette.wikia.nocookie.net/noragami/images/2/26/Neko.gif/revision/latest?cb=20151223012852);
+	background-image: url("https://vignette.wikia.nocookie.net/noragami/images/2/26/Neko.gif");
 	background-repeat: no-repeat;
 	background-color: #ffffff;
 	border: 2px solid #000000;

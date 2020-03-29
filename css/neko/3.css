@@ -3,7 +3,7 @@ body {
 	text-shadow: 1px 1px 2px #bbb;
 }
 .chatRoomsAndMessages{
-	background-image:url("http://arteze.github.io/charlavod/CSS/Neko/Neko_5.png");
+	background-image:url("http://arteze.github.io/charlavod/css/neko/gato_5.png");
 	border: 2px solid #828effee;
 }
 .chatMessagesScrollBar div {
@@ -14,7 +14,7 @@ body {
 }
 .chatUsersTab {
 	background-position: center;
-	background-image: url("http://arteze.github.io/charlavod/CSS/Neko/Neko_BN_5.gif");
+	background-image: url("http://arteze.github.io/charlavod/css/neko/gato_bn_5.gif");
 	background-color: #eee;
 	border: 2px solid #000000;
 }

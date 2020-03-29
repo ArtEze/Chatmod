@@ -14,10 +14,10 @@ textarea{
 	font-size: 1.em;
 }
 .chatHeaderWrapper{
-	background-image: url("https://arteze.github.io/charlavod/CSS/Neko/Neko_5.png");
+	background-image: url("https://arteze.github.io/charlavod/css/neko/gato_5.png");
 }
 .chatRoomsAndMessages{
-	background-image:url("https://arteze.github.io/charlavod/CSS/Neko/Neko_5.png");
+	background-image:url("https://arteze.github.io/charlavod/css/neko/gato_5.png");
 	border: 2px solid #828effee;
 }
 .chatMessagesScrollBar div {
@@ -28,19 +28,19 @@ textarea{
 }
 .chatUsersTab {
 	background-position: center;
-	background-image: url("https://arteze.github.io/charlavod/CSS/Neko/Neko_BN_5.gif");
+	background-image: url("https://arteze.github.io/charlavod/css/neko/gato_bn_5.gif");
 	background-color: #eee;
 	border: 2px solid #000000;
 }
 .admin .groupIcon {
-	background-image: url("https://arteze.github.io/charlavod/CSS/Neko/2FVOqTE.png");
+	background-image: url("https://arteze.github.io/charlavod/css/neko/imgur_2_f_v_oq_t_e.png");
 }
 .moderator .groupIcon {
-	background-image: url("https://arteze.github.io/charlavod/CSS/Neko/8XXEYKP.png");
+	background-image: url("https://arteze.github.io/charlavod/css/neko/imgur_8_x_x_e_y_k_p.png");
 }
 .user .groupIcon{
 	/* Extraído de: http://i.imgur.com/kmB7Lqn.gif */
-	background-image: url("https://arteze.github.io/charlavod/CSS/Neko/kmB7Lqn.gif");
+	background-image: url("https://arteze.github.io/charlavod/css/neko/imgur_km_b7_lqn.gif");
 }
 .goog-toolbar{
 	background: #70a00015 url("");
