@@ -3,8 +3,8 @@ var archivos = [
 	,"activar_herramientas"
 	,"colores_arcoiris"
 	,"fon"
-	,"números_hacia_texto"
-	,"texto_hacia_número"
+	,"reales_hacia_texto"
+	,"texto_hacia_reales"
 	,"programa"
 ]
 
