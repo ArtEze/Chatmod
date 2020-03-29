@@ -1,4 +1,4 @@
-var archivos = [
+oxy.url.archivos = [
 	"utilidades"
 	,"activar_herramientas"
 	,"colores_arcoiris"
@@ -8,14 +8,13 @@ var archivos = [
 	,"programa"
 ]
 
-function cargar_lista_archivos(archivos){
-	return archivos.map(x=>{
-		var a = document.createElement("script")
-		var directorio = window.raw_dir
-		var extensión = "." + "js"
-		var anticache = "?" + Date.now()
-		a.src = directorio + x + extensión + anticache
-		document.head.appendChild(a)
+oxy.cargar_lista_archivos = function(archivos){
+	oxy.url.src = []
+	return oxy.url.archivos.map(x=>{
+		var archivo = oxy.url.tampermonkey.carpeta + x + oxy.extensión + oxy.url.anticache
+		oxy.url.src.push(archivo)
+		oxy.agregar_código(archivo)
 	})
 }
-cargar_lista_archivos(archivos)
+cargar_lista_archivos(oxy.url.archivos)
+
