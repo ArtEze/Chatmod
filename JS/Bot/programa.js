@@ -1,6 +1,8 @@
-﻿// Código hecho por Emiliano Ezequiel Parenti
+/*
+	Código hecho por Emiliano Ezequiel Parenti
 
-// Las funciones se van a declarar con window para que sean funciones globales.
+	Las funciones van a declararse con window para que sean funciones globales.
+*/
 
 window.x = function(){
 	console.log(Array.from(arguments))
@@ -106,22 +108,6 @@ window.nick_unicode = function(nombre){
 		var texto = "\\"+x.split("").map(x=>("000000"+x.charCodeAt().toString(16)).slice(-6)).join("\\")
 		window.insertar_textarea(texto)
 	})(nombre)
-}
-window.modificar_función = function(entrada,intermediario,escribir_textarea){
-	var función = typeof(entrada)=="string"?window[entrada]:entrada
-	var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
-	var nombre_entrada = función.name
-	var nombre_intermediario = función_2.name
-	var modificado = función+""
-	modificado = modificado.replace(
-		/^function ([^\x28]+)\s*\x28((?:,?\s*[^,\x29]+)+)\x29\s*\x7b\s*((?:.|\n)+)\x7d$/gi
-		,"function $1($2){"+nombre_intermediario+"($2);$3}"
-	)
-	if(escribir_textarea){
-		try{window.insertar_textarea(modificado)}catch(e){}
-	}
-	try{eval(nombre_entrada+"="+modificado)}catch(e){}
-	return window[nombre_entrada]
 }
 window.buscar_en_matriz = function(array,columna,valor){
 	return array.map(x=>x[columna]).indexOf(valor)
