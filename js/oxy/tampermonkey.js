@@ -11,6 +11,7 @@
 
 window.oxy = {
 	funciones: {}
+	, variables: {}
 }
 
 var oxy = window.oxy
@@ -38,19 +39,20 @@ funciones.cargar = function()
 			completo: "https://arteze.github.io/charlavod/js/oxy/tampermonkey.js"
 			, archivo: "cargar_lista_archivos"
 		}
-		, cargar: {}
 		, interrogación: "?"
 		, punto: "."
         , tipo_de_archivo: "js"
     }
+    oxy.variables.cargar = {}
 
     var url = oxy.url
+    var variables = oxy.variables.cargar
 
     url.extensión = url.punto + url.tipo_de_archivo
 	url.anticache = url.interrogación + Date.now()
 	url.tampermonkey.carpeta = funciones.obtener_carpeta(url.tampermonkey.completo)
 	url.tampermonkey.sin_cache = funciones.obtener_url_sin_cache()
-	oxy.cargar.etiqueta_script = funciones.agregar_código(url.tampermonkey.sin_cache)
+	variables.etiqueta_script = funciones.agregar_código(url.tampermonkey.sin_cache)
 }
 
 oxy.cargar()
