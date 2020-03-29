@@ -1,11 +1,11 @@
 var archivos = [
 	"utilidades"
-	,"activar_herramientas",
-	"colores_arcoiris",
-	"fon",
-	"números_hacia_texto",
-	"texto_hacia_número",
-	"programa"
+	,"activar_herramientas"
+	,"colores_arcoiris"
+	,"fon"
+	,"números_hacia_texto"
+	,"texto_hacia_número"
+	,"programa"
 ]
 
 function cargar_lista_archivos(archivos){
