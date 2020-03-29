@@ -52,5 +52,6 @@ funciones.cargar = function()
 	url.tampermonkey.sin_cache = funciones.obtener_url_sin_cache()
 	oxy.cargar.etiqueta_script = funciones.agregar_código(url.tampermonkey.sin_cache)
 }
+
 oxy.cargar()
 
