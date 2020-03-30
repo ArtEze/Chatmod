@@ -20,7 +20,6 @@ oxy.iniciar = function()
 			obtener: {
 				url_sin_cache: function(url){
 					var devuelve = undefined
-					var url = url
 					var tm = url.tampermonkey
 					var anti_cache = funciones.general.obtener.anti_cache()
 					devuelve = tm.carpeta + tm.archivo + url.extensión + anti_cache
