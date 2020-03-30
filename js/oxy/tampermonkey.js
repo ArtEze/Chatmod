@@ -17,17 +17,30 @@ oxy.iniciar = function()
 {
 	oxy.funciones = {
 		cargar: {
-			obtener_url_sin_cache: function(){
-				var devuelve = undefined
-				var url = oxy.url
-				var tampermonkey = url.tampermonkey
-				devuelve = tampermonkey.carpeta + tampermonkey.archivo + url.extensión + url.anticache
-				return devuelve
+			obtener: {
+				url_sin_cache: function(){
+					var devuelve = undefined
+					var url = oxy.url
+					var tm = url.tampermonkey
+					var anti_cache = funciones.general.obtener.anti_cache()
+					devuelve = tm.carpeta + tm.archivo + url.extensión + anti_cache
+					return devuelve
+				}
 			}
 		}
 		, general: {
-			obtener_carpeta: function(url){
-				return url.split("/").slice(0,-1).concat("").join("/")
+			obtener: {
+				carpeta: function(url){
+					return url.split("/").slice(0,-1).concat("").join("/")
+				}
+				, tiempo: function(){
+					return +Date.now()
+				}
+				, anti_cache: function(){
+					var tiempo = oxy.funciones.general.obtener.tiempo()
+					oxy.url.tiempos.push(tiempo)
+					return oxy.url.interrogación + tiempo
+				}
 			}
 			, agregar_código: function(url){
 				var etiqueta = document.createElement("script")
@@ -49,20 +62,20 @@ oxy.iniciar = function()
 		, interrogación: "?"
 		, punto: "."
 		, tipo_de_archivo: "js"
+		, tiempos: []
 	}
 
 	var url = oxy.url
 	var variables = oxy.variables.cargar
 	var funciones = oxy.funciones
-	
-	oxy.funciones.general.cargar.iniciar = oxy.iniciar
+
+	oxy.funciones.cargar.iniciar = oxy.iniciar
 	delete oxy.iniciar
 
 	url.extensión = url.punto + url.tipo_de_archivo
-	url.anticache = url.interrogación + Date.now()
-	url.tampermonkey.carpeta = funciones.obtener_carpeta(url.tampermonkey.completo)
-	url.tampermonkey.sin_cache = funciones.obtener_url_sin_cache()
-	variables.etiqueta_script = funciones.agregar_código(url.tampermonkey.sin_cache)
+	url.tampermonkey.carpeta = funciones.general.obtener.carpeta(url.tampermonkey.completo)
+	url.tampermonkey.sin_cache = funciones.general.obtener.url_sin_cache()
+	variables.etiqueta_script = funciones.general.agregar_código(url.tampermonkey.sin_cache)
 }
 
 oxy.iniciar()
