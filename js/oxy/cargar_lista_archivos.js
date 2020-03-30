@@ -18,7 +18,7 @@ funciones.cargar_lista_archivos = function(archivos){
 		var anti_cache = oxy.funciones.general.obtener.tiempo()
 		var archivo = url.tampermonkey.carpeta + x + url.extensión + anti_cache
 		url.src.push(archivo)
-		funciones.agregar_código(archivo)
+		funciones.general.agregar_código(archivo)
 	})
 }
 

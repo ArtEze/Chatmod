@@ -69,13 +69,14 @@ oxy.iniciar = function()
 	var variables = oxy.variables.cargar
 	var funciones = oxy.funciones
 
+	var sin_cache = funciones.cargar.obtener.url_sin_cache()
+
 	oxy.funciones.cargar.iniciar = oxy.iniciar
 	delete oxy.iniciar
 
 	url.extensión = url.punto + url.tipo_de_archivo
 	url.tampermonkey.carpeta = funciones.general.obtener.carpeta(url.tampermonkey.completo)
-	url.tampermonkey.sin_cache = funciones.general.obtener.url_sin_cache()
-	variables.etiqueta_script = funciones.general.agregar_código(url.tampermonkey.sin_cache)
+	variables.etiqueta_script = funciones.general.agregar_código(sin_cache)
 }
 
 oxy.iniciar()
