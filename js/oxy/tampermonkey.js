@@ -29,7 +29,8 @@ funciones.agregar_código = function(url){
 funciones.obtener_url_sin_cache = function(){
 	var devuelve = undefined
 	var url = oxy.url
-	devuelve = url.tampermonkey.carpeta + url.tampermonkey.archivo + oxy.extensión + oxy.url.anticache
+	var tampermonkey = url.tampermonkey
+	devuelve = tampermonkey.carpeta + tampermonkey.archivo + url.extensión + url.anticache
 	return devuelve
 }
 funciones.cargar = function()
