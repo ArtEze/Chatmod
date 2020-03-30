@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Bot Otecald Chatovod
+// @name         Bot Oxy para Chatovod
 // @version      2.7.7
 // @description  Cargador del bot Oxy para Chatovod.
 // @author       ArtEze
