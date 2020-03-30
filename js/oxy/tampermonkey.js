@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name		 Bot Oxy para Chatovod
-// @version	  2.7.7
+// @name         Bot Oxy para Chatovod
+// @version      2.7.7
 // @description  Cargador del bot Oxy para Chatovod.
-// @author	   ArtEze
-// @match		*://*.chatovod.com/*
-// @exclude	  *://*.chatovod.com/widget/rpframe
-// @exclude	  *://account.chatovod.com/*
-// @grant		none
+// @author       ArtEze
+// @match        *://*.chatovod.com/*
+// @exclude	     *://*.chatovod.com/widget/rpframe
+// @exclude	     *://account.chatovod.com/*
+// @grant        none
 // ==/UserScript==
 
 window.oxy = {}
