@@ -18,9 +18,9 @@ oxy.iniciar = function()
 	oxy.funciones = {
 		cargar: {
 			obtener: {
-				url_sin_cache: function(){
+				url_sin_cache: function(url){
 					var devuelve = undefined
-					var url = oxy.url
+					var url = url
 					var tm = url.tampermonkey
 					var anti_cache = funciones.general.obtener.anti_cache()
 					devuelve = tm.carpeta + tm.archivo + url.extensión + anti_cache
@@ -69,13 +69,14 @@ oxy.iniciar = function()
 	var variables = oxy.variables.cargar
 	var funciones = oxy.funciones
 
-	var sin_cache = funciones.cargar.obtener.url_sin_cache()
-
 	oxy.funciones.cargar.iniciar = oxy.iniciar
 	delete oxy.iniciar
 
 	url.extensión = url.punto + url.tipo_de_archivo
 	url.tampermonkey.carpeta = funciones.general.obtener.carpeta(url.tampermonkey.completo)
+
+	var sin_cache = funciones.cargar.obtener.url_sin_cache(url)
+
 	variables.etiqueta_script = funciones.general.agregar_código(sin_cache)
 }
 
