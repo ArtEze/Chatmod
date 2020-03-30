@@ -1,5 +1,6 @@
 
 var url = oxy.url
+var funciones = oxy.funciones
 
 oxy.url.archivos = [
 	"utilidades"
@@ -11,14 +12,14 @@ oxy.url.archivos = [
 	,"programa"
 ]
 
-oxy.cargar_lista_archivos = function(archivos){
+funciones.cargar_lista_archivos = function(archivos){
 	url.src = []
 	return url.archivos.map(x=>{
 		var archivo = url.tampermonkey.carpeta + x + url.extensión + url.anticache
 		url.src.push(archivo)
-		oxy.funciones.agregar_código(archivo)
+		funciones.agregar_código(archivo)
 	})
 }
 
-cargar_lista_archivos(url.archivos)
+funciones.cargar_lista_archivos(url.archivos)
 
