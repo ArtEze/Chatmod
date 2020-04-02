@@ -1722,7 +1722,7 @@ window.descargar_lightshot = function(entrada,número,usuario,sala,hacia){
 	}
 }
 window.saludame_y_despedime = function(entrada,número,usuario,sala,hacia){
-	var regex_saludar = /sal[uúù]d[aeiouáéíóúàèìòù]|b[iu]envenid[aeiouáéíóúàèìòù]/gi
+	var regex_saludar = /(sal[uúù]d[aeiouáéíóúàèìòù])|(la b[iu]envenid[aeiouáéíóúàèìòù])/gi
 	if(regex_saludar.test(entrada) & window.puede_saludarlos ){
 		window.idos[usuario] = 0
 		window.entrados[usuario] = 0
