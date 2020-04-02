@@ -1525,7 +1525,7 @@ window.unir_array_palabras = function(array){
 	}
 	return devuelve
 }
-window.esperar_saludo_idos(){
+window.esperar_saludo_idos = function(){
 	var sala = 1
 	var mensajes = []
 
@@ -1557,7 +1557,7 @@ window.esperar_saludo_idos(){
 	var mensaje = window.elemento_aleatorio(mensajes)
 	window.enviar_mensaje(mensaje,sala,[],100)
 }
-window.esperar_saludo_entrados(){
+window.esperar_saludo_entrados = function(){
 	var sala = 1
 	var bienvenidas = []
 
