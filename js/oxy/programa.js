@@ -1531,31 +1531,31 @@ window.esperar_saludo_idos(){
 
 	var nombres = window.idos_por_saludar.slice(0,2)
 	var nombre = nombres[0]
+	window.idos_por_saludar = window.idos_por_saludar.slice(2)
 
 	if(window.idos_por_saludar.length>=2){
+		var género = undefined
 		for(var i in window.idos_por_saludar){
 			var nombre_actual = window.idos_por_saludar[i]
-			var género = window.género_usuario(nombre_actual)
-
-			var nombre_bbcode = window.bbcode_usuario(nombre_actual)
-			nombres_bbcode_array.push(nombre_bbcode)
+			var nombre_negrita = window.bbcode_usuario(nombre_actual)
+			género = window.género_usuario(nombre_actual)
+			nombres_bbcode_array.push(nombre_negrita)
 		}
 		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
 
-		var nombre_negrita = window.bbcode_usuario(nombre)
-		mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
-		mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
-		mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
+		mensajes.push("¡L" + género + "s extrañaremos, " + nombres_bbcode + "! ¡Vuelvan pronto! :3")
+		mensajes.push("¡Adios" + género + "s " + nombres_bbcode + "! ¡Los extrañaremos!")
+		mensajes.push("¡Chaus" + género + "s " + nombres_bbcode + "! ¡Esperaremos sus regresos!")
 	}
 
-	if(window.idos_por_saludar.length>=1){
+	if(window.idos_por_saludar.length==1){
 		var nombre_negrita = window.bbcode_usuario(nombre)
 		mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
 		mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
 		mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
 	}
 	var mensaje = window.elemento_aleatorio(mensajes)
-	window.enviar_mensaje(mensaje,sala,[],window.tiempo_espera())
+	window.enviar_mensaje(mensaje,sala,[],100)
 }
 window.esperar_saludo_entrados(){
 	var sala = 1
@@ -1563,14 +1563,17 @@ window.esperar_saludo_entrados(){
 
 	var nombres = window.entrados_por_saludar.slice(0,2)
 	var nombre = nombres[0]
+	window.entrados_por_saludar = window.entrados_por_saludar.slice(2)
+
 
 	if(window.entrados_por_saludar.length>=2){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
+		var género = undefined
 		for(var i in window.entrados_por_saludar){
 			var nombre_actual = window.entrados_por_saludar[i]
-			var género = window.género_usuario(nombre_actual)
 			var nombre_bbcode = window.bbcode_usuario(nombre_actual)
+			género = window.género_usuario(nombre_actual)
 			nombres_bbcode_array.push(nombre_bbcode)
 		}
 		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
@@ -1598,15 +1601,16 @@ window.esperar_saludo_entrados(){
 	}
 	
 	var mensaje = window.elemento_aleatorio(bienvenidas)
-	window.enviar_mensaje(mensaje,sala,[],window.tiempo_espera())
+	window.enviar_mensaje(mensaje,sala,[],100)
 }
 window.enviar_saludo = function(nombre,sala){
 	window.idos_por_saludar.push(nombre)
-	window.esperar_saludo_idos()
+	setTimeout(window.esperar_saludo_idos,window.tiempo_espera())
 }
 window.enviar_despedida = function(nombre,sala){
 	window.entrados_por_saludar.push(nombre)
 	window.esperar_saludo_entrados()
+	setTimeout(window.esperar_saludo_entrados,window.tiempo_espera())
 }
 
 window.saludar = function(nombre){
