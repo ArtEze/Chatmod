@@ -1547,7 +1547,7 @@ window.esperar_saludo_idos = function(){
 		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
 
 		mensajes.push("¡L" + género + "s extrañaremos, " + nombres_bbcode + "! ¡Vuelvan pronto! :3")
-		mensajes.push("¡Adios" + género + "s " + nombres_bbcode + "! ¡Los extrañaremos!")
+		mensajes.push("¡Adios" + género + "s " + nombres_bbcode + "! ¡L" + género + "s extrañaremos!")
 		mensajes.push("¡Chaus" + género + "s " + nombres_bbcode + "! ¡Esperaremos sus regresos!")
 	}
 
