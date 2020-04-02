@@ -1529,20 +1529,21 @@ window.esperar_saludo_idos = function(){
 	var sala = 1
 	var mensajes = []
 
-	var nombres = window.idos_por_saludar.slice(0,2)
+	var nombres = window.idos_por_saludar.slice(0,3)
 	var nombre = nombres[0]
-	window.idos_por_saludar = window.idos_por_saludar.slice(2)
+	window.idos_por_saludar = window.idos_por_saludar.slice(3)
 
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
 		var género = undefined
-		for(var i in nombres){
-			var nombre_actual = window.idos_por_saludar[i]
+		for(var i=0;i<nombres.length;++i){
+			var nombre_actual = nombres[i]
 			var nombre_negrita = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
 			nombres_bbcode_array.push(nombre_negrita)
 		}
+		console.log(nombres_bbcode_array)
 		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
 
 		mensajes.push("¡L" + género + "s extrañaremos, " + nombres_bbcode + "! ¡Vuelvan pronto! :3")
@@ -1566,9 +1567,9 @@ window.esperar_saludo_entrados = function(){
 	var sala = 1
 	var bienvenidas = []
 
-	var nombres = window.entrados_por_saludar.slice(0,2)
+	var nombres = window.entrados_por_saludar.slice(0,3)
 	var nombre = nombres[0]
-	window.entrados_por_saludar = window.entrados_por_saludar.slice(2)
+	window.entrados_por_saludar = window.entrados_por_saludar.slice(3)
 
 	// console.log( window.entrados_por_saludar )
 
@@ -1576,12 +1577,13 @@ window.esperar_saludo_entrados = function(){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
 		var género = undefined
-		for(var i in nombres){
-			var nombre_actual = window.entrados_por_saludar[i]
+		for(var i=0;i<nombres.length;++i){
+			var nombre_actual = nombres[i]
 			var nombre_bbcode = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
 			nombres_bbcode_array.push(nombre_bbcode)
 		}
+		console.log(nombres_bbcode_array)
 		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
 
 		var nombre_chat = document.querySelector(".text").textContent
