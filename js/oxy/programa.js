@@ -1516,6 +1516,17 @@ window.tiempo_espera_saludo = function(){
 window.tiempo_espera = function(){
 	return Math.floor(window.aleatorio()*21*1000)
 }
+window.reestablecer_localStorage = function(){
+	return ["idos","entrados"].map(x=>{
+		var a = JSON.parse(localStorage[x])
+		for(var i in a){
+			if(i.match(/[yiι]/i)){
+				a[i]=0
+			}
+		}
+		localStorage[x]=JSON.stringify(a)
+	})
+}
 window.separar_por_and = function(nombres){
 	var array = []
 	nombres.map(x=>array.push(...x.split(/[yiι]/i)))
