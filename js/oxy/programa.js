@@ -1521,7 +1521,8 @@ window.unir_array_palabras = function(array,callback){
 	if(array.length>=2){
 		var and = "y"
 		var último = devuelve.slice(-1)[0]
-		var buscar_ands = último.match(/[yÿýỳŷiïíìî]/gi)
+		var buscar_letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
+		var buscar_ands = buscar_palabras!=null&&buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)
 		if(buscar_ands!=null){
 			and = "e"
 		}
