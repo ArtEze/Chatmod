@@ -1534,6 +1534,8 @@ window.esperar_saludo_idos = function(){
 	window.idos_por_saludar = window.idos_por_saludar.slice(2)
 
 	if(nombres.length>=2){
+		var nombres_bbcode_array = []
+		var nombres_bbcode = ""
 		var género = undefined
 		for(var i in nombres){
 			var nombre_actual = window.idos_por_saludar[i]
