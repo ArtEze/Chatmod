@@ -1518,7 +1518,8 @@ window.tiempo_espera = function(){
 }
 window.separar_por_and = function(nombres){
 	var array = []
-	nombres.map(x=>array.push(...x.split(/y/i))).filter(x=>x!="")
+	nombres.map(x=>array.push(...x.split(/y/i)))
+	array = array.filter(x=>x!="")
 	return array
 }
 window.unir_array_palabras = function(array,callback){
