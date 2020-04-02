@@ -1519,7 +1519,7 @@ window.tiempo_espera = function(){
 window.unir_array_palabras = function(array,callback){
 	var devuelve = array
 	var nombres = []
-	array.map(x=>nombres.push(...x.split("y")))
+	array.map(x=>nombres.push(...x.split("y"))).filter(x=>x!="")
 	if(nombres.length>=2){
 		var and = "y"
 		var último = nombres.slice(-1)[0]
