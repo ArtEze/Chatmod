@@ -1607,7 +1607,7 @@ window.esperar_saludo_entrados = function(){
 }
 window.enviar_despedida = function(nombre,sala){
 	window.idos_por_saludar.push(nombre)
-	// console.log(window.entrados_por_saludar)
+	// console.log(window.idos_por_saludar)
 	setTimeout(window.esperar_saludo_idos,window.tiempo_espera())
 }
 window.enviar_saludo = function(nombre,sala){
