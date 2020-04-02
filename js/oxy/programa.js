@@ -1516,10 +1516,17 @@ window.tiempo_espera_saludo = function(){
 window.tiempo_espera = function(){
 	return Math.floor(window.aleatorio()*21*1000)
 }
-window.unir_array_palabras = function(array){
+window.unir_array_palabras = function(array,callback){
 	var devuelve = array
 	if(array.length>=2){
-		devuelve = devuelve.slice(0,-1).join(", ")+" y "+devuelve.slice(-1)
+		var and = "y"
+		var último = devuelve.slice(-1)[0]
+		var buscar_ands = último.match(/[yÿýỳŷiïíìî]/gi)
+		if(buscar_ands!=null){
+			and = "e"
+		}
+		procesado = devuelve.map(x=>callback(x))
+		devuelve = procesado.slice(0,-1).join(", ") + " " + and + " " + procesado.slice(-1)
 	}else{
 		devuelve = devuelve.toString()
 	}
@@ -1539,12 +1546,10 @@ window.esperar_saludo_idos = function(){
 		var género = undefined
 		for(var i=0;i<nombres.length;++i){
 			var nombre_actual = nombres[i]
-			var nombre_negrita = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
-			nombres_bbcode_array.push(nombre_negrita)
 		}
 		console.log(nombres_bbcode_array)
-		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
+		nombres_bbcode = window.unir_array_palabras(nombres,window.bbcode_usuario)
 
 		mensajes.push("¡L" + género + "s extrañaremos, " + nombres_bbcode + "! ¡Vuelvan pronto! :3")
 		mensajes.push("¡Adios" + género + "s " + nombres_bbcode + "! ¡L" + género + "s extrañaremos!")
@@ -1579,12 +1584,10 @@ window.esperar_saludo_entrados = function(){
 		var género = undefined
 		for(var i=0;i<nombres.length;++i){
 			var nombre_actual = nombres[i]
-			var nombre_bbcode = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
-			nombres_bbcode_array.push(nombre_bbcode)
 		}
 		console.log(nombres_bbcode_array)
-		nombres_bbcode = window.unir_array_palabras(nombres_bbcode_array)
+		nombres_bbcode = window.unir_array_palabras(nombres,window.bbcode_usuario)
 
 		var nombre_chat = document.querySelector(".text").textContent
 		var color_chat = window.determinar_color_texto(nombre_chat)
