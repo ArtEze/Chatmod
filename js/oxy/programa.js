@@ -1611,13 +1611,29 @@ window.esperar_saludo_entrados = function(){
 }
 window.enviar_despedida = function(nombre,sala){
 	window.idos_por_saludar.push(nombre)
-	 console.log(window.idos_por_saludar)
-	setTimeout(window.esperar_saludo_idos,window.tiempo_espera())
+	console.log("Por despedir: ",window.idos_por_saludar)
+	window.espera_actual = window.tiempo_espera_saludo()
+	window.tiempo_total_saludo += window.espera_actual
+	setTimeout(()=>{
+		window.tiempo_total_saludo -= window.espera_actual
+		if(window.tiempo_total_saludo<21*1000){
+			window.tiempo_total_saludo = 21*1000
+		}
+		window.esperar_saludo_idos()
+	},window.tiempo_total_saludo)
 }
 window.enviar_saludo = function(nombre,sala){
 	window.entrados_por_saludar.push(nombre)
-	 console.log(window.entrados_por_saludar)
-	setTimeout(window.esperar_saludo_entrados,window.tiempo_espera())
+	console.log("Por dar bienvenida: ",window.entrados_por_saludar)
+	window.espera_actual = tiempo_espera_saludo()
+	window.tiempo_total_saludo += window.espera_actual
+	setTimeout(()=>{
+		window.tiempo_total_saludo -= window.espera_actual
+		if(window.tiempo_total_saludo<21*1000){
+			window.tiempo_total_saludo = 21*1000
+		}
+		window.esperar_saludo_entrados()
+	},window.tiempo_total_saludo)
 }
 
 window.saludar = function(nombre){
@@ -1632,15 +1648,7 @@ window.saludar = function(nombre){
 		g	moderator
 	*/
 	console.log(nombre)
-	window.espera_actual = tiempo_espera_saludo()
-	window.tiempo_total_saludo += window.espera_actual
-	setTimeout(()=>{
-		window.enviar_saludo(nombre,1)
-		window.tiempo_total_saludo -= window.espera_actual
-		if(window.tiempo_total_saludo<21*1000){
-			window.tiempo_total_saludo = 21*1000
-		}
-	},window.tiempo_total_saludo)
+	window.enviar_saludo(nombre,1)
 	entrados[nombre] = 1
 	localStorage.entrados = JSON.stringify(entrados)
 }
@@ -1895,22 +1903,14 @@ window.entrar_y_salir = function(a,b,c){
 				//window.banear_ip(nombre)
 				//window.activar_ban(nombre,sala_ban)
 				if(entrados[nombre]==0){
-					window.saludar(nombre)
+					window.saludar(nombre,1)
 				}
 			}else{
 				entrar_salir.push([0,nombre,tiempo])
 				if(idos[nombre]==0){
 					idos[nombre] = 1
 					localStorage.idos = JSON.stringify(idos)
-					window.espera_actual = window.tiempo_espera_saludo()
-					window.tiempo_total_saludo += window.espera_actual
-					setTimeout(()=>{
-						window.enviar_despedida(nombre,1)
-						window.tiempo_total_saludo -= window.espera_actual
-						if(window.tiempo_total_saludo<21*1000){
-							window.tiempo_total_saludo = 21*1000
-						}
-					},window.tiempo_total_saludo)
+					window.enviar_despedida(nombre,1)
 				}
 			}
 		}
