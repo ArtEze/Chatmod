@@ -1533,7 +1533,7 @@ window.esperar_saludo_idos = function(){
 	var nombre = nombres[0]
 	window.idos_por_saludar = window.idos_por_saludar.slice(2)
 
-	if(window.idos_por_saludar.length>=2){
+	if(nombres>=2){
 		var género = undefined
 		for(var i in nombres){
 			var nombre_actual = window.idos_por_saludar[i]
@@ -1548,13 +1548,14 @@ window.esperar_saludo_idos = function(){
 		mensajes.push("¡Chaus" + género + "s " + nombres_bbcode + "! ¡Esperaremos sus regresos!")
 	}
 
-	if(window.idos_por_saludar.length==1){
+	if(nombres.length==1){
 		var nombre_negrita = window.bbcode_usuario(nombre)
 		mensajes.push("¡Te extrañaremos, " + nombre_negrita + "! ¡Vuelve pronto! :3")
 		mensajes.push("¡Adiós " + nombre_negrita + "! ¡Te extrañaremos!")
 		mensajes.push("¡Chau " + nombre_negrita + "! ¡Esperaremos tu regreso!")
 	}
 	var mensaje = window.elemento_aleatorio(mensajes)
+	// console.log(mensaje,mensajes)
 	window.enviar_mensaje(mensaje,sala,[],100)
 }
 window.esperar_saludo_entrados = function(){
@@ -1565,8 +1566,9 @@ window.esperar_saludo_entrados = function(){
 	var nombre = nombres[0]
 	window.entrados_por_saludar = window.entrados_por_saludar.slice(2)
 
+	// console.log( window.entrados_por_saludar )
 
-	if(window.entrados_por_saludar.length>=2){
+	if(nombres.length>=2){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
 		var género = undefined
@@ -1587,7 +1589,7 @@ window.esperar_saludo_entrados = function(){
 		bienvenidas.push( "¡Esto es "+ nombre_chat_negrita +"! ¡Bienvenid"+género + "s " + nombres_bbcode + "!" );
 		bienvenidas.push( "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombres_bbcode + "!" );
 	}
-	if(window.entrados_por_saludar.length==1){
+	if(nombres.length==1){
 		var género = window.género_usuario(nombre)
 		var nombre_bbcode = window.bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
@@ -1599,17 +1601,18 @@ window.esperar_saludo_entrados = function(){
 		bienvenidas.push( "¡Esto es "+ nombre_chat_negrita +"! ¡Bienvenid"+género + " " + nombre_bbcode + "!" );
 		bienvenidas.push( "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombre_bbcode + "!" );
 	}
-	
 	var mensaje = window.elemento_aleatorio(bienvenidas)
+	// console.log(mensaje,bienvenidas)
 	window.enviar_mensaje(mensaje,sala,[],100)
 }
-window.enviar_saludo = function(nombre,sala){
+window.enviar_despedida = function(nombre,sala){
 	window.idos_por_saludar.push(nombre)
+	// console.log(window.entrados_por_saludar)
 	setTimeout(window.esperar_saludo_idos,window.tiempo_espera())
 }
-window.enviar_despedida = function(nombre,sala){
+window.enviar_saludo = function(nombre,sala){
 	window.entrados_por_saludar.push(nombre)
-	window.esperar_saludo_entrados()
+	// console.log(window.entrados_por_saludar)
 	setTimeout(window.esperar_saludo_entrados,window.tiempo_espera())
 }
 
