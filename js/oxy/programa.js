@@ -1518,18 +1518,20 @@ window.tiempo_espera = function(){
 }
 window.unir_array_palabras = function(array,callback){
 	var devuelve = array
-	if(array.length>=2){
+	var nombres = []
+	array.map(x=>nombres.push(...x.split("y")))
+	if(nombres.length>=2){
 		var and = "y"
-		var último = devuelve.slice(-1)[0]
+		var último = nombres.slice(-1)[0]
 		var buscar_letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
 		var buscar_ands = buscar_letras!=null&&buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)
 		if(buscar_ands!=null){
 			and = "e"
 		}
-		procesado = devuelve.map(x=>callback(x))
+		var procesado = nombres.map(x=>callback(x))
 		devuelve = procesado.slice(0,-1).join(", ") + " " + and + " " + procesado.slice(-1)
 	}else{
-		devuelve = devuelve.toString()
+		devuelve = nombres.toString()
 	}
 	return devuelve
 }
