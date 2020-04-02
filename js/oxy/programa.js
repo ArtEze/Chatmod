@@ -1518,7 +1518,7 @@ window.tiempo_espera = function(){
 }
 window.separar_por_and = function(nombres){
 	var array = []
-	nombres.map(x=>array.push(...x.split(/[yi]/i)))
+	nombres.map(x=>array.push(...x.split(/[yiι]/i)))
 	array = array.filter(x=>x!="")
 	return array
 }
