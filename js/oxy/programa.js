@@ -1535,7 +1535,7 @@ window.esperar_saludo_idos = function(){
 
 	if(window.idos_por_saludar.length>=2){
 		var género = undefined
-		for(var i in window.idos_por_saludar){
+		for(var i in nombres){
 			var nombre_actual = window.idos_por_saludar[i]
 			var nombre_negrita = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
@@ -1570,7 +1570,7 @@ window.esperar_saludo_entrados = function(){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
 		var género = undefined
-		for(var i in window.entrados_por_saludar){
+		for(var i in nombres){
 			var nombre_actual = window.entrados_por_saludar[i]
 			var nombre_bbcode = window.bbcode_usuario(nombre_actual)
 			género = window.género_usuario(nombre_actual)
