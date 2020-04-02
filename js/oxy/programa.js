@@ -1516,10 +1516,14 @@ window.tiempo_espera_saludo = function(){
 window.tiempo_espera = function(){
 	return Math.floor(window.aleatorio()*21*1000)
 }
+window.separar_por_and = function(nombres){
+	var array = []
+	nombres.map(x=>array.push(...x.split(/y/i))).filter(x=>x!="")
+	return array
+}
 window.unir_array_palabras = function(array,callback){
 	var devuelve = array
-	var nombres = []
-	array.map(x=>nombres.push(...x.split(/y/i))).filter(x=>x!="")
+	var nombres = array
 	if(nombres.length>=2){
 		var and = "y"
 		var último = nombres.slice(-1)[0]
@@ -1542,6 +1546,8 @@ window.esperar_saludo_idos = function(){
 	var nombres = window.idos_por_saludar.slice(0,3)
 	var nombre = nombres[0]
 	window.idos_por_saludar = window.idos_por_saludar.slice(3)
+
+	var nombres = window.separar_por_and(nombres)
 
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
@@ -1580,6 +1586,8 @@ window.esperar_saludo_entrados = function(){
 	window.entrados_por_saludar = window.entrados_por_saludar.slice(3)
 
 	// console.log( window.entrados_por_saludar )
+
+	var nombres = window.separar_por_and(nombres)
 
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
