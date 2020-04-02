@@ -2,7 +2,7 @@
 
 console.log("Cargado programa.js")
 
-var modificación_xq(a,b,c,d,e){
+var modificación_xq = function(a,b,c,d,e){
 	if(window.oxy.array_xq==undefined){
 		window.oxy.array_xq = {
 			a:[],b:[],c:[],d:[],e:[]
