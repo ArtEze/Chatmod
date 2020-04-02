@@ -2,6 +2,26 @@
 
 console.log("Cargado programa.js")
 
+var modificación_xq(a,b,c,d,e){
+	if(window.oxy.array_xq==undefined){
+		window.oxy.array_xq = {
+			a:[],b:[],c:[],d:[],e:[]
+		}	
+	}
+	window.oxy.array_xq.a.push(a)
+	window.oxy.array_xq.b.push(b)
+	window.oxy.array_xq.c.push(c)
+	window.oxy.array_xq.d.push(d)
+	window.oxy.array_xq.e.push(e)
+}
+
+function xq_reemplazo(){
+	var está_activado_herramientas = window.obtener.activado.herramientas()
+	if(!está_activado_herramientas){
+		for (t -= h; 0 < t; t--) n.removeChild(fe(n));
+	}
+}
+
 function quitar_eliminado_mensajes(a, b, c, d, e) {
 	var g = e.m
 	var h = e.to

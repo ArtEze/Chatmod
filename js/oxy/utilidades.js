@@ -9,8 +9,12 @@ window.modificar_función = function(entrada,intermediario,escribir_textarea){
 		,"function $1($2){"+nombre_intermediario+"($2);$3}"
 	)
 	if(escribir_textarea){
-		try{window.insertar_textarea(modificado)}catch(e){}
+		try{window.insertar_textarea(modificado)}catch(e){
+			console.error("Mod_1: ",e)
+		}
 	}
-	try{eval(nombre_entrada+"="+modificado)}catch(e){}
+	try{eval(nombre_entrada+"="+modificado)}catch(e){
+		console.error("Mod_2: ",e)
+	}
 	return window[nombre_entrada]
 }

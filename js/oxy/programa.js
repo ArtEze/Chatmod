@@ -42,9 +42,12 @@ window.está_listo = function(){
 window.puedo_enviar_mensajes = function(){
 	return window.estado_conexión()==2
 }
+window.aleatorio = function(){ // Función que intenta reemplazar a Math.random()
+	return +Date.now().toString().split("").concat("0.").reverse().join("")
+}
 window.elemento_aleatorio = function(array){
 	array = array.filter(x=>x!=undefined)
-	return array[Math.floor(Math.random()*array.length)]
+	return array[Math.floor(window.aleatorio()*array.length)]
 }
 window.texto_hacia_html = function(texto){
 	return domparser.parseFromString(texto,"text/html")
@@ -87,7 +90,7 @@ window.descargar = function(dirección,función,error){
 }
 window.descargar_votantes = function(){
 	window.descargar(
-		location.origin+"/custom.css?"+Math.floor(Math.random()*1000)
+		location.origin+"/custom.css?"+Math.floor(window.aleatorio()*1000)
 		,x=>{
 			var lista_votantes=x.match(/=".+"/gi)
 			if(lista_votantes!=null){
@@ -490,7 +493,7 @@ window.operar_perfil = function(usuario,sala,hacia){
 	window.moderar_usuario(usuario,(datos)=>window.pedir_hora_usuario(datos,usuario,sala,hacia))
 }
 window.aleatorio_hora = function(){
-	return 60*1000*Math.floor(1+Math.random()*60*24) // 24 horas
+	return 60*1000*Math.floor(1+window.aleatorio()*60*24) // 24 horas
 }
 window.decir_la_hora = function(){
 	var soy_un_bot = window.soy_bot()
@@ -1071,9 +1074,6 @@ window.eliminar_banes = function(entrada,número,sala){
 		}
 	}
 }
-window.aleatorio = function(entero){
-	return Math.floor(Math.random()*entero)
-}
 window.agregar_avatar = function(datos,usuario,hacia,sala,i){
 	var analizado = JSON.parse(datos)
 	var actual = hacia[i]
@@ -1511,10 +1511,10 @@ window.determinar_color_texto = function(nombre_chat){
 
 window.tiempo_total_saludo = 21*1000
 window.tiempo_espera_saludo = function(){
-	return 21*1000 + Math.floor(Math.random()*1000*15) // 15 segundos de espera.
+	return 21*1000 + Math.floor(window.aleatorio()*1000*15) // 15 segundos de espera.
 }
 window.tiempo_espera = function(){
-	return Math.floor(Math.random()*21*1000)
+	return Math.floor(window.aleatorio()*21*1000)
 }
 window.enviar_saludo = function(nombre,sala){
 	var bienvenidas = []
