@@ -1522,7 +1522,7 @@ window.unir_array_palabras = function(array,callback){
 		var and = "y"
 		var último = devuelve.slice(-1)[0]
 		var buscar_letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
-		var buscar_ands = buscar_palabras!=null&&buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)
+		var buscar_ands = buscar_letras!=null&&buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)
 		if(buscar_ands!=null){
 			and = "e"
 		}
@@ -1722,7 +1722,7 @@ window.descargar_lightshot = function(entrada,número,usuario,sala,hacia){
 	}
 }
 window.saludame_y_despedime = function(entrada,número,usuario,sala,hacia){
-	var regex_saludar = /sal[uúù]d[aeiouáéíóúàèìòù]|bienvenid[aeiouáéíóúàèìòù]/gi
+	var regex_saludar = /sal[uúù]d[aeiouáéíóúàèìòù]|b[iu]envenid[aeiouáéíóúàèìòù]/gi
 	if(regex_saludar.test(entrada) & window.puede_saludarlos ){
 		window.idos[usuario] = 0
 		window.entrados[usuario] = 0
