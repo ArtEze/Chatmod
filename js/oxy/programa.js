@@ -1533,19 +1533,26 @@ window.separar_por_and = function(nombres){
 	array = array.filter(x=>x!="")//.reverse()
 	return array
 }
+window.empieza_con_y = function(texto){
+	var devuelve = false
+	var buscar_letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
+	if(buscar_letras){
+		devuelve = buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)===null
+	}
+	return devuelve
+}
 window.unir_array_palabras = function(array,callback){
 	var devuelve = array
 	var nombres = array
 	if(nombres.length>=2){
-		var and = "y"
+		var y = "y"
 		var último = nombres.slice(-1)[0]
-		var buscar_letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
-		var buscar_ands = buscar_letras!=null&&buscar_letras[0].match(/[yÿýỳŷiïíìî]/gi)
-		if(buscar_ands!=null){
-			and = "e"
+		var buscar_y = empieza_con_y(último)
+		if(buscar_y){
+			y = "e"
 		}
 		var procesado = nombres.map(x=>callback(x))
-		devuelve = procesado.slice(0,-1).join(", ") + " " + and + " " + procesado.slice(-1)
+		devuelve = procesado.slice(0,-1).join(", ") + " " + y + " " + procesado.slice(-1)
 	}else{
 		devuelve = nombres.toString()
 	}
