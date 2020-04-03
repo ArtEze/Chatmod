@@ -1535,9 +1535,9 @@ window.separar_por_and = function(nombres){
 }
 window.empieza_con_y = function(texto){
 	var devuelve = false
-	var letras = último.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
-	if(buscar_letras!==null){
-		devuelve = buscar_letras[0][0].match(/[yÿýỳŷiïíìî]/gi)===null
+	var letras = texto.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
+	if(letras!==null){
+		devuelve = letras[0][0].match(/[yÿýỳŷiïíìî]/gi)
 	}
 	return devuelve
 }
