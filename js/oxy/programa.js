@@ -1529,8 +1529,8 @@ window.reestablecer_localStorage = function(){
 }
 window.separar_por_and = function(nombres){
 	var array = []
-	nombres.map(x=>array.push(...x.split(/[yiι]/i)))
-	array = array.filter(x=>x!="").reverse()
+	nombres.map(x=>array.push(...x.split(/\b[y]\b/i)))
+	array = array.filter(x=>x!="")//.reverse()
 	return array
 }
 window.unir_array_palabras = function(array,callback){
