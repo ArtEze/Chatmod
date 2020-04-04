@@ -681,7 +681,7 @@ window.género_usuario = function(usuario){
 window.bbcode_usuario = function(usuario){
 	var color = window.color_usuario(usuario)
 	if(color==undefined){color="000000"}
-	return "[code][i][b][color=#"+color+"]"+usuario+"[/color][/b][/i][/code]"
+	return "[i][b][color=#"+color+"][code]"+usuario+"[/code][/color][/b][/i]"
 }
 window.mostrar_imágenes = function(entrada,número,usuario,sala,hacia){
 	if(puede_mostrar_imágenes){
