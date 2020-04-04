@@ -207,6 +207,16 @@ window.eliminar_mensaje = function(número,sala){
 	var dirección = chat + modo + "?csrf="+ window.obtener_CSRF() + fin
 	window.descargar(dirección,x=>window.callback_eliminar(x))
 }
+window.obtener_color_aleatorio = function(){
+	return Array(6)
+		.toString()
+		.replace(/,/g,0)
+		.concat(
+			Math.floor(
+				window.aleatorio()*Math.pow(256,3)
+			).toString(16)
+		).slice(-6)
+}
 window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	mensaje = window.caracteres_hacia_hexadecimal(mensaje)
 	sala = sala==undefined?1:sala
@@ -214,7 +224,18 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	tiempo = tiempo==undefined?0:tiempo
 	var chat = location.origin+"/chat/"
 	var modo = "send"
-	var fin = "&roomId="+sala+"&msg="+ mensaje
+	var and = "%26" // &
+	var numeral = "%23" // #
+	var igual = "%3d" // =
+	var espacio = "32;" // \x20
+	var reemplazo_espacios = and + numeral + espacio
+	var color_aleatorio = window.obtener_color_aleatorio()
+	var fin = ( "&roomId=" + sala
+		+ "&msg="
+		+ "/me [color" + igual + numeral + color_aleatorio + "]" 
+		+ mensaje.replace(/(%20|\x20)/g,reemplazo_espacios)
+		+ "[/color]"
+	)
 	if(hacia.length>0){fin+="&to="+hacia}
 	var dirección = chat + modo + "?csrf="+ window.obtener_CSRF() + fin
 	setTimeout(()=>window.descargar(dirección),tiempo)
