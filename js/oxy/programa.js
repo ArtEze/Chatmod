@@ -1533,11 +1533,18 @@ window.separar_por_and = function(nombres){
 	array = array.filter(x=>x!="")//.reverse()
 	return array
 }
-window.empieza_con_y = function(texto){
+window.cambiar_y_griega_por_e = function(texto){
 	var devuelve = false
-	var letras = texto.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]/gi)
+	var letras = texto.match(/[a-zýỳÿŷáàäâéèëêíìïîóòöôúùüû]+/gi)
 	if(letras!==null){
-		devuelve = letras[0][0].match(/[yÿýỳŷiïíìî]/gi)
+		var letras_2 = letras[0]
+		var primera = letras_2[0]
+		var segunda = letras_2[1]
+		var primera_es_y_griega = primera.match(/[yýỳÿŷiíìïî]/i)
+		var segunda_es_vocal = segunda && segunda.match(/[aáàäâeéèëêiíìïîoóòöôuúùüû]/i)
+		if( primera_es_y_griega && ( !segunda || !segunda_es_vocal) ){
+			devuelve = true
+		}
 	}
 	return devuelve
 }
@@ -1547,7 +1554,7 @@ window.unir_array_palabras = function(array,callback){
 	if(nombres.length>=2){
 		var y = "y"
 		var último = nombres.slice(-1)[0]
-		var buscar_y = empieza_con_y(último)
+		var buscar_y = cambiar_y_griega_por_e(último)
 		if(buscar_y){
 			y = "e"
 		}
