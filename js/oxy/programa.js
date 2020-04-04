@@ -706,7 +706,7 @@ window.bbcode_usuario = function(usuario){
 		|| color==""
 		|| color=="000000"
 	){
-		color="808080"
+		color = window.obtener_color_aleatorio()
 	}
 	return "[i][b][color=#"+color+"][code]"+usuario+"[/code][/color][/b][/i]"
 }
