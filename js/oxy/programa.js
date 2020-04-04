@@ -1566,10 +1566,10 @@ window.obtener_todos_diferentes = function(array){
 }
 window.simplificar_nombre = function(nombre){
 	var devuelve = ""
-	var nombre = nombre_array.split("")
-	for(var i=0;i<nombre.length;++i){
-		if(nombre[i]!=devuelve.slice(-1)){
-			devuelve+=nombre[i]
+	var nombre_array = nombre.split("")
+	for(var i=0;i<nombre_array.length;++i){
+		if(nombre_array[i]!=devuelve.slice(-1)){
+			devuelve+=nombre_array[i]
 		}
 	}
 	return devuelve
