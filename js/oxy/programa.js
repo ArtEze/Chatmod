@@ -1566,15 +1566,21 @@ window.obtener_todos_diferentes = function(array){
 }
 window.simplificar_nombre = function(nombre){
 	var devuelve = ""
+	var array_iguales = []
 	var nombre_array = nombre.split("")
 	for(var i=0;i<nombre_array.length;++i){
-		var resultado = devuelve+=nombre_array[i]
+		var letra = nombre_array[i]
+		var letra_array = array_iguales.slice(-1)[0] && array_iguales.slice(-1)[0][0]
+		if(letra!=letra_array){
+			array_iguales.push([letra,0])
+		}else{
+			++array_iguales[array_iguales.length-1][1]
+		}
 		if(
-			   resultado.slice(-1)[0] != resultado.slice(-2)[0]
-			&& resultado.slice(-2)[0] == resultado.slice(-3)[0]
-			&& resultado.slice(-3)[0] == resultado.slice(-4)[0]
+			array_iguales[array_iguales.length-1]
+			&& array_iguales[array_iguales.length-1][1]<2
 		){
-			devuelve=resultado
+			devuelve += letra
 		}
 	}
 	return devuelve
