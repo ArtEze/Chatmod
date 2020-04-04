@@ -1558,13 +1558,31 @@ window.unir_array_palabras = function(array,callback){
 	}
 	return devuelve
 }
+window.obtener_límite_saludos = function(){
+	return 4
+}
+window.obtener_todos_diferentes = function(array){
+	return Array.from(new Set(array))
+}
+window.simplificar_nombre = function(nombre){
+	var devuelve = ""
+	var nombre = nombre_array.split("")
+	for(var i=0;i<nombre.length;++i){
+		if(nombre[i]!=devuelve.slice(-1)){
+			devuelve+=nombre[i]
+		}
+	}
+	return devuelve
+}
 window.esperar_saludo_idos = function(){
 	var sala = 1
 	var mensajes = []
 
-	var nombres = window.idos_por_saludar.slice(0,3)
+	var límite = window.obtener_límite_saludos()
+	var lista_nombres = window.idos_por_saludar.slice(0,límite)
+	var nombres = window.obtener_todos_diferentes(lista_nombres).map(x=>window.simplificar_nombre(x))
 	var nombre = nombres[0]
-	window.idos_por_saludar = window.idos_por_saludar.slice(3)
+	window.idos_por_saludar = window.idos_por_saludar.slice(límite)
 
 	var nombres = window.separar_por_and(nombres)
 
@@ -1600,9 +1618,11 @@ window.esperar_saludo_entrados = function(){
 	var sala = 1
 	var bienvenidas = []
 
-	var nombres = window.entrados_por_saludar.slice(0,3)
+	var límite = window.obtener_límite_saludos()
+	var lista_nombres = window.entrados_por_saludar.slice(0,límite)
+	var nombres = window.obtener_todos_diferentes(lista_nombres).map(x=>window.simplificar_nombre(x))
 	var nombre = nombres[0]
-	window.entrados_por_saludar = window.entrados_por_saludar.slice(3)
+	window.entrados_por_saludar = window.entrados_por_saludar.slice(límite)
 
 	// console.log( window.entrados_por_saludar )
 
