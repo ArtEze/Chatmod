@@ -1568,7 +1568,10 @@ window.simplificar_nombre = function(nombre){
 	var devuelve = ""
 	var nombre_array = nombre.split("")
 	for(var i=0;i<nombre_array.length;++i){
-		if(nombre_array[i]!=devuelve.slice(-1)){
+		if(
+			nombre_array[i]!=devuelve.slice(-1)[0]
+			&& nombre_array[i]!=devuelve.slice(-2)[0]
+		){
 			devuelve+=nombre_array[i]
 		}
 	}
