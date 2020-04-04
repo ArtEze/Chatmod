@@ -681,7 +681,7 @@ window.género_usuario = function(usuario){
 window.bbcode_usuario = function(usuario){
 	var color = window.color_usuario(usuario)
 	if(color==undefined){color="000000"}
-	return "[b][color=#"+color+"]"+usuario+"[/color][/b]"
+	return "[code][i][b][color=#"+color+"]"+usuario+"[/color][/b][/i][/code]"
 }
 window.mostrar_imágenes = function(entrada,número,usuario,sala,hacia){
 	if(puede_mostrar_imágenes){
@@ -1554,7 +1554,7 @@ window.unir_array_palabras = function(array,callback){
 	if(nombres.length>=2){
 		var y = "y"
 		var último = nombres.slice(-1)[0]
-		var buscar_y = cambiar_y_griega_por_e(último)
+		var buscar_y = window.cambiar_y_griega_por_e(último)
 		if(buscar_y){
 			y = "e"
 		}
