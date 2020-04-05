@@ -294,7 +294,7 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	var igual = "%3d" // =
 	var espacio_porcentaje = "%20" // %20
 	var espacio = "32;" // \x20
-	var reemplazo_espacios = and + numeral + espacio
+	// var reemplazo_espacios = and + numeral + espacio
 	var color_aleatorio = window.obtener_color_aleatorio()
 	var fin = "&roomId=" + sala + "&msg="
 	var una_semilla = window.ahora_5_segundos()
@@ -302,15 +302,15 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 		//fin += "/me" + espacio_porcentaje
 	}
 	if( window.aleatorio_menor_a(2,++una_semilla)==0 ){
-		fin += window.aleatorio_menor_a(100,++una_semilla).toString() + reemplazo_espacios
+		fin += window.aleatorio_menor_a(100,++una_semilla).toString() + espacio_porcentaje
 	}
 	fin += (
 		"[color" + igual + numeral + color_aleatorio + "]" 
-		+ mensaje.replace(/(%20|\x20)/g,reemplazo_espacios)
+		+ mensaje.replace(/(%20|\x20)/g,espacio_porcentaje)
 		+ "[/color]"
 	)
 	if( window.aleatorio_menor_a(3,++una_semilla)==0 ){
-		fin += reemplazo_espacios + window.aleatorio_menor_a(100,++una_semilla).toString()
+		fin += espacio_porcentaje + window.aleatorio_menor_a(100,++una_semilla).toString()
 	}
 	if(hacia.length>0){
 		fin+="&to="+hacia
@@ -1772,13 +1772,22 @@ window.esperar_saludo_entrados = function(){
 		var color_chat = window.determinar_color_texto(nombre_chat)
 		// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 		
-		var mensaje_aleatorio = window.elemento_aleatorio(window.mensajes)[0]
+		var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes)
+		console.log(mensaje_aleatorio_array)
+		var mensaje_aleatorio = mensaje_aleatorio_array[0]
+		
 
 		bienvenidas.push(
-			"¡Bienvenid"+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!" 
+			"Ha entrado "+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!" 
 			, "¡Bienvenid"+género + "s a " + mensaje_aleatorio + ", " + nombres_bbcode + "!" 
-			, "¡Esto es "+ mensaje_aleatorio +"! ¡Bienvenid"+género + "s " + nombres_bbcode + "!"
-			, "¡Est" + género + " es " + mensaje_aleatorio + ", " + nombres_bbcode + "!"
+			, "¡Esto es "+ mensaje_aleatorio +"! ¡"+género + "l " + nombres_bbcode + "!"
+			, "Entró un" + género + " es " + mensaje_aleatorio + ", " + nombres_bbcode + "!"
+			, nombres_bbcode + mensaje_aleatorio
+				.replace(/[aeiou]/g,"i")
+				.replace(/[AEIOU]/g,"O")
+			, mensaje_aleatorio
+				.replace(/[aeiou]/g,"i") + nombres_bbcode
+				.replace(/[AEIOU]/g,"E") + nombres_bbcode
 		)
 	}
 	if(nombres.length==1){
