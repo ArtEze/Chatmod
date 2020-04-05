@@ -1770,13 +1770,15 @@ window.esperar_saludo_entrados = function(){
 
 		var nombre_chat = document.querySelector(".text").textContent
 		var color_chat = window.determinar_color_texto(nombre_chat)
-		var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
+		// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
+		
+		var mensaje_aleatorio = window.elemento_aleatorio(window.mensajes)[0]
 
 		bienvenidas.push(
-			"¡Bienvenid"+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ nombre_chat_negrita +"!" 
-			, "¡Bienvenid"+género + "s a " + nombre_chat_negrita + ", " + nombres_bbcode + "!" 
-			, "¡Esto es "+ nombre_chat_negrita +"! ¡Bienvenid"+género + "s " + nombres_bbcode + "!"
-			, "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombres_bbcode + "!"
+			"¡Bienvenid"+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!" 
+			, "¡Bienvenid"+género + "s a " + mensaje_aleatorio + ", " + nombres_bbcode + "!" 
+			, "¡Esto es "+ mensaje_aleatorio +"! ¡Bienvenid"+género + "s " + nombres_bbcode + "!"
+			, "¡Est" + género + " es " + mensaje_aleatorio + ", " + nombres_bbcode + "!"
 		)
 	}
 	if(nombres.length==1){
@@ -1784,13 +1786,12 @@ window.esperar_saludo_entrados = function(){
 		var nombre_bbcode = window.bbcode_usuario(nombre)
 		var nombre_chat = document.querySelector(".text").textContent
 		var color_chat = window.determinar_color_texto(nombre_chat)
-		var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 
 		bienvenidas.push(
-			"¡Bienvenid"+género + " " + nombre_bbcode + "! " + "¡Esto es "+ nombre_chat_negrita +"!"
-			, "¡Bienvenid"+género + " a " + nombre_chat_negrita + ", " + nombre_bbcode + "!"
-			, "¡Esto es "+ nombre_chat_negrita +"! ¡Bienvenid"+género + " " + nombre_bbcode + "!"
-			, "¡Est" + género + " es " + nombre_chat_negrita + ", " + nombre_bbcode + "!"
+			"¡Bienvenid"+género + " " + nombre_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!"
+			, "¡Bienvenid"+género + " a " + mensaje_aleatorio + ", " + nombre_bbcode + "!"
+			, "¡Esto es "+ mensaje_aleatorio +"! ¡Bienvenid"+género + " " + nombre_bbcode + "!"
+			, "¡Est" + género + " es " + mensaje_aleatorio + ", " + nombre_bbcode + "!"
 		)
 	}
 	if(nombres.length>=1){
