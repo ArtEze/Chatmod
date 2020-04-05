@@ -22,81 +22,6 @@ function xq_reemplazo(){
 	}
 }
 
-function quitar_eliminado_mensajes(a, b, c, d, e) {
-	var g = e.m
-	var h = e.to
-	var k
-	var m = h && a.j.nick;
-	if (m) {
-		var m = !1,
-		q = a.j.nick.toLowerCase();
-		for (k = 0; k < h.length; k++) if (h[k].toLowerCase() == q) {
-			m = !0;
-			break
-		}
-	}
-	var n = '<div class="chatMessage ts';
-	m && (n += ' hl');
-	e.u && (n += ' unread');
-	n = n + '">' + ('<span title="' + a.ls + '" class="pw"><span class="sayto"></span><i></i></span>');
-	m = e.f;
-	q = e.nh;
-	m && !q && (n += '<a href="#" class="from">' + Aa(m) + '</a>', n += h ? '<span class="toarr">&rarr;</span>' :
-	': ');
-	if (h && !q) {
-		for (k = 0; k < h.length; k++) {
-			var x = Aa(h[k]),
-			n = n + ('<a href="#" class="to nick" data-nick="' + x + '">' + x + '</a>');
-			k != h.length - 1 && (n += ', ')
-		}
-		n += ': '
-	}
-	h = void 0 !== e.ts ? new Date(e.ts)	: new Date;
-	n += '<span class="text">' + (e.html ? g : zq(a, g)) + '</span>';
-	if (e.actions) {
-		n += '<span class="actions"><ul>';
-		x = e.actions;
-		k = 0;
-		for (l = x.length; k < l; k++) var y = x[k],
-		n = n + ('<li><a href="#" data-action-data="' + y.data[0] + '" data-action-type="' + y.type + '">' +
-		y.title + '</a></li>');
-		n += '</ul></span>'
-	}
-	n += '<span class="info"><span class="time" title="' + a.Aq.format(h) + '">' + a.rs.format(h) + '</span><span class="check"><i></i></span></span>';
-	n += '</div>';
-	k = ae(n);
-	var n = U(b, 'cm'),
-	t;
-	if (void 0 === n)
-	{
-		n = N('chatMessages', b),	W(b, 'cm', n);
-	}else if (h = Math.max(a.j.uh, a.j.jc), !1 !== U(b, 'onBottom') && (t = ee(n).length) > h)
-	{
-		var está_activado_herramientas = window.obtener.activado.herramientas()
-		if(!está_activado_herramientas){
-			for (t -= h; 0 < t; t--) n.removeChild(fe(n));
-		}
-	}
-	var P = U(b, 'chatovodScrollBar');
-	m && (x = a.H.Vb(m, null, N('from', k), e.minor ? null : N('text', k)), x instanceof od && ud(x, function () {
-		hi(P)
-	}));
-	t = Sd('nick', k);
-	for (h = 0; h < t.length; h++) x = t[h],
-	x = a.H.Vb(x.getAttribute('data-nick'), null, x),
-	x instanceof od && ud(x, function () {
-		hi(P)
-	});
-	e.pp ? (n.insertBefore(k, n.childNodes[0] || null), 0 != k && (t = N('chatMessagesContainer', b), t.scrollTop += Q(k).height))	: n.appendChild(k);
-	m && W(k, 'nick', m);
-	W(k, 'ts', e.ts);
-	t = Pd('IMG', 'loadlater', k);
-	0 < t.length && Aq(a, b, t);
-	hi(P);
-	t = void 0 == e.s && (void 0 !== e.u || void 0 !== e.r) && m && (!!a.j.nick && m.toLowerCase() != a.j.nick.toLowerCase() || !a.j.nick);
-	K(b, 'active') || t && mq(a.kb, c, d);
-	t && (b = dn(a.Xa, a.Xa.vf(m)), Sp(a.Me, q ? null : m, c + d + m + e.ts, g, b))
-}
 window.tiempo_espera_carga = 50
 function deslizar_mensaje(){
 	window.cantidad_mensajes.push(document.querySelectorAll(".chatMessagesTab.active .chatMessage.ts").length)
@@ -605,9 +530,18 @@ function ver_cantidad_mensajes(){
 	window.acciones = div.textContent
 	iniciar_tiempo_cantidades()
 }
-
+function permanecer_mensajes(){
+	window.permanecer = Function(
+		"a","b","c","d","e",
+		window.xq.toString()
+		.replace("n.removeChild(fe(n))","")
+		.replace("function xq(a,b,c,d,e){","")
+		.slice(0,-1)
+	)
+	window.xq = window.permanecer
+}
 function iniciar_herramientas(){
-	xq = (a,b,c,d,e)=>quitar_eliminado_mensajes(a,b,c,d,e)
+	permanecer_mensajes()
 	Cq = (a,b,c,d)=>cargar_mensajes(a,b,c,d)
 	window.crear.activador.herramientas()
 	cambiar_botones()
