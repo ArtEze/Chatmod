@@ -216,7 +216,7 @@ window.caracteres_hacia_hexadecimal = function(texto){
 	return texto
 }
 window.nombre_es_bot_spam = function(nombre){
-	return /^([A-ZÁÀÀÂÉÈËÊÍÌÏÎÓÒÖÔÚÙÜÛ][a-záàäâéèëêíìïîóòöôúùüû]+){2}$/.test(nombre)
+	return /^([A-ZÁÀÀÂÉÈËÊÍÌÏÎÓÒÖÔÚÙÜÛÑ][a-záàäâéèëêíìïîóòöôúùüûñ]+){2}\d+$/.test(nombre)
 }
 window.banear_según_minutos = function(nombre,minutos,causa){
 	var chat = location.origin+"/chat/"
