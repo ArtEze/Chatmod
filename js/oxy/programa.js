@@ -1701,6 +1701,9 @@ window.simplificar_nombre = function(nombre){
 	}
 	return devuelve
 }
+window.chat_negrita = function(){
+	return "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
+}
 window.esperar_saludo_idos = function(){
 	var sala = 1
 	var mensajes = []
@@ -1757,6 +1760,15 @@ window.esperar_saludo_entrados = function(){
 
 	var nombres = window.separar_por_and(nombres)
 
+	// var nombre_chat = document.querySelector(".text").textContent
+	// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
+	
+	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes)
+	console.log(mensaje_aleatorio_array)
+	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0]
+	var color_chat = window.determinar_color_texto(mensaje_aleatorio_sin_color)
+	var mensaje_aleatorio = window.char_negrita(mensaje_aleatorio_sin_color,color_chat)
+
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
 		var nombres_bbcode = ""
@@ -1767,15 +1779,6 @@ window.esperar_saludo_entrados = function(){
 		}
 		console.log(nombres_bbcode_array)
 		nombres_bbcode = window.unir_array_palabras(nombres,window.bbcode_usuario)
-
-		var nombre_chat = document.querySelector(".text").textContent
-		var color_chat = window.determinar_color_texto(nombre_chat)
-		// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
-		
-		var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes)
-		console.log(mensaje_aleatorio_array)
-		var mensaje_aleatorio = mensaje_aleatorio_array[0]
-		
 
 		bienvenidas.push(
 			"Ha entrado "+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!" 
