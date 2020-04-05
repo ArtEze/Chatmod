@@ -1769,7 +1769,7 @@ window.esperar_saludo_entrados = function(){
 	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes.filter(x=>x[3]==1))
 	console.log(mensaje_aleatorio_array)
 	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0]
-				.match(/[A-Za-z0-9\x20]+/g).join("").split(" ").sort().join("")
+				.match(/[A-Za-z0-9\x20]+/g).join("").split(" ").sort().join(" ")
 	var color_chat = window.determinar_color_texto(mensaje_aleatorio_sin_color)
 	var mensaje_aleatorio = window.chat_negrita(mensaje_aleatorio_sin_color,color_chat)
 
