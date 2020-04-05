@@ -84,6 +84,12 @@ window.generar_100_aleatorios = function(){
 	}
 	return a
 }
+window.generar_semilla = function(){
+	setInterval(function(){
+		window.la_semilla = ahora_5_segundos()
+	},4999)
+}
+window.generar_semilla()
 window.aleatorio_menor_a = function(x,semilla){
 	 // Aleatorio menor a un número.
 	var resto_fecha = semilla || window.ahora_5_segundos()
@@ -264,11 +270,10 @@ window.entero_hacia_hexadecimal = function(entero,longitud){
 	return ([...Array(longitud)].map(x=>0).join("")+entero.toString(16)).slice(-longitud)
 }
 window.obtener_color_aleatorio = function(){
-	var semilla = window.ahora_5_segundos()
 	var luminosidad = 255*3
 	var color = [255,255,255]
 	while(luminosidad>=256*2){
-		color = [...Array(3)].map(x=>aleatorio_menor_a(256,++semilla))
+		color = [...Array(3)].map(x=>aleatorio_menor_a(256,++window.la_semilla))
 		luminosidad = calcular_luminosidad(color)
 	}
 	color = color.map(x=>window.entero_hacia_hexadecimal(x,2)).join("")
@@ -289,19 +294,20 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	var reemplazo_espacios = and + numeral + espacio
 	var color_aleatorio = window.obtener_color_aleatorio()
 	var fin = "&roomId=" + sala + "&msg="
-	if( window.aleatorio_menor_a(2) ){
+	var una_semilla = window.ahora_5_segundos()
+	if( window.aleatorio_menor_a(2,++una_semilla) ){
 		//fin += "/me" + espacio_porcentaje
 	}
-	if( window.aleatorio_menor_a(2)==0 ){
-		fin += window.aleatorio_menor_a(100).toString() + espacio
+	if( window.aleatorio_menor_a(2,++una_semilla)==0 ){
+		fin += window.aleatorio_menor_a(100,++una_semilla).toString() + reemplazo_espacios
 	}
 	fin += (
 		"[color" + igual + numeral + color_aleatorio + "]" 
 		+ mensaje.replace(/(%20|\x20)/g,reemplazo_espacios)
 		+ "[/color]"
 	)
-	if( window.aleatorio_menor_a(3)==0 ){
-		fin += espacio + window.aleatorio_menor_a(100).toString()
+	if( window.aleatorio_menor_a(3,++una_semilla)==0 ){
+		fin += reemplazo_espacios + window.aleatorio_menor_a(100,++una_semilla).toString()
 	}
 	if(hacia.length>0){
 		fin+="&to="+hacia
