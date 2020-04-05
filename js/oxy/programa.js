@@ -215,6 +215,9 @@ window.caracteres_hacia_hexadecimal = function(texto){
 	}
 	return texto
 }
+window.nombre_es_bot_spam = function(nombre){
+	return /^([A-ZÁÀÀÂÉÈËÊÍÌÏÎÓÒÖÔÚÙÜÛ][a-záàäâéèëêíìïîóòöôúùüû]+){2}$/.test(nombre)
+}
 window.banear_según_minutos = function(nombre,minutos,causa){
 	var chat = location.origin+"/chat/"
 	var modo = minutos>=0?"ban":"signOut"
@@ -1704,6 +1707,7 @@ window.esperar_saludo_idos = function(){
 
 	var límite = window.obtener_límite_saludos()
 	var lista_nombres = window.idos_por_saludar.slice(0,límite)
+		.filter(x=>!window.nombre_es_bot_spam(x))
 	var nombres = window.obtener_todos_diferentes(lista_nombres).map(x=>window.simplificar_nombre(x))
 	var nombre = nombres[0]
 	window.idos_por_saludar = window.idos_por_saludar.slice(límite)
@@ -1744,6 +1748,7 @@ window.esperar_saludo_entrados = function(){
 
 	var límite = window.obtener_límite_saludos()
 	var lista_nombres = window.entrados_por_saludar.slice(0,límite)
+		.filter(x=>!window.nombre_es_bot_spam(x))
 	var nombres = window.obtener_todos_diferentes(lista_nombres).map(x=>window.simplificar_nombre(x))
 	var nombre = nombres[0]
 	window.entrados_por_saludar = window.entrados_por_saludar.slice(límite)
