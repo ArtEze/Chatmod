@@ -1596,6 +1596,9 @@ window.borrar_nombre_de_idos = function(nombre){
 	return [delete entrados[nombre],delete idos[nombre]]
 }
 window.determinar_color_texto = function(nombre_chat){
+
+	console.log("Nombre chat:",nombre_chat)
+
 	var octal = nombre_chat.split("").map(x=>
 		x.charCodeAt().toString(16).slice(-1)
 	).join("")
@@ -1701,7 +1704,7 @@ window.simplificar_nombre = function(nombre){
 	}
 	return devuelve
 }
-window.chat_negrita = function(){
+window.chat_negrita = function(nombre_chat,color_chat){
 	return "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 }
 window.esperar_saludo_idos = function(){
@@ -1765,9 +1768,9 @@ window.esperar_saludo_entrados = function(){
 	
 	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes)
 	console.log(mensaje_aleatorio_array)
-	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0]
+	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0].split(" ").sort().join("")
 	var color_chat = window.determinar_color_texto(mensaje_aleatorio_sin_color)
-	var mensaje_aleatorio = window.char_negrita(mensaje_aleatorio_sin_color,color_chat)
+	var mensaje_aleatorio = window.chat_negrita(mensaje_aleatorio_sin_color,color_chat)
 
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
@@ -1785,10 +1788,10 @@ window.esperar_saludo_entrados = function(){
 			, "¡Bienvenid"+género + "s a " + mensaje_aleatorio + ", " + nombres_bbcode + "!" 
 			, "¡Esto es "+ mensaje_aleatorio +"! ¡"+género + "l " + nombres_bbcode + "!"
 			, "Entró un" + género + " es " + mensaje_aleatorio + ", " + nombres_bbcode + "!"
-			, nombres_bbcode + mensaje_aleatorio
+			, nombres_bbcode + mensaje_aleatorio_sin_color
 				.replace(/[aeiou]/g,"i")
 				.replace(/[AEIOU]/g,"O")
-			, mensaje_aleatorio
+			, mensaje_aleatorio_sin_color
 				.replace(/[aeiou]/g,"i") + nombres_bbcode
 				.replace(/[AEIOU]/g,"E") + nombres_bbcode
 		)
@@ -1796,8 +1799,6 @@ window.esperar_saludo_entrados = function(){
 	if(nombres.length==1){
 		var género = window.género_usuario(nombre)
 		var nombre_bbcode = window.bbcode_usuario(nombre)
-		var nombre_chat = document.querySelector(".text").textContent
-		var color_chat = window.determinar_color_texto(nombre_chat)
 
 		bienvenidas.push(
 			"¡Bienvenid"+género + " " + nombre_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!"
