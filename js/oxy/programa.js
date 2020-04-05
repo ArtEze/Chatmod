@@ -1599,25 +1599,23 @@ window.determinar_color_texto = function(nombre_chat){
 
 	console.log("Nombre chat:",nombre_chat)
 
-	var octal = nombre_chat.split("").map(x=>
-		x.charCodeAt().toString(16).slice(-1)
-	).join("")
-	var longitud = octal.length
-	var i=0;
-	devuelve = [...Array(6)].map(
-		x=>{
-			var pos = Math.round((++i)/7*longitud)
-			var num = octal[pos]
-			if(num>="a"){
-				num = 10+num.charCodeAt()-"a".charCodeAt()
-			}else{
-				num = num.charCodeAt()-"0".charCodeAt()
-			}
-			num = num%(num,(i%2==0)?16:8)
-			return num.toString(16)
-		}
-	).join("")
-	return devuelve
+	var los_24_bits = [...Array(24)].map(x=>0).join("")
+	var mensaje_a_binario = nombre_chat.split("").map(x=>x.charCodeAt().toString(2)).join("")
+	var binario = los_24_bits.concat(mensaje_a_binario).split("")
+	var rojo = []
+	var verde = []
+	var azul = []
+	for(var i=0;i<binario.length;++i){
+		rojo.push(binario.shift())
+		verde.push(binario.shift())
+		azul.push(binario.shift())
+	}
+	var color = [
+		 window.entero_hacia_hexadecimal(window.binario_hacia_entero(rojo.join("")) ,2)
+		,window.entero_hacia_hexadecimal(window.binario_hacia_entero(verde.join("")),2)
+		,window.entero_hacia_hexadecimal(window.binario_hacia_entero(azul.join("")) ,2)
+	]
+	return color.join("")
 }
 
 window.tiempo_total_saludo = 21*1000
