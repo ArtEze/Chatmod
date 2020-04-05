@@ -1766,7 +1766,7 @@ window.esperar_saludo_entrados = function(){
 	// var nombre_chat = document.querySelector(".text").textContent
 	// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
 	
-	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes)
+	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes.filter(x=>x[3]==1))
 	console.log(mensaje_aleatorio_array)
 	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0].split(" ").sort().join("")
 	var color_chat = window.determinar_color_texto(mensaje_aleatorio_sin_color)
