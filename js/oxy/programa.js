@@ -45,9 +45,55 @@ window.puedo_enviar_mensajes = function(){
 window.aleatorio = function(){ // Función que intenta reemplazar a Math.random()
 	return +Date.now().toString().split("").concat("0.").reverse().join("")
 }
+window.binario_hacia_entero = function(texto_binario){
+	return +"0b0".concat(texto_binario)
+}
+window.aleatorizar = function(x,debug){
+	if(x==0){return 0}
+	var binario = x.toString(2)
+	var longitud = binario.length
+	var número = ""
+	var resultado = undefined
+	binario = binario.slice(2) + binario.slice(0,-2)
+	while( binario.length>0 ){
+		var primero = binario.slice(0,1)
+		var último = binario.slice(-1)
+		/*
+		var índice = Math.floor(binario.length/2)
+		var centro = binario[índice]
+		debug && console.log(último,primero,centro)
+		if(centro!==undefined){número+=centro}
+		*/
+		if(último!==undefined){número+=último}
+		if(primero!==undefined){número+=primero}
+		//var binario_2 = binario.slice(1,índice) + binario.slice(índice,-1)
+		var binario_2 = binario.slice(1,-1)
+		binario = binario_2
+	}
+	resultado = window.binario_hacia_entero(número)%x
+	return resultado
+}
+window.ahora_5_segundos = function(){
+	return Math.floor(Date.now()/5000)
+}
+window.generar_100_aleatorios = function(){
+	var a=[]
+	var x = ahora_5_segundos()
+	for(var i=x;i<x+100;++i){
+		a.push(aleatorizar(i))
+	}
+	return a
+}
+window.aleatorio_menor_a = function(x,semilla){
+	 // Aleatorio menor a un número.
+	var resto_fecha = semilla || window.ahora_5_segundos()
+	var aleatorizado = (aleatorizar(resto_fecha))%x
+	return aleatorizado
+}
 window.elemento_aleatorio = function(array){
 	array = array.filter(x=>x!=undefined)
-	return array[Math.floor(window.aleatorio()*array.length)]
+	var aleatorio = window.aleatorio_menor_a(array.length)
+	return array[aleatorio]
 }
 window.texto_hacia_html = function(texto){
 	return domparser.parseFromString(texto,"text/html")
@@ -90,7 +136,7 @@ window.descargar = function(dirección,función,error){
 }
 window.descargar_votantes = function(){
 	window.descargar(
-		location.origin+"/custom.css?"+Math.floor(window.aleatorio()*1000)
+		location.origin + "/custom.css?" + Date.now()
 		,x=>{
 			var lista_votantes=x.match(/=".+"/gi)
 			if(lista_votantes!=null){
@@ -208,14 +254,15 @@ window.eliminar_mensaje = function(número,sala){
 	window.descargar(dirección,x=>window.callback_eliminar(x))
 }
 window.obtener_color_aleatorio = function(){
-	return Array(6)
-		.toString()
-		.replace(/,/g,0)
+	return (
+		[...Array(6)]
+		.map(x=>0)
+		.join("")
 		.concat(
-			Math.floor(
-				window.aleatorio()*Math.pow(256,3)
-			).toString(16)
+			aleatorio_menor_a(256**3)
+			.toString(16)
 		).slice(-6)
+	)
 }
 window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	mensaje = window.caracteres_hacia_hexadecimal(mensaje)
@@ -227,16 +274,25 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	var and = "%26" // &
 	var numeral = "%23" // #
 	var igual = "%3d" // =
+	var espacio_porcentaje = "%20" // %20
 	var espacio = "32;" // \x20
 	var reemplazo_espacios = and + numeral + espacio
 	var color_aleatorio = window.obtener_color_aleatorio()
-	var fin = ( "&roomId=" + sala
-		+ "&msg="
-		+ "/me [color" + igual + numeral + color_aleatorio + "]" 
+	var fin = "&roomId=" + sala + "&msg="
+	if( window.aleatorio_menor_a(2) ){
+		fin += "/me" + espacio_porcentaje
+	}
+	if( window.aleatorio_menor_a(4)==0 ){
+		fin += window.aleatorio_menor_a(1000**2).toString() + espacio
+	}
+	fin += (
+		"[color" + igual + numeral + color_aleatorio + "]" 
 		+ mensaje.replace(/(%20|\x20)/g,reemplazo_espacios)
 		+ "[/color]"
 	)
-	if(hacia.length>0){fin+="&to="+hacia}
+	if(hacia.length>0){
+		fin+="&to="+hacia
+	}
 	var dirección = chat + modo + "?csrf="+ window.obtener_CSRF() + fin
 	setTimeout(()=>window.descargar(dirección),tiempo)
 }
@@ -416,7 +472,7 @@ window.patear_a_todos = function(entrada,número,usuario,sala,hacia){
 				window.eliminar_mensaje(número,sala)
 			}
 			if(entrada.match(/^\s*detener\s*$/gi)!=null){
-				var suerte = aleatorio(3)!=0
+				var suerte = window.aleatorio_menor_a(3)!=0
 				if(suerte){
 					window.enviar_mensaje("[size=20][b]El pateo ha sido detenido.[/b][/size]",sala)
 					puede_patear = 0
@@ -514,7 +570,8 @@ window.operar_perfil = function(usuario,sala,hacia){
 	window.moderar_usuario(usuario,(datos)=>window.pedir_hora_usuario(datos,usuario,sala,hacia))
 }
 window.aleatorio_hora = function(){
-	return 60*1000*Math.floor(1+window.aleatorio()*60*24) // 24 horas
+	// 1 minuto + 8 horas
+	return (10**3) * ( 1+aleatorio_menor_a(60**2*8) )
 }
 window.decir_la_hora = function(){
 	var soy_un_bot = window.soy_bot()
@@ -1117,7 +1174,9 @@ window.agregar_avatar = function(datos,usuario,hacia,sala,i){
 		identidad = us_pos==undefined?"":us_pos.id
 	}
 	if(identidad!=undefined&!avatar_excluidos.includes(actual)){
-		window.enviar_mensaje("[img]"+sitio+"/n/"+identidad+"/d?"+window.aleatorio(1000)+"[/img]",sala,[usuario,actual],89*i)
+		var mensaje_sin_mod = sitio+"/n/"+identidad+"/e?"+Date.now()
+		var mensaje_con_mod = "[img]" + mensaje_sin_mod + "[/img]"
+		window.enviar_mensaje(mensaje_sin_mod,sala,[usuario,actual],89*i)
 	}
 }
 window.mostrar_avatares = function(entrada,usuario,hacia,sala){
@@ -1508,7 +1567,7 @@ window.etiquetar_nick = function(entrada,usuario,sala,hacia){
 	var regex = /^\s*tag\s*(.+)\s*$/gi
 	if(regex.test(entrada)){
 		var nick = entrada.replace(regex,"$1")
-		window.enviar_mensaje(""+window.aleatorio(100),sala,[nick],1)
+		window.enviar_mensaje(""+window.aleatorio_menor_a(100),sala,[nick],1)
 	}
 }
 window.borrar_nombre_de_idos = function(nombre){
@@ -1538,10 +1597,11 @@ window.determinar_color_texto = function(nombre_chat){
 
 window.tiempo_total_saludo = 21*1000
 window.tiempo_espera_saludo = function(){
-	return 21*1000 + Math.floor(window.aleatorio()*1000*15) // 15 segundos de espera.
+	// 15 segundos de espera.
+	return 21*1000 + window.aleatorio_menor_a(1000*15)
 }
 window.tiempo_espera = function(){
-	return Math.floor(window.aleatorio()*21*1000)
+	return window.aleatorio_menor_a(21*1000)
 }
 window.reestablecer_localStorage = function(){
 	return ["idos","entrados"].map(x=>{
