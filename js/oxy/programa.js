@@ -253,16 +253,26 @@ window.eliminar_mensaje = function(número,sala){
 	var dirección = chat + modo + "?csrf="+ window.obtener_CSRF() + fin
 	window.descargar(dirección,x=>window.callback_eliminar(x))
 }
+window.calcular_luminosidad = function(color){
+	var suma = 0
+	for(var i in color){
+		suma += color[i]
+	}
+	return suma
+}
+window.entero_hacia_hexadecimal = function(entero,longitud){
+	return ([...Array(longitud)].map(x=>0).join("")+entero.toString(16)).slice(-longitud)
+}
 window.obtener_color_aleatorio = function(){
-	return (
-		[...Array(6)]
-		.map(x=>0)
-		.join("")
-		.concat(
-			aleatorio_menor_a(256**3)
-			.toString(16)
-		).slice(-6)
-	)
+	var semilla = window.ahora_5_segundos()
+	var luminosidad = 255*3
+	var color = [255,255,255]
+	while(luminosidad>=256*2){
+		color = [...Array(3)].map(x=>aleatorio_menor_a(256,++semilla))
+		luminosidad = calcular_luminosidad(color)
+	}
+	color = color.map(x=>window.entero_hacia_hexadecimal(x,2)).join("")
+	return color
 }
 window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	mensaje = window.caracteres_hacia_hexadecimal(mensaje)
@@ -280,16 +290,19 @@ window.enviar_mensaje = function(mensaje,sala,hacia,tiempo){
 	var color_aleatorio = window.obtener_color_aleatorio()
 	var fin = "&roomId=" + sala + "&msg="
 	if( window.aleatorio_menor_a(2) ){
-		fin += "/me" + espacio_porcentaje
+		//fin += "/me" + espacio_porcentaje
 	}
-	if( window.aleatorio_menor_a(4)==0 ){
-		fin += window.aleatorio_menor_a(1000**2).toString() + espacio
+	if( window.aleatorio_menor_a(2)==0 ){
+		fin += window.aleatorio_menor_a(100).toString() + espacio
 	}
 	fin += (
 		"[color" + igual + numeral + color_aleatorio + "]" 
 		+ mensaje.replace(/(%20|\x20)/g,reemplazo_espacios)
 		+ "[/color]"
 	)
+	if( window.aleatorio_menor_a(3)==0 ){
+		fin += espacio + window.aleatorio_menor_a(100).toString()
+	}
 	if(hacia.length>0){
 		fin+="&to="+hacia
 	}
