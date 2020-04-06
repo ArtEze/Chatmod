@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         Bot Oxy para Chatovod
-// @version      2.8.0
+// @version      2.8.1
 // @description  Cargador del bot Oxy para Chatovod.
 // @author       ArtEze
+// @updateURL    https://arteze.github.io/charlavod/js/oxy/tampermonkey.js
 // @match        *://*.chatovod.com/*
 // @exclude	     *://*.chatovod.com/widget/rpframe
 // @exclude	     *://account.chatovod.com/*
