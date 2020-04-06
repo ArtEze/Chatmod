@@ -37,10 +37,12 @@ iniciar_oxy = function iniciar_oxy(){
 				, borrar_función_carpeta: function(){
 					delete obtener_carpeta
 				}
-				, definir_esto: function(nombre_origen,nombre_destino){
-					var archivo = oxy.funciones.iniciar.a()
-					v( nombre_origen, oxy.funciones[archivo][nombre_destino] )
-					delete window[nombre_destino]
+				, definir_esto: function(nombre_función,nuevo_nombre){
+					with(oxy){
+						var archivo = funciones.iniciar.a()
+						v( nuevo_nombre, funciones[archivo][nombre_función] )
+						delete window[borrar]
+					}
 				}
 				, agregar_código: function(url){
 					var archivo = oxy.funciones.iniciar.a()
@@ -65,7 +67,7 @@ iniciar_oxy = function iniciar_oxy(){
 		var carpeta = i.x("carpeta")
 		i.agregar_código(carpeta+"cargar_archivos")
 		i.borrar_función_carpeta()
-		i.definir_esto("iniciar_oxy_tampermonkey","iniciar_oxy")
+		i.definir_esto("iniciar_oxy","iniciar_oxy_tampermonkey")
 	}
 }
 iniciar_oxy()
