@@ -1,4 +1,4 @@
-window.oxy.funciones.utilidades = {
+oxy.funciones.utilidades = {
 	modificar_función: function(entrada,intermediario,escribir_textarea){
 		var función = typeof(entrada)=="string"?window[entrada]:entrada
 		var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
