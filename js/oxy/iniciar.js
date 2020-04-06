@@ -10,8 +10,8 @@ iniciar_oxy = function iniciar_oxy(){
 				obtener_carpeta: obtener_carpeta
 			}
 			, iniciar: {
-				u: x=>x.slice(-1)[0]
-				, a: ()=>oxy.funciones.iniciar.u(oxy.variables.iniciar.archivo_actual)[0]
+				ult: x=>x.slice(-1)[0]
+				, a: ()=>oxy.funciones.iniciar.ult(oxy.variables.iniciar.archivo_actual)[0]
 				, b: x=>oxy.variables.iniciar.archivo_actual.push([x,Date.now()])
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
@@ -28,10 +28,8 @@ iniciar_oxy = function iniciar_oxy(){
 				}
 				, w: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
-					with(oxy){
-						var i = funciones[archivo]
-						console.log(i)
-						return i.u(oxy.variables[archivo][nombre])[0]
+					with(oxy.funciones[archivo]){
+						return ult(oxy.variables[archivo][nombre])[0]
 					}
 				}
 				, definir_esto: function(){
