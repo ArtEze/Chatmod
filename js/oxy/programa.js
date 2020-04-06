@@ -1755,21 +1755,10 @@ window.esperar_saludo_entrados = function(){
 		.filter(x=>!window.nombre_es_bot_spam(x))
 	var nombres = window.obtener_todos_diferentes(lista_nombres).map(x=>window.simplificar_nombre(x))
 	var nombre = nombres[0]
+
 	window.entrados_por_saludar = window.entrados_por_saludar.slice(límite)
 
-	// console.log( window.entrados_por_saludar )
-
 	var nombres = window.separar_por_and(nombres)
-
-	// var nombre_chat = document.querySelector(".text").textContent
-	// var nombre_chat_negrita = "[b][color=#"+color_chat+"]"+nombre_chat+"[/color][/b]"
-	
-	var mensaje_aleatorio_array = window.elemento_aleatorio(window.mensajes.filter(x=>x[3]==1))
-	console.log(mensaje_aleatorio_array)
-	var mensaje_aleatorio_sin_color = mensaje_aleatorio_array[0]
-				.match(/[A-Za-z0-9\x20]+/g).join("").split(" ").sort().join(" ")
-	var color_chat = window.determinar_color_texto(mensaje_aleatorio_sin_color)
-	var mensaje_aleatorio = window.chat_negrita(mensaje_aleatorio_sin_color,color_chat)
 
 	if(nombres.length>=2){
 		var nombres_bbcode_array = []
@@ -1783,16 +1772,8 @@ window.esperar_saludo_entrados = function(){
 		nombres_bbcode = window.unir_array_palabras(nombres,window.bbcode_usuario)
 
 		bienvenidas.push(
-			"Ha entrado "+género + "s " + nombres_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!" 
-			, "¡Bienvenid"+género + "s a " + mensaje_aleatorio + ", " + nombres_bbcode + "!" 
-			, "¡Esto es "+ mensaje_aleatorio +"! ¡"+género + "l " + nombres_bbcode + "!"
-			, "Entró un" + género + " es " + mensaje_aleatorio + ", " + nombres_bbcode + "!"
-			, nombres_bbcode + mensaje_aleatorio_sin_color
-				.replace(/[aeiou]/g,"i")
-				.replace(/[AEIOU]/g,"O")
-			, mensaje_aleatorio_sin_color
-				.replace(/[aeiou]/g,"i") + nombres_bbcode
-				.replace(/[AEIOU]/g,"E") + nombres_bbcode
+			`Bienvenid${género}s: ${nombres_bbcode}.`
+			, `Han entrado ell${género}s: ${nombres_bbcode}.`
 		)
 	}
 	if(nombres.length==1){
@@ -1800,10 +1781,10 @@ window.esperar_saludo_entrados = function(){
 		var nombre_bbcode = window.bbcode_usuario(nombre)
 
 		bienvenidas.push(
-			"¡Bienvenid"+género + " " + nombre_bbcode + "! " + "¡Esto es "+ mensaje_aleatorio +"!"
-			, "¡Bienvenid"+género + " a " + mensaje_aleatorio + ", " + nombre_bbcode + "!"
-			, "¡Esto es "+ mensaje_aleatorio +"! ¡Bienvenid"+género + " " + nombre_bbcode + "!"
-			, "¡Est" + género + " es " + mensaje_aleatorio + ", " + nombre_bbcode + "!"
+			`¡Bienvenid${género}! ¡Esto es ${mensaje_aleatorio}!`
+			, `¡Bienvenid${género} ${nombre_bbcode}!`
+			, `¡Sea bienvenid${género} ${nombre_bbcode}!`
+			, `¡Entró ${nombre_bbcode}!`
 		)
 	}
 	if(nombres.length>=1){
