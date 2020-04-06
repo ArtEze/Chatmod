@@ -1781,7 +1781,7 @@ window.esperar_saludo_entrados = function(){
 		var nombre_bbcode = window.bbcode_usuario(nombre)
 
 		bienvenidas.push(
-			`¡Bienvenid${género}! ¡Esto es ${mensaje_aleatorio}!`
+			`¡Bienvenid${género} muchach${género} ${nombre_bbcode}!`
 			, `¡Bienvenid${género} ${nombre_bbcode}!`
 			, `¡Sea bienvenid${género} ${nombre_bbcode}!`
 			, `¡Entró ${nombre_bbcode}!`
