@@ -1,7 +1,9 @@
 iniciar_oxy = function iniciar_oxy(){
 	oxy = {
 		variables: {
-			archivo_actual: ["iniciar"]
+			iniciar: {
+				archivo_actual: []
+			}
 		}
 		, funciones: {
 			tampermonkey: {
@@ -9,8 +11,10 @@ iniciar_oxy = function iniciar_oxy(){
 			}
 			, iniciar: {
 				u: x=>x.slice(-1)[0]
+				, a: ()=>oxy.funciones.iniciar.u(oxy.variables.iniciar.archivo_actual)[0]
+				, b: x=>oxy.variables.iniciar.archivo_actual.push([x,Date.now()])
 				, v: function(nombre,valor){
-					var archivo = oxy.funciones.iniciar.u(oxy.variables.archivo_actual)
+					var archivo = oxy.funciones.iniciar.a()
 					if(oxy.variables[archivo]==undefined){
 						oxy.variables[archivo] = {}
 					}
@@ -21,11 +25,12 @@ iniciar_oxy = function iniciar_oxy(){
 					return oxy.variables[archivo][nombre]
 				}
 				, w: function(nombre){
-					var archivo = oxy.funciones.iniciar.u(oxy.variables.archivo_actual)
-					return oxy.variables[archivo][nombre].slice(-1)[0][0]
+					var archivo = oxy.funciones.iniciar.a()
+					return oxy.funciones.iniciar.u(oxy.variables[archivo][nombre])[0]
 				}
 				, definir_esto: function(){
-					with(oxy.funciones){
+					var archivo = oxy.funciones.iniciar.a()
+					with(oxy.funciones[archivo]){
 						v("iniciar_oxy_tampermonkey",iniciar_oxy)
 						delete iniciar_oxy
 						delete obtener_carpeta
@@ -36,7 +41,7 @@ iniciar_oxy = function iniciar_oxy(){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
 						etiqueta.src = w("tampermonkey_actual")
-						document.head.appendChild(etiqueta)
+						//document.head.appendChild(etiqueta)
 						return etiqueta
 					}
 				}
@@ -45,8 +50,11 @@ iniciar_oxy = function iniciar_oxy(){
 	}
 	with(oxy.funciones){ // Usando with para mejor facilidad.
 		var i=iniciar, t=tampermonkey
-		i.v("tampermonkey",document.querySelector("script[src*=github]").src)
-		i.v("carpeta",t.obtener_carpeta(i.w("tampermonkey")))
+		i.b("tampermonkey")
+		i.v("url_tampermonkey",document.querySelector("script[src*=github]").src)
+		var tm = i.w("url_tampermonkey")
+		i.b("iniciar")
+		i.v("carpeta",t.obtener_carpeta(tm))
 		i.agregar_código(i.w("carpeta")+"cargar_lista_archivos")
 		i.definir_esto()
 	}
