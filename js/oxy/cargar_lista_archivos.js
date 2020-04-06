@@ -10,6 +10,7 @@ oxy.funciones.cargar_archivos = function(){
 			,"programa"
 		])
 		w("urls_códigos").map(x=>agregar_código(w("carpeta")+x+".js"))
+	}
 }
 oxy.funciones.cargar_archivos()
 
