@@ -1,3 +1,4 @@
+try{oxy}catch(e){oxy={funciones:{}}}
 oxy.funciones.utilidades = {
 	modificar_función: function(entrada,intermediario,escribir_textarea){
 		var función = typeof(entrada)=="string"?window[entrada]:entrada
@@ -30,9 +31,12 @@ oxy.funciones.utilidades = {
 		var ventana = {}
 		for(var i in claves){
 			var clave = claves[i]
-			ventana[clave] = window[clave]
+			if(window[clave]!==window){
+				ventana[clave] = window[clave]
+			}
 		}
 		return ventana
 	}
 }
+// oxy.funciones.utilidades.clonar_ventana()
 
