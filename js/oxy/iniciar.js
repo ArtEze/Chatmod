@@ -16,12 +16,12 @@ function cargar_cargador(){
 					with(oxy){
 						console.log("Nombre archivo: ",nombre_archivo)
 						var elemento = funciones.iniciar.c(nombre_archivo)
-						variables.iniciar.archivo_actual.push([elemento])
+						variables.iniciar.archivo_actual.push(elemento)
 					}
 				}
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
-					console.log(archivo)
+					console.log("Asignar archivo: ",archivo)
 					with(oxy){
 						if(variables[archivo]==undefined){
 							variables[archivo] = {}
@@ -47,7 +47,7 @@ function cargar_cargador(){
 							funciones[archivo] = {}
 						}
 						if(funciones[archivo][nombre_función]==undefined){
-							console.log( funciones, archivo, nombre_función )
+							console.log( "Definir: ", [funciones, archivo, nombre_función] )
 							funciones[archivo][nombre_función] = window[nombre_función]
 							delete window[nombre_función]
 						}
