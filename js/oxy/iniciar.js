@@ -53,16 +53,15 @@ function cargar_cargador(){
 		}
 	}
 	with(oxy.funciones){ // Usando with para mejor facilidad.
-		var i=iniciar, t=tampermonkey
+		var i=iniciar
 		i.b("tampermonkey")
 		i.v("url_tampermonkey",document.querySelector("script[src*=github]").src)
 		var tm = i.x("url_tampermonkey")
 		i.definir_esto("obtener_carpeta")
 		i.b("iniciar")
-		console.log(oxy)
-		i.v("carpeta",t.obtener_carpeta(tm))
-		console.log(oxy)
+		i.v("carpeta",oxy.tampermonkey.obtener_carpeta(tm))
 		var carpeta = i.x("carpeta")
+		console.log(carpeta)
 		i.agregar_código(carpeta+"cargar_archivos")
 		i.b("tampermonkey")
 		i.definir_esto("oxy_tampermonkey")
