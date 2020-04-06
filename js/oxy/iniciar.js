@@ -21,6 +21,7 @@ iniciar_oxy = function iniciar_oxy(){
 					return oxy.variables[archivo][nombre]
 				}
 				, w: function(nombre){
+					var archivo = oxy.funciones.iniciar.u(oxy.variables.archivo_actual)
 					return oxy.variables[archivo][nombre].slice(-1)[0][0]
 				}
 				, definir_esto: function(){
