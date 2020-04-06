@@ -19,7 +19,7 @@ window.iniciar_oxy = function iniciar_oxy(){
 					delete window.obtener_carpeta
 				}
 			}
-			, carpeta: window.obtener_carpeta
+			, obtener_carpeta: window.obtener_carpeta
 			, agregar_código: function(url){
 				with(window.oxy.funciones){
 					var etiqueta = document.createElement("script")
@@ -33,7 +33,7 @@ window.iniciar_oxy = function iniciar_oxy(){
 	}
 	with(window.oxy.funciones){ // Usando with para mejor facilidad.
 		v("tampermonkey",document.querySelector("script[src*=github]").src)
-		v("carpeta",carpeta(w("tampermonkey")))
+		v("carpeta",obtener_carpeta(w("tampermonkey")))
 		//agregar_código(w("carpeta")+"cargar_lista_archivos.js")
 		definir_esto()
 	}
