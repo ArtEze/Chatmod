@@ -35,8 +35,10 @@ function cargar_cargador(){
 				, definir_esto: function(nombre_función){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
-						funciones[archivo][nombre_función] = window[nombre_función]
-						delete window[nombre_función]
+						if(funciones[archivo][nombre_función]==undefined){
+							funciones[archivo][nombre_función] = window[nombre_función]
+							delete window[nombre_función]
+						}
 					}
 				}
 				, agregar_código: function(url){
@@ -59,7 +61,8 @@ function cargar_cargador(){
 		var tm = i.x("url_tampermonkey")
 		i.definir_esto("obtener_carpeta")
 		i.b("iniciar")
-		i.v("carpeta",oxy.tampermonkey.obtener_carpeta(tm))
+		console.log(oxy.funciones,tampermonkey)
+		i.v("carpeta",oxy.funciones.tampermonkey.obtener_carpeta(tm))
 		var carpeta = i.x("carpeta")
 		console.log(carpeta)
 		i.agregar_código(carpeta+"cargar_archivos")
