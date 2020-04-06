@@ -1,6 +1,8 @@
 window.cargar_archivos = function(){
 	with(window.oxy.funciones){ // Usando with para mejor facilidad.
 		var i=iniciar
+		i.b("tampermonkey")
+		var carpeta = i.x("carpeta")
 		i.b("cargar_archivos")
 		i.v("urls_códigos", [
 			"utilidades"
@@ -11,8 +13,6 @@ window.cargar_archivos = function(){
 			,"texto_hacia_reales"
 			,"programa"
 		])
-		i.b("iniciar")
-		var carpeta = i.x("carpeta")
 		i.b("cargar_archivos")
 		i.x("urls_códigos").map(x=>i.agregar_código(carpeta+x))
 		i.definir_esto("cargar_archivos")
