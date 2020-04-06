@@ -37,9 +37,9 @@ iniciar_oxy = function iniciar_oxy(){
 				, borrar_función_carpeta: function(){
 					delete obtener_carpeta
 				}
-				, definir_esto: function(nombre){
+				, definir_esto: function(nombre_origen,nombre_destino){
 					var archivo = oxy.funciones.iniciar.a()
-					v(nombre,oxy.funciones[archivo][nombre_destino])
+					v( nombre_origen, oxy.funciones[archivo][nombre_destino] )
 					delete window[nombre_destino]
 				}
 				, agregar_código: function(url){
