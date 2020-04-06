@@ -18,7 +18,7 @@ function cargar_cargador(){
 						if(funciones[archivo]==undefined){
 							funciones[archivo]={}						
 						}
-						var elemento = funciones.iniciar.c(nombre_archivo)
+						var elemento = funciones.iniciar.c(archivo)
 						variables.iniciar.archivo_actual.push(elemento)
 					}
 				}
