@@ -27,9 +27,10 @@ oxy.funciones.utilidades = {
 			})
 			return es
 		})
-		var ventana = []
+		var ventana = {}
 		for(var i in claves){
-			ventana[i] = window[i]
+			var clave = claves[i]
+			ventana[clave] = window[clave]
 		}
 		return ventana
 	}
