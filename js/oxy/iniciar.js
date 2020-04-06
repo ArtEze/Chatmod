@@ -43,6 +43,7 @@ function cargar_cargador(){
 				}
 				, agregar_código: function(url){
 					var archivo = oxy.funciones.iniciar.a()
+					console.log(url,archivo,oxy)
 					with(oxy.funciones[archivo]){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
