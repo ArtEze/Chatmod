@@ -41,7 +41,7 @@ iniciar_oxy = function iniciar_oxy(){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
 						v( nuevo_nombre, funciones[archivo][nombre_función] )
-						delete window[borrar]
+						delete window[nombre_función]
 					}
 				}
 				, agregar_código: function(url){
