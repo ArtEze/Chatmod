@@ -35,7 +35,7 @@ function cargar_cargador(){
 				, definir_esto: function(nombre_función){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
-						v( nombre_función, funciones[archivo][nombre_función] )
+						funciones[archivo][nombre_función] = window[nombre_función]
 						delete window[nombre_función]
 					}
 				}
