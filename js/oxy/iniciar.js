@@ -21,10 +21,20 @@ function cargar_cargador(){
 						variables.iniciar.archivo_actual.push(elemento)
 					}
 				}
-				, v: function(nombre,valor){
-					var archivo = oxy.funciones.iniciar.a()
-					console.log("Asignar: ",archivo,nombre,valor)
+				, s: function(función,archivo,nombre,valor,puede_depurar){
 					with(oxy){
+						if(variables.registro==undefined){
+							variables.registro = []
+						}
+						var registro = [`${nombre}: `,archivo,nombre,valor]
+						variables.registro.push(registro)
+						puede_depurar && console.log(...registro)
+					}
+				}
+				, v: function(nombre,valor){
+					with(oxy){
+						var archivo = funciones.iniciar.a()
+						funciones.iniciar.s("Asignar",archivo,...arguments)
 						if(variables[archivo]==undefined){
 							variables[archivo] = {}
 						}
