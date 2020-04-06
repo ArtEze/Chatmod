@@ -14,9 +14,6 @@ function cargar_cargador(){
 				, c: x=>[x,Date.now(),Error().stack.replace("Error\n","")]
 				, b: function(nombre_archivo){
 					with(oxy){
-						if(funciones[nombre_archivo]==undefined){
-							funciones[nombre_archivo] = {}
-						}
 						var elemento = funciones.iniciar.c(nombre_archivo)
 						variables.iniciar.archivo_actual.push([elemento])
 					}
@@ -44,6 +41,9 @@ function cargar_cargador(){
 				, definir_esto: function(nombre_función){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
+						if(funciones[archivo]==undefined){
+							funciones[archivo] = {}
+						}
 						if(funciones[archivo][nombre_función]==undefined){
 							funciones[archivo][nombre_función] = window[nombre_función]
 							delete window[nombre_función]
