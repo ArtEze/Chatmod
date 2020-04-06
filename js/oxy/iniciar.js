@@ -1,7 +1,8 @@
 iniciar_oxy = function iniciar_oxy(){
 	oxy = {
 		variables: {
-			iniciar: {
+			tampermonkey: {}
+			, iniciar: {
 				archivo_actual: []
 			}
 		}
@@ -46,7 +47,7 @@ iniciar_oxy = function iniciar_oxy(){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
 						etiqueta.src = w("tampermonkey_actual")
-						//document.head.appendChild(etiqueta)
+						document.head.appendChild(etiqueta)
 						return etiqueta
 					}
 				}
