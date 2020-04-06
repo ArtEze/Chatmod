@@ -26,7 +26,7 @@ cargar_cargador = function(){
 						if(iniciar.registro==undefined){
 							iniciar.registro = []
 						}
-						var registro = [`${función}: `,...[...arguments].slice(1,-1)]
+						var registro = [`${función}: `,...[...arguments].slice(1,4)]
 						iniciar.registro.push(registro)
 						puede_depurar && console.log(...registro)
 					}
