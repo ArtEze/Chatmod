@@ -23,7 +23,7 @@ iniciar_oxy = function iniciar_oxy(){
 						if(variables[archivo][nombre]==undefined){
 							variables[archivo][nombre] = []
 						}
-						var trazado = Error().stack.replace(/Error\n/,"")
+						var trazado = Error().stack.replace("Error\n","")
 						variables[archivo][nombre].push([valor,Date.now(),trazado])
 						return nombre
 					}
