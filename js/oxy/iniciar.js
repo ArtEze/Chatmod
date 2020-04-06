@@ -15,18 +15,22 @@ iniciar_oxy = function iniciar_oxy(){
 				, b: x=>oxy.variables.iniciar.archivo_actual.push([x,Date.now()])
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
-					if(oxy.variables[archivo]==undefined){
-						oxy.variables[archivo] = {}
+					with(oxy){
+						if(variables[archivo]==undefined){
+							variables[archivo] = {}
+						}
+						if(variables[archivo][nombre]==undefined){
+							variables[archivo][nombre] = []
+						}
+						variables[archivo][nombre].push([valor,Date.now()])
+						return nombre
 					}
-					if(oxy.variables[archivo][nombre]==undefined){
-						oxy.variables[archivo][nombre] = []
-					}
-					oxy.variables[archivo][nombre].push([valor,Date.now()])
-					return oxy.variables[archivo][nombre]
 				}
 				, w: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
-					return oxy.funciones.iniciar.u(oxy.variables[archivo][nombre])[0]
+					with(oxy.funciones[archivo]){
+						return u(oxy.variables[archivo][nombre])[0]
+					}
 				}
 				, definir_esto: function(){
 					var archivo = oxy.funciones.iniciar.a()
@@ -38,7 +42,7 @@ iniciar_oxy = function iniciar_oxy(){
 				}
 				, agregar_código: function(url){
 					var archivo = oxy.funciones.iniciar.a()
-					with(oxy.funciones){
+					with(oxy.funciones[archivo]){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
 						etiqueta.src = w("tampermonkey_actual")
