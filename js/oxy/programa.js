@@ -2119,8 +2119,9 @@ window.registrar_los_pedidos = function registrar_los_pedidos(a,b){
 }
 window.activar_bot_2 = function(){
 	cc.prototype.log = (a,b,c)=>window.entrar_y_salir(a,b,c)
-	window.modificar_función(mh,window.registrar_los_pedidos,false)
-	window.modificar_función(yq,window.procesar_mensajes,false)
+	var utilidades = oxy.funciones.utilidades
+	utilidades.modificar_función(mh,window.registrar_los_pedidos,false)
+	utilidades.modificar_función(yq,window.procesar_mensajes,false)
 
 	/*
 	nick	ArtEze
