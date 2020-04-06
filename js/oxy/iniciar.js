@@ -12,9 +12,12 @@ function cargar_cargador(){
 				ult: x=>x.slice(-1)[0]
 				, a: ()=>oxy.funciones.iniciar.ult(oxy.variables.iniciar.archivo_actual)[0]
 				, c: x=>[x,Date.now(),Error().stack.replace("Error\n","")]
-				, b: function(nombre_archivo){
+				, b: function(archivo){
 					with(oxy){
-						console.log("Nombre archivo: ",nombre_archivo)
+						console.log("Nombre archivo: ",archivo)
+						if(funciones[archivo]==undefined){
+							funciones[archivo]={}						
+						}
 						var elemento = funciones.iniciar.c(nombre_archivo)
 						variables.iniciar.archivo_actual.push(elemento)
 					}
