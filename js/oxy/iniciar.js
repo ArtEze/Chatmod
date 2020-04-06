@@ -1,4 +1,4 @@
-function cargar_cargador(){
+window.cargar_cargador = function(){
 	oxy = {
 		variables: {
 			tampermonkey: {}
@@ -22,16 +22,16 @@ function cargar_cargador(){
 					}
 				}
 				, s: function(función,archivo,nombre,valor,puede_depurar){
-					with(oxy){
-						if(variables.registro==undefined){
-							variables.registro = []
+					with(oxy.variables){
+						if(iniciar.registro==undefined){
+							iniciar.registro = []
 						}
 						var registro = [`${nombre}: `,archivo,nombre,valor]
-						variables.registro.push(registro)
+						iniciar.registro.push(registro)
 						puede_depurar && console.log(...registro)
 					}
 				}
-				, v: function(nombre,valor){
+				, v: function(nombre,valor,puede_depurar){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
 						funciones.iniciar.s("Asignar",archivo,...arguments)
@@ -59,7 +59,6 @@ function cargar_cargador(){
 							funciones[archivo] = {}
 						}
 						if(funciones[archivo][nombre_función]==undefined){
-							console.log( "Definir: ", [funciones, archivo, nombre_función] )
 							funciones[archivo][nombre_función] = window[nombre_función]
 							delete window[nombre_función]
 						}
@@ -96,5 +95,5 @@ function cargar_cargador(){
 		i.definir_esto("cargar_cargador")
 	}
 }
-cargar_cargador()
+window.cargar_cargador()
 

@@ -1,4 +1,4 @@
-function cargar_archivos(){
+window.cargar_archivos = function(){
 	with(window.oxy.funciones){ // Usando with para mejor facilidad.
 		var i=iniciar
 		i.b("cargar_archivos")
@@ -18,5 +18,5 @@ function cargar_archivos(){
 		i.definir_esto("cargar_archivos")
 	}
 }
-cargar_archivos()
+window.cargar_archivos()
 
