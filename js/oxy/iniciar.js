@@ -14,6 +14,7 @@ function cargar_cargador(){
 				, c: x=>[x,Date.now(),Error().stack.replace("Error\n","")]
 				, b: function(nombre_archivo){
 					with(oxy){
+						console.log("Nombre archivo: ",nombre_archivo)
 						var elemento = funciones.iniciar.c(nombre_archivo)
 						variables.iniciar.archivo_actual.push([elemento])
 					}
