@@ -61,7 +61,8 @@ iniciar_oxy = function iniciar_oxy(){
 		var tm = i.x("url_tampermonkey")
 		i.b("iniciar")
 		i.v("carpeta",t.obtener_carpeta(tm))
-		i.agregar_código(i.w("carpeta")+"cargar_archivos")
+		var carpeta = i.x("carpeta")
+		i.agregar_código(carpeta+"cargar_archivos")
 		i.borrar_función_carpeta()
 		i.definir_esto("iniciar_oxy_tampermonkey","iniciar_oxy")
 	}
