@@ -19,7 +19,7 @@ oxy.funciones.utilidades = {
 		}
 		return window[nombre_entrada]
 	}
-	clonar_ventana: function(){
+	, clonar_ventana: function(){
 		var claves = Object.keys(window).filter(x=>{
 			var es = true
 			var filtro = ["parent","top"].map(y=>{
