@@ -11,7 +11,16 @@ function cargar_cargador(){
 			, iniciar: {
 				ult: x=>x.slice(-1)[0]
 				, a: ()=>oxy.funciones.iniciar.ult(oxy.variables.iniciar.archivo_actual)[0]
-				, b: x=>oxy.variables.iniciar.archivo_actual.push([x,Date.now()])
+				, c: x=>[x,Date.now(),Error().stack.replace("Error\n","")]
+				, b: function(nombre_archivo){
+					with(oxy){
+						if(funciones[nombre_archivo]==undefined){
+							funciones[nombre_archivo] = {}
+						}
+						var elemento = funciones.iniciar.c(nombre_archivo)
+						variables.iniciar.archivo_actual.push([elemento])
+					}
+				}
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
 					with(oxy){
@@ -21,8 +30,8 @@ function cargar_cargador(){
 						if(variables[archivo][nombre]==undefined){
 							variables[archivo][nombre] = []
 						}
-						var trazado = Error().stack.replace("Error\n","")
-						variables[archivo][nombre].push([valor,Date.now(),trazado])
+						var elemento = oxy.funciones.iniciar.c(valor)
+						variables[archivo][nombre].push(elemento)
 						return nombre
 					}
 				}
