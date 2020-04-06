@@ -23,7 +23,8 @@ iniciar_oxy = function iniciar_oxy(){
 						if(variables[archivo][nombre]==undefined){
 							variables[archivo][nombre] = []
 						}
-						variables[archivo][nombre].push([valor,Date.now()])
+						var trazado = Error().stack.replace(/Error\n/,"")
+						variables[archivo][nombre].push([valor,Date.now(),trazado])
 						return nombre
 					}
 				}
@@ -46,7 +47,7 @@ iniciar_oxy = function iniciar_oxy(){
 					with(oxy.funciones[archivo]){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
-						etiqueta.src = w("tampermonkey_actual")
+						etiqueta.src = x("tampermonkey_actual")
 						document.head.appendChild(etiqueta)
 						return etiqueta
 					}
