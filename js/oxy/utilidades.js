@@ -1,4 +1,4 @@
-window.utilidades = {
+window.oxy.funciones.utilidades = {
 	modificar_función: function(entrada,intermediario,escribir_textarea){
 		var función = typeof(entrada)=="string"?window[entrada]:entrada
 		var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
@@ -19,7 +19,7 @@ window.utilidades = {
 		}
 		return window[nombre_entrada]
 	}
-	window.clonar_ventana: function(){
+	clonar_ventana: function(){
 		var claves = Object.keys(window).filter(x=>{
 			var es = true
 			var filtro = ["parent","top"].map(y=>{
