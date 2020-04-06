@@ -37,6 +37,7 @@ iniciar_oxy = function iniciar_oxy(){
 					}
 				}
 				, agregar_código: function(url){
+					var archivo = oxy.funciones.iniciar.a()
 					with(oxy.funciones){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
