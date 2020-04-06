@@ -14,7 +14,7 @@ window.iniciar_oxy = function iniciar_oxy(){
 			}
 			, definir_esto: function(){
 				with(window.oxy.funciones){
-					v("esto",window.iniciar_oxy)
+					v("iniciar_oxy_tampermonkey",window.iniciar_oxy)
 					delete window.iniciar_oxy
 					delete window.obtener_carpeta
 				}
@@ -34,7 +34,7 @@ window.iniciar_oxy = function iniciar_oxy(){
 	with(window.oxy.funciones){ // Usando with para mejor facilidad.
 		v("tampermonkey",document.querySelector("script[src*=github]").src)
 		v("carpeta",obtener_carpeta(w("tampermonkey")))
-		//agregar_código(w("carpeta")+"cargar_lista_archivos.js")
+		agregar_código(w("carpeta")+"cargar_lista_archivos.js")
 		definir_esto()
 	}
 }
