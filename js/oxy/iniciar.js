@@ -27,19 +27,19 @@ iniciar_oxy = function iniciar_oxy(){
 						return nombre
 					}
 				}
-				, w: function(nombre){
+				, x: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
 					with(oxy.funciones.iniciar){
 						return ult(oxy.variables[archivo][nombre])[0]
 					}
 				}
-				, definir_esto: function(){
+				, borrar_función_carpeta: function(){
+					delete obtener_carpeta
+				}
+				, definir_esto: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
-					with(oxy.funciones[archivo]){
-						v("iniciar_oxy_tampermonkey",iniciar_oxy)
-						delete iniciar_oxy
-						delete obtener_carpeta
-					}
+					v(nombre,oxy.funciones[archivo][nombre_destino])
+					delete window[nombre_destino]
 				}
 				, agregar_código: function(url){
 					var archivo = oxy.funciones.iniciar.a()
@@ -58,11 +58,12 @@ iniciar_oxy = function iniciar_oxy(){
 		var i=iniciar, t=tampermonkey
 		i.b("tampermonkey")
 		i.v("url_tampermonkey",document.querySelector("script[src*=github]").src)
-		var tm = i.w("url_tampermonkey")
+		var tm = i.x("url_tampermonkey")
 		i.b("iniciar")
 		i.v("carpeta",t.obtener_carpeta(tm))
-		i.agregar_código(i.w("carpeta")+"cargar_lista_archivos")
-		i.definir_esto()
+		i.agregar_código(i.w("carpeta")+"cargar_archivos")
+		i.borrar_función_carpeta()
+		i.definir_esto("iniciar_oxy_tampermonkey","iniciar_oxy")
 	}
 }
 iniciar_oxy()
