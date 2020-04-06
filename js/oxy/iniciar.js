@@ -8,7 +8,7 @@ iniciar_oxy = function iniciar_oxy(){
 				obtener_carpeta: obtener_carpeta
 			}
 			, iniciar: {
-				u: x.slice(-1)[0]
+				u: x=>x.slice(-1)[0]
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.u(oxy.variables.archivo_actual)
 					if(oxy.variables[archivo]==undefined){
