@@ -1,46 +1,49 @@
-try{oxy}catch(e){oxy={funciones:{}}}
-oxy.funciones.utilidades = {
-	modificar_función: function(entrada,intermediario,escribir_textarea){
-		var función = typeof(entrada)=="string"?window[entrada]:entrada
-		var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
-		var nombre_entrada = función.name
-		var nombre_intermediario = función_2.name
-		var modificado = función+""
-		modificado = modificado.replace(
-			/^function ([^\x28]+)\s*\x28((?:,?\s*[^,\x29]+)+)\x29\s*\x7b\s*((?:.|\n)+)\x7d$/gi
-			,"function $1($2){"+nombre_intermediario+"($2);$3}"
-		)
-		if(escribir_textarea){
-			try{window.insertar_textarea(modificado)}catch(e){
-				console.error("Mod_1: ",e)
+utilidades = function(){
+	try{oxy}catch(e){oxy={funciones:{}}}
+	oxy.funciones.utilidades = {
+		modificar_función: function(entrada,intermediario,escribir_textarea){
+			var función = typeof(entrada)=="string"?window[entrada]:entrada
+			var función_2 = typeof(intermediario)=="string"?window[intermediario]:intermediario
+			var nombre_entrada = función.name
+			var nombre_intermediario = función_2.name
+			var modificado = función+""
+			modificado = modificado.replace(
+				/^function ([^\x28]+)\s*\x28((?:,?\s*[^,\x29]+)+)\x29\s*\x7b\s*((?:.|\n)+)\x7d$/gi
+				,"function $1($2){"+nombre_intermediario+"($2);$3}"
+			)
+			if(escribir_textarea){
+				try{window.insertar_textarea(modificado)}catch(e){
+					console.error("Mod_1: ",e)
+				}
 			}
+			try{eval(nombre_entrada+"="+modificado)}catch(e){
+				console.error("Mod_2: ",e)
+			}
+			return window[nombre_entrada]
 		}
-		try{eval(nombre_entrada+"="+modificado)}catch(e){
-			console.error("Mod_2: ",e)
+		, filtrar_chatovod: function(x){
+			return x
 		}
-		return window[nombre_entrada]
-	}
-	, filtrar_chatovod: function(x){
-		return x
-	}
-	, clonar_ventana: function(regreso){
-		var claves = Object.keys(window).filter(x=>{
-			var es = true
-			var filtro = ["parent","top"].map(y=>{
-				if(x==y){es=false}
+		, clonar_ventana: function(regreso){
+			var claves = Object.keys(window).filter(x=>{
+				var es = true
+				var filtro = ["parent","top"].map(y=>{
+					if(x==y){es=false}
+				})
+				return es
 			})
-			return es
-		})
-		var ventana = {}
-		for(var i in claves){
-			var clave = claves[i]
-			if(window[clave]!==window){
-				ventana[clave] = window[clave]
+			var ventana = {}
+			for(var i in claves){
+				var clave = claves[i]
+				if(window[clave]!==window){
+					ventana[clave] = window[clave]
+				}
 			}
+			var procesado = regreso(ventana)
+			return procesado
 		}
-		var procesado = regreso(ventana)
-		return procesado
 	}
 }
+utilidades()
 // oxy.funciones.utilidades.clonar_ventana(oxy.funciones.utilidades.filtrar_chatovod)
 

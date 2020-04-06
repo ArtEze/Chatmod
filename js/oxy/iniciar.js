@@ -1,4 +1,4 @@
-window.cargar_cargador = function(){
+cargar_cargador = function(){
 	oxy = {
 		variables: {
 			tampermonkey: {}
@@ -78,14 +78,14 @@ window.cargar_cargador = function(){
 		}
 	}
 	with(oxy.funciones){ // Usando with para mejor facilidad.
-		var i=iniciar
+		var i=iniciar,t=tampermonkey
 		i.b("tampermonkey")
 		i.v("url_tampermonkey",document.querySelector("script[src*=github]").src)
 		var tm = i.x("url_tampermonkey")
 		i.definir_esto("obtener_carpeta")
+		i.v("carpeta",t.obtener_carpeta(tm))
 		i.b("iniciar")
-		console.log(oxy.funciones,tampermonkey)
-		i.v("carpeta",oxy.funciones.tampermonkey.obtener_carpeta(tm))
+		console.log(t,oxy.funciones,tampermonkey)
 		var carpeta = i.x("carpeta")
 		console.log(carpeta)
 		i.agregar_código(carpeta+"cargar_archivos")
@@ -95,5 +95,5 @@ window.cargar_cargador = function(){
 		i.definir_esto("cargar_cargador")
 	}
 }
-window.cargar_cargador()
+cargar_cargador()
 
