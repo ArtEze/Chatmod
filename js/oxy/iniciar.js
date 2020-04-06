@@ -28,8 +28,10 @@ iniciar_oxy = function iniciar_oxy(){
 				}
 				, w: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
-					with(oxy.funciones[archivo]){
-						return u(oxy.variables[archivo][nombre])[0]
+					with(oxy){
+						var i = funciones[archivo]
+						console.log(i)
+						return i.u(oxy.variables[archivo][nombre])[0]
 					}
 				}
 				, definir_esto: function(){
