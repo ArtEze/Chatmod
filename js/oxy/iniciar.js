@@ -16,11 +16,10 @@ window.iniciar_oxy = function iniciar_oxy(){
 				with(window.oxy.funciones){
 					v("esto",window.iniciar_oxy)
 					delete window.iniciar_oxy
+					delete window.obtener_carpeta
 				}
 			}
-			, carpeta: function(url){
-				return url.split("/").slice(0,-1).concat("").join("/")
-			}
+			, carpeta: window.obtener_carpeta
 			, agregar_código: function(url){
 				with(window.oxy.funciones){
 					var etiqueta = document.createElement("script")
@@ -33,10 +32,10 @@ window.iniciar_oxy = function iniciar_oxy(){
 		}
 	}
 	with(window.oxy.funciones){ // Usando with para mejor facilidad.
-		definir_esto()
-		v("tampermonkey","https://arteze.github.io/charlavod/js/oxy/tampermonkey.js")
+		v("tampermonkey",document.querySelector("script"))
 		v("carpeta",carpeta(w("tampermonkey")))
-		agregar_código(w("carpeta")+"iniciar.js")
+		//agregar_código(w("carpeta")+"cargar_lista_archivos.js")
+		definir_esto()
 	}
 }
 window.iniciar_oxy()
