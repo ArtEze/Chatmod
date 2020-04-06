@@ -43,10 +43,11 @@ iniciar_oxy = function iniciar_oxy(){
 		}
 	}
 	with(oxy.funciones){ // Usando with para mejor facilidad.
-		v("tampermonkey",document.querySelector("script[src*=github]").src)
-		v("carpeta",obtener_carpeta(w("tampermonkey")))
-		agregar_código(w("carpeta")+"cargar_lista_archivos")
-		definir_esto()
+		var i=iniciar, t=tampermonkey
+		i.v("tampermonkey",document.querySelector("script[src*=github]").src)
+		i.v("carpeta",t.obtener_carpeta(i.w("tampermonkey")))
+		i.agregar_código(w("carpeta")+"cargar_lista_archivos")
+		i.definir_esto()
 	}
 }
 iniciar_oxy()
