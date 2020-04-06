@@ -1,26 +1,15 @@
-
-var url = oxy.url
-var funciones = oxy.funciones
-
-oxy.url.archivos = [
-	"utilidades"
-	,"activar_herramientas"
-	,"colores_arcoiris"
-	,"fon"
-	,"reales_hacia_texto"
-	,"texto_hacia_reales"
-	,"programa"
-]
-
-funciones.cargar_lista_archivos = function(archivos){
-	url.src = []
-	return url.archivos.map(x=>{
-		var anti_cache = oxy.funciones.general.obtener.anti_cache()
-		var archivo = url.tampermonkey.carpeta + x + url.extensión + anti_cache
-		url.src.push(archivo)
-		funciones.general.agregar_código(archivo)
-	})
+oxy.funciones.cargar_archivos = function(){
+	with(window.oxy.funciones){ // Usando with para mejor facilidad.
+		v("urls_códigos", [
+			"utilidades"
+			,"activar_herramientas"
+			,"colores_arcoiris"
+			,"fon"
+			,"reales_hacia_texto"
+			,"texto_hacia_reales"
+			,"programa"
+		])
+		w("urls_códigos").map(x=>agregar_código(w("carpeta")+x+".js"))
 }
-
-funciones.cargar_lista_archivos(url.archivos)
+oxy.funciones.cargar_archivos()
 
