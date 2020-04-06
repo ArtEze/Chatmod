@@ -28,7 +28,7 @@ iniciar_oxy = function iniciar_oxy(){
 				}
 				, w: function(nombre){
 					var archivo = oxy.funciones.iniciar.a()
-					with(oxy.funciones[archivo]){
+					with(oxy.funciones.iniciar){
 						return ult(oxy.variables[archivo][nombre])[0]
 					}
 				}
