@@ -1,4 +1,4 @@
-iniciar_oxy = function iniciar_oxy(){
+function cargar_cargador(){
 	oxy = {
 		variables: {
 			tampermonkey: {}
@@ -7,9 +7,7 @@ iniciar_oxy = function iniciar_oxy(){
 			}
 		}
 		, funciones: {
-			tampermonkey: {
-				obtener_carpeta: obtener_carpeta
-			}
+			tampermonkey: {}
 			, iniciar: {
 				ult: x=>x.slice(-1)[0]
 				, a: ()=>oxy.funciones.iniciar.ult(oxy.variables.iniciar.archivo_actual)[0]
@@ -34,13 +32,10 @@ iniciar_oxy = function iniciar_oxy(){
 						return ult(oxy.variables[archivo][nombre])[0]
 					}
 				}
-				, borrar_función_carpeta: function(){
-					delete obtener_carpeta
-				}
-				, definir_esto: function(nombre_función,nuevo_nombre){
+				, definir_esto: function(nombre_función){
 					with(oxy){
 						var archivo = funciones.iniciar.a()
-						v( nuevo_nombre, funciones[archivo][nombre_función] )
+						v( nombre_función, funciones[archivo][nombre_función] )
 						delete window[nombre_función]
 					}
 				}
@@ -66,9 +61,13 @@ iniciar_oxy = function iniciar_oxy(){
 		i.v("carpeta",t.obtener_carpeta(tm))
 		var carpeta = i.x("carpeta")
 		i.agregar_código(carpeta+"cargar_archivos")
-		i.borrar_función_carpeta()
-		i.definir_esto("iniciar_oxy","iniciar_oxy_tampermonkey")
+		i.borrar_variables_tampermonkey()
+		i.b("tampermonkey")
+		i.definir_esto("obtener_carpeta")
+		i.definir_esto("oxy_tampermonkey")
+		i.b("iniciar")
+		i.definir_esto("cargar_cargador")
 	}
 }
-iniciar_oxy()
+cargar_cargador()
 
