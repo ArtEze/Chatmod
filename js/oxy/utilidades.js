@@ -20,7 +20,10 @@ oxy.funciones.utilidades = {
 		}
 		return window[nombre_entrada]
 	}
-	, clonar_ventana: function(){
+	, filtrar_chatovod: function(x){
+		return x
+	}
+	, clonar_ventana: function(regreso){
 		var claves = Object.keys(window).filter(x=>{
 			var es = true
 			var filtro = ["parent","top"].map(y=>{
@@ -35,8 +38,9 @@ oxy.funciones.utilidades = {
 				ventana[clave] = window[clave]
 			}
 		}
-		return ventana
+		var procesado = regreso(ventana)
+		return procesado
 	}
 }
-// oxy.funciones.utilidades.clonar_ventana()
+// oxy.funciones.utilidades.clonar_ventana(oxy.funciones.utilidades.filtrar_chatovod)
 
