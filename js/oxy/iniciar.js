@@ -23,7 +23,7 @@ window.iniciar_oxy = function iniciar_oxy(){
 			, agregar_código: function(url){
 				with(window.oxy.funciones){
 					var etiqueta = document.createElement("script")
-					v("tampermonkey_actual", url + "?" + Date.now())
+					v("tampermonkey_actual", url + ".js?" + Date.now())
 					etiqueta.src = w("tampermonkey_actual")
 					document.head.appendChild(etiqueta)
 					return etiqueta
