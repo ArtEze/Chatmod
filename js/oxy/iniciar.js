@@ -14,7 +14,6 @@ function cargar_cargador(){
 				, c: x=>[x,Date.now(),Error().stack.replace("Error\n","")]
 				, b: function(archivo){
 					with(oxy){
-						console.log("Nombre archivo: ",archivo)
 						if(funciones[archivo]==undefined){
 							funciones[archivo]={}						
 						}
@@ -24,7 +23,7 @@ function cargar_cargador(){
 				}
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
-					console.log("Asignar archivo: ",archivo)
+					console.log("Asignar: ",archivo,nombre,valor)
 					with(oxy){
 						if(variables[archivo]==undefined){
 							variables[archivo] = {}
@@ -58,8 +57,7 @@ function cargar_cargador(){
 				}
 				, agregar_código: function(url){
 					var archivo = oxy.funciones.iniciar.a()
-					console.log(url,archivo,oxy)
-					with(oxy.funciones[archivo]){
+					with(oxy.funciones.iniciar){
 						var etiqueta = document.createElement("script")
 						v("tampermonkey_actual", url + ".js?" + Date.now())
 						etiqueta.src = x("tampermonkey_actual")
