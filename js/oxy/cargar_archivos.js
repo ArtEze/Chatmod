@@ -15,8 +15,8 @@ function cargar_archivos(){
 		var carpeta = i.x("carpeta")
 		i.b("cargar_archivos")
 		i.x("urls_códigos").map(x=>i.agregar_código(carpeta+x))
+		i.definir_esto("cargar_archivos")
 	}
-	i.definir_esto("cargar_archivos")
 }
 cargar_archivos()
 
