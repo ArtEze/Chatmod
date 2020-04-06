@@ -20,6 +20,7 @@ function cargar_cargador(){
 				}
 				, v: function(nombre,valor){
 					var archivo = oxy.funciones.iniciar.a()
+					console.log(archivo)
 					with(oxy){
 						if(variables[archivo]==undefined){
 							variables[archivo] = {}
@@ -45,6 +46,7 @@ function cargar_cargador(){
 							funciones[archivo] = {}
 						}
 						if(funciones[archivo][nombre_función]==undefined){
+							console.log( funciones, archivo, nombre_función )
 							funciones[archivo][nombre_función] = window[nombre_función]
 							delete window[nombre_función]
 						}
