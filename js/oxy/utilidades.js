@@ -272,5 +272,5 @@ utilidades = function(){
 }
 utilidades()
 // oxy.funciones.utilidades.clonar_ventana(oxy.funciones.utilidades.filtrar_chatovod)
-oxy.funciones.utilidades.clonar("window",true)
+console.log( oxy.funciones.utilidades.clonar("window",true) )
 
