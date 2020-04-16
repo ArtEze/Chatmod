@@ -234,14 +234,15 @@ utilidades = function(){
 											depurar(debug,"log54 No pudo convertir HTML a string",ruta)
 										}
 										try{
-											html = valor.querySelector("html").outerHTML
+											html = valor.querySelector("html")
 										}catch(e){
 											console.log("log55",e)
 										}
-										salida[clave] = {
-											html: html
-											, valores: valores
+										salida[clave] = {}
+										if(html!=undefined){
+											salida[clave].html = html.outerHTML
 										}
+										salida[clave].valor = valores
 										asignado = true
 									}
 								}
