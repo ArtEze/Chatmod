@@ -1,4 +1,6 @@
-﻿Las funciones del bot son las siguientes.
+Las funciones del bot son las siguientes.
+
+La instalación en Tampermonkey: https://arteze.github.io/charlavod/js/oxy/tampermonkey.js
 
 1) Da ban automáticamente a los que pasan contenido +18.
 2) Banea automáticamente a los que pasan otros chats.
