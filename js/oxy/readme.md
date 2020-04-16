@@ -1,4 +1,4 @@
-# instalación en Tampermonkey
+# La instalación en Tampermonkey
 
  - https://arteze.github.io/charlavod/js/oxy/tampermonkey.js
 
