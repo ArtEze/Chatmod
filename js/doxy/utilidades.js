@@ -272,5 +272,5 @@ utilidades = function(){
 }
 utilidades()
 // doxy.funciones.utilidades.clonar_ventana(doxy.funciones.utilidades.filtrar_chatovod)
-console.log( oxy.funciones.utilidades.clonar("window",true) )
+console.log( doxy.funciones.utilidades.clonar("window",true) )
 
