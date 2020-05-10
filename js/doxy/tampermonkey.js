@@ -5,6 +5,7 @@
 // @author       ArtEze
 // @updateURL    https://arteze.github.io/charlavod/js/doxy/tampermonkey.js
 // @match        *://*.chatovod.com/*
+// @exclude	     *://*.chatovod.com/users/
 // @exclude	     *://*.chatovod.com/widget/rpframe
 // @exclude	     *://account.chatovod.com/*
 // @grant        none
