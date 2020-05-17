@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         Bot doxy para Chatovod
-// @version      2.8.4
+// @version      2.8.5
 // @description  Cargador del bot doxy para Chatovod.
 // @author       ArtEze
 // @updateURL    https://arteze.github.io/charlavod/js/doxy/tampermonkey.js
-// @match        *://*.chatovod.com/*
-// @exclude	     *://*.chatovod.com/id*
-// @exclude	     *://*.chatovod.com/register
-// @exclude	     *://*.chatovod.com/users/*
-// @exclude	     *://*.chatovod.com/widget/rpframe
-// @exclude	     *://account.chatovod.com/*
+// @match        *://*.chatovod.com/?bot=1
+// @exclude      *://*.chatovod.com/id*
+// @exclude      *://*.chatovod.com/register
+// @exclude      *://*.chatovod.com/users/*
+// @exclude      *://*.chatovod.com/widget/rpframe
+// @exclude      *://account.chatovod.com/*
 // @grant        none
 // ==/UserScript==
 
