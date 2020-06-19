@@ -59,6 +59,7 @@ module.exports =
 		})
 
 		bot.on("message", function(message) {
+			elmensaje = message
 			console.log(message.content)
 
 			var mensaje = message.content
