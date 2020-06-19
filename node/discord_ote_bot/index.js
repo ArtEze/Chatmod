@@ -59,8 +59,7 @@ module.exports =
 		})
 
 		bot.on("message", function(message) {
-			elmensaje = message
-			console.log(elmensaje)
+			console.log(message.content)
 
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
