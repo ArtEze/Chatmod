@@ -46,7 +46,7 @@ module.exports =
 	iniciar:function(TOKEN){
 		
 		dichos = []
-		discord = require("C:/nodejs/node_modules/discord.js")
+		discord = require("/run/media/arteze/d/linux_arteze/documentos/github/node_modules/discord.js")
 		bot = new discord.Client()
 
 		this.funs=funs
@@ -59,7 +59,9 @@ module.exports =
 		})
 
 		bot.on("message", function(message) {
-			
+			elmensaje = message
+			console.log(elmensaje)
+
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
 			if (message.author.equals(bot.user)) return;
@@ -72,13 +74,13 @@ module.exports =
 			dichos.push( enviar )
 			switch( enviar ){
 				case "info":
-					message.channel.sendMessage("Un mensaje.")
+					message.channel.send("Un mensaje.")
 					break;
 				case "+":
-					message.channel.sendMessage(enviar)
+					message.channel.send(enviar)
 					break;
 				default:
-					message.channel.sendMessage( this.funs.procesar(enviar) )
+					message.channel.send( this.funs.procesar(enviar) )
 					break;
 			}
 			return;
