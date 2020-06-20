@@ -65,7 +65,8 @@ module.exports =
 		bot.on("message", function(message) {
 			m = message
 			c = m.content
-			console.log(c)
+			a = m.author.username
+			console.log(a,c)
 
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
