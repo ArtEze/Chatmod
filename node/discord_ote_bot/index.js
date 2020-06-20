@@ -8,6 +8,10 @@ n_bot = require("C:/Users/Otecald/Desktop/Proyectos 2017/Node JS/Otecald Bot/có
 
 n_bot.iniciar(escribir el token aquí) //Ejemplo: n_bot.iniciar("adfsfklgjdfgkljdf")
 
+Enlace para invitar con ClienId:
+
+https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&permissions=8
+
 */
 
 funs = {
@@ -73,16 +77,20 @@ module.exports =
 			var enviar = args[0]
 
 			dichos.push( enviar )
+			var procesado = ""
 			switch( enviar ){
 				case "info":
-					message.channel.send("Un mensaje.")
+					procesado = "Un mensaje."
 					break;
 				case "+":
-					message.channel.send(enviar)
+					procesado = enviar
 					break;
 				default:
-					message.channel.send( this.funs.procesar(enviar) )
+					procesado = this.funs.procesar(enviar)
 					break;
+			}
+			if(procesado.length<2000){
+				message.channel.send(procesado)
 			}
 			return;
 		})
