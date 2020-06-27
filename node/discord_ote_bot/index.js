@@ -50,7 +50,7 @@ module.exports =
 	iniciar:function(TOKEN){
 		
 		dichos = []
-		discord = require("/run/media/arteze/d/linux_arteze/documentos/github/node_modules/discord.js")
+		discord = require("/d/linux_arteze/documentos/github/node_modules/discord.js")
 		bot = new discord.Client()
 
 		this.funs=funs
@@ -90,6 +90,9 @@ module.exports =
 					procesado = this.funs.procesar(enviar)
 					break;
 			}
+			procesado = (procesado).toString()
+			console.log("Procesado",procesado)
+			//message.channel.send(procesado.length.toString())
 			if(procesado.length<2000){
 				message.channel.send(procesado)
 			}
