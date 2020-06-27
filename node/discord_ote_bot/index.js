@@ -20,7 +20,7 @@ funs = {
 		try{
 			return eval(mensaje)
 		}catch(e){
-			console.log("No",mensaje)
+			console.log("Error",e,"Mensaje",mensaje)
 			return mensaje
 		}
 	},
