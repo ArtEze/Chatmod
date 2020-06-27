@@ -91,7 +91,7 @@ module.exports =
 					break;
 			}
 			procesado = (procesado).toString()
-			console.log("Procesado",procesado)
+			//console.log("Procesado",procesado)
 			//message.channel.send(procesado.length.toString())
 			if(procesado.length<2000){
 				message.channel.send(procesado)
