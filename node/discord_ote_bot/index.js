@@ -63,6 +63,7 @@ module.exports =
 			c = m.content
 			a = m.author.username
 			console.log(a,c)
+			dichos.push( `${a}: ${c}` )
 
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
@@ -73,7 +74,6 @@ module.exports =
 			var args = post_pref.split(/\s+/g)
 			var enviar = args[0]
 
-			dichos.push( enviar )
 			var procesado = ""
 			switch( enviar ){
 				case "info":
