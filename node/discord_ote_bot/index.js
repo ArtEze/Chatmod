@@ -6,7 +6,7 @@ https://discordapp.com/developers/applications/me
 
 n_bot = require("C:/Users/Otecald/Desktop/Proyectos 2017/Node JS/Otecald Bot/código.js")
 
-n_bot.iniciar(escribir el token aquí) //Ejemplo: n_bot.iniciar("adfsfklgjdfgkljdf")
+n_bot.iniciar(escribir el token aquí) //Ejemplo: n_bot.iniciar("contraseña")
 
 Enlace para invitar con ClienId:
 
@@ -27,8 +27,7 @@ funs = {
 	quitar_espacios: function(mensaje)
 	{
 		var i=0
-		for(;i<mensaje.length;i++)
-		{
+		for(;i<mensaje.length;i++){
 			if( !(mensaje[i]==" "|mensaje[i]=="\t") ){break;}
 		}
 		return mensaje.slice(i)
@@ -36,18 +35,23 @@ funs = {
 	quitar_prefijo: function(mensaje,prefijo){
 		var mensaje=this.quitar_espacios(mensaje)
 		
-		if( mensaje.slice(0,prefijo.length).toLowerCase()==prefijo )
-		{
+		if( mensaje.slice(0,prefijo.length).toLowerCase()==prefijo ){
 			mensaje=mensaje.slice(prefijo.length)
 		}
 		var mensaje=this.quitar_espacios(mensaje)
 		return mensaje
+	},
+	desencriptar: function(token_encriptado,contraseña){
+		var mykey = crypto.createDecipher('aes-128-cbc', contraseña)
+		var mystr = mykey.update(token_encriptado, 'hex', 'utf8')
+		mystr += mykey.final('utf8')
+		return mystr
 	}
 }
 
 module.exports =
 {
-	iniciar:function(TOKEN){
+	iniciar:function(contraseña){
 		
 		dichos = []
 		discord = require("/d/linux_arteze/documentos/github/node_modules/discord.js")
@@ -98,9 +102,13 @@ module.exports =
 			}
 			return;
 		})
-		bot.login(TOKEN)
+		var token_encriptado = (
+"ac806fb5f3a17f9e0978e28ca365b84ff4e7e2fa56dfac78514e09fe06eaac4f642be536ad6e6bbf4eb4d9186de276ba45b61724d90d3ce68ab1a6cc2aad0703"
+		)
+		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
+		bot.login(token_desencriptado)
 	}
 }
 
-// module.exports.iniciar("gadlñfgdsfglkj") //Poner el token
+// module.exports.iniciar("contraseña")
 
