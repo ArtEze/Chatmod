@@ -46,7 +46,7 @@ module.exports =
 	iniciar:function(contraseña){
 		
 		dichos = []
-		discord = require("/d/linux_arteze/documentos/github/node_modules/discord.js")
+		discord = require("../../../node_modules/discord.js")
 		bot = new discord.Client()
 
 		this.funs=funs
