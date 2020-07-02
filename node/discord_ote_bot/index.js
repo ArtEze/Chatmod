@@ -86,11 +86,13 @@ module.exports =
 					procesado = this.funs.procesar(post_pref)
 					break;
 			}
-			procesado = (procesado).toString()
-			//console.log("Procesado",procesado)
-			//message.channel.send(procesado.length.toString())
-			if(procesado.length<2000){
-				message.channel.send(procesado)
+			if(procesado !=undefined){			
+				procesado = (procesado).toString()
+				//console.log("Procesado",procesado)
+				//message.channel.send(procesado.length.toString())
+				if(procesado.length<2000){
+					message.channel.send(procesado)
+				}
 			}
 			return;
 		})
