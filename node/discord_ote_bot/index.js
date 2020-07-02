@@ -55,15 +55,16 @@ module.exports =
 		var prefijo = "ote"
 
 		bot.on("ready", function() {
-			console.log("Listo y sin errores.")
+			console.log(" Listo y sin errores.")
 		})
 
 		bot.on("message", function(message) {
 			m = message
-			c = m.content
+			c = m.channel.name
 			a = m.author.username
-			console.log(a,c)
-			dichos.push( `${a}: ${c}` )
+			n = m.content
+			console.log(c,a,n)
+			dichos.push( `${c} '${a}': ${n}` )
 
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
