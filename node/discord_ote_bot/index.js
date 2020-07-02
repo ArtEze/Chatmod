@@ -33,12 +33,19 @@ funs = {
 		}
 		return salida
 	},
-	desencriptar: function(token_encriptado,contraseña){
+	desencriptar: function desencriptar(token_encriptado,contraseña){
 		var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
-		var salida = desencriptador.update(token_encriptado, "hex", "utf8")
+		var salida = desencriptador.update(token_encriptado, "base64", "utf8")
 		salida += desencriptador.final("utf8")
 		return salida
 	}
+	, encriptar: function encriptar(token,contraseña) {
+		var encriptador = crypto.createCipher("aes-128-cbc", contraseña)
+		var salida = encriptador.update(token, 'utf8', "base64")
+		salida += encriptador.final("base64")
+		return salida
+	}
+
 }
 
 module.exports =
@@ -96,9 +103,7 @@ module.exports =
 			}
 			return;
 		})
-		var token_encriptado = (
-"ac806fb5f3a17f9e0978e28ca365b84ff4e7e2fa56dfac78514e09fe06eaac4f642be536ad6e6bbf4eb4d9186de276ba45b61724d90d3ce68ab1a6cc2aad0703"
-		)
+		var token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
 		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
 		bot.login(token_desencriptado)
 	}
