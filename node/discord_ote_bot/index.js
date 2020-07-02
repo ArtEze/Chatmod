@@ -52,7 +52,7 @@ module.exports =
 		this.funs=funs
 		bot.funs=funs
 		
-		var prefijo = "ote"
+		var prefijo = "ot+ec?a?l?d?"
 
 		bot.on("ready", function() {
 			console.log(" Listo y sin errores.")
