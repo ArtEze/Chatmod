@@ -67,7 +67,7 @@ module.exports =
 
 			var mensaje = message.content
 			var minúsculas = mensaje.toLowerCase()
-			if (message.author.equals(bot.user)) return;
+			//if (message.author.equals(bot.user)) return;
 			if (!minúsculas.startsWith(prefijo)) return;
 
 			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
