@@ -29,7 +29,6 @@ funs = {
 		var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
 		var prefijo_encontrado = mensaje.match(regex)
 		if(prefijo_encontrado!=null){
-			console.log("Prefijo encontrado",prefijo_encontrado)
 			salida = mensaje.replace(prefijo_encontrado,"")
 		}
 		return salida
