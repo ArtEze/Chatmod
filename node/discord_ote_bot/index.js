@@ -31,8 +31,6 @@ funs = {
 		if(prefijo_encontrado!=null){
 			console.log("Prefijo encontrado",prefijo_encontrado)
 			salida = mensaje.replace(prefijo_encontrado,"")
-		}else{
-			console.log("Prefijo")
 		}
 		return salida
 	},
@@ -75,12 +73,8 @@ module.exports =
 			if ( regex_prefijo.test(mensaje) == null ) return;
 
 			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
-			console.log("Post_Pref",post_pref)
 			var args = post_pref.split(/\s+/g)
-			console.log("Args",args)
-
 			var enviar = args[0]
-
 			var procesado = ""
 			switch( enviar ){
 				case "info":
