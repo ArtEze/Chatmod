@@ -34,10 +34,10 @@ funs = {
 		return salida
 	},
 	desencriptar: function(token_encriptado,contraseña){
-		var mykey = crypto.createDecipher('aes-128-cbc', contraseña)
-		var mystr = mykey.update(token_encriptado, 'hex', 'utf8')
-		mystr += mykey.final('utf8')
-		return mystr
+		var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
+		var salida = desencriptador.update(token_encriptado, "hex", "utf8")
+		salida += desencriptador.final("utf8")
+		return salida
 	}
 }
 
