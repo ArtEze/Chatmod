@@ -29,7 +29,10 @@ funs = {
 		var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
 		var prefijo_encontrado = mensaje.match(regex)
 		if(prefijo_encontrado!=null){
+			console.log("Prefijo encontrado",prefijo_encontrado)
 			salida = mensaje.replace(prefijo_encontrado,"")
+		}else{
+			console.log("Prefijo")
 		}
 		return salida
 	},
@@ -53,6 +56,7 @@ module.exports =
 		bot.funs=funs
 		
 		var prefijo = "ot+ec?a?l?d?"
+		var regex_prefijo = new RegExp(prefijo,"gi")
 
 		bot.on("ready", function() {
 			console.log(" Listo y sin errores.")
@@ -67,12 +71,14 @@ module.exports =
 			dichos.push( `${c} '${a}': ${n}` )
 
 			var mensaje = message.content
-			var minúsculas = mensaje.toLowerCase()
 			//if (message.author.equals(bot.user)) return;
-			if (!minúsculas.startsWith(prefijo)) return;
+			if ( regex_prefijo.test(mensaje) == null ) return;
 
 			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
+			console.log("Post_Pref",post_pref)
 			var args = post_pref.split(/\s+/g)
+			console.log("Args",args)
+
 			var enviar = args[0]
 
 			var procesado = ""
