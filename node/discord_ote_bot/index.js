@@ -23,8 +23,10 @@ funs = {
 			return eval(mensaje)
 		}catch(error){
 			e = error
-			// esto.funs.enviar( mensaje_objeto, `Error:\n\x60\x60\x60\js\n${e}\x60\x60\x60` )
-			console.log("Error",error,"Mensaje",mensaje)
+			var consola = `Error:\n\x60\x60\x60\js\n${error.stack}\x60\x60\x60`
+			var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
+			//esto.funs.enviar( mensaje_objeto, por_enviar )
+			console.log(consola)
 			return mensaje
 		}
 	},
