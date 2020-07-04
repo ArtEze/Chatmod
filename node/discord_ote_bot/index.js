@@ -21,9 +21,10 @@ funs = {
 	, procesar: function(esto,mensaje_objeto,mensaje){
 		try{
 			return eval(mensaje)
-		}catch(e){
-			esto.funs.enviar( mensaje_objeto, `Error:\n\x60\x60\x60\js\n${e}\x60\x60\x60` )
-			console.log("Error",e,"Mensaje",mensaje)
+		}catch(error){
+			e = error
+			// esto.funs.enviar( mensaje_objeto, `Error:\n\x60\x60\x60\js\n${e}\x60\x60\x60` )
+			console.log("Error",error,"Mensaje",mensaje)
 			return mensaje
 		}
 	},
