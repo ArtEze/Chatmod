@@ -68,8 +68,8 @@ module.exports =
 
 		bot.on("message", function(message) {
 			m = message
-			c = m.channel.name
-			a = m.author.username || `(Privado ${m.channel.recipient.username})`
+			c = m.channel.name || `(Privado)`
+			a = m.author.username
 			n = m.content
 			console.log(c,a,n)
 			dichos.push( `${c} '${a}': ${n}` )
