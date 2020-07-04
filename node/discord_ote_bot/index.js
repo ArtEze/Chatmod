@@ -15,11 +15,14 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 */
 
 funs = {
-	procesar: function(mensaje)
-	{
+	enviar: function(mensaje_objeto,mensaje){
+		mensaje_objeto.channel.send(mensaje)
+	}
+	, procesar: function(esto,mensaje_objeto,mensaje){
 		try{
 			return eval(mensaje)
 		}catch(e){
+			esto.funs.enviar( mensaje_objeto, `Error:\n\x60\x60\x60\js\n${e}\x60\x60\x60` )
 			console.log("Error",e,"Mensaje",mensaje)
 			return mensaje
 		}
@@ -80,9 +83,9 @@ module.exports =
 
 			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
 			var args = post_pref.split(/\s+/g)
-			var enviar = args[0]
+			var argumento = args[0]
 			var procesado = ""
-			switch( enviar ){
+			switch( argumento ){
 				case "info":
 					procesado = "Un mensaje."
 					break;
@@ -90,7 +93,7 @@ module.exports =
 					procesado = args.slice(1).join(" ")
 					break;
 				default:
-					procesado = this.funs.procesar(post_pref)
+					procesado = this.funs.procesar(this,message,post_pref)
 					break;
 			}
 			if(procesado !=undefined){			
@@ -98,7 +101,7 @@ module.exports =
 				//console.log("Procesado",procesado)
 				//message.channel.send(procesado.length.toString())
 				if(procesado.length<2000){
-					message.channel.send(procesado)
+					this.funs.enviar(message,procesado)
 				}
 			}
 			return;
