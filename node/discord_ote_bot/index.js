@@ -20,8 +20,7 @@ module.exports =
 		enviar: function(mensaje_objeto,mensaje){
 			mensaje_objeto.channel.send(mensaje)
 		}
-		, procesar: function(esto,mensaje_objeto,mensaje){
-			console.log(this)
+		, procesar: function(mensaje_objeto,mensaje){
 			try{
 				return eval(mensaje)
 			}catch(error){
@@ -29,7 +28,7 @@ module.exports =
 				var pila = error.stack
 				var consola = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
 				var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
-				//esto.funs.enviar( mensaje_objeto, por_enviar )
+				//this.enviar( mensaje_objeto, por_enviar )
 				console.log(error)
 				return mensaje
 			}
@@ -96,7 +95,7 @@ module.exports =
 					procesado = args.slice(1).join(" ")
 					break;
 				default:
-					procesado = this.funs.procesar(this,message,post_pref)
+					procesado = this.funs.procesar(message,post_pref)
 					break;
 			}
 			if(procesado !=undefined){			
