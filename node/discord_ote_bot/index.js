@@ -20,7 +20,7 @@ module.exports =
 		salida: function(){
 			return process.stdout.write(...arguments)
 		}
-		cambiar_título: function(título){
+		, cambiar_título: function(título){
 			this.salida(`\x1B]2;${título}\x07`)
 		}
 		, mostrar: function(){
