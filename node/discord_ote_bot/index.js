@@ -18,7 +18,16 @@ module.exports =
 {
 	funs: {
 		enviar: function(mensaje_objeto,mensaje){
-			mensaje_objeto.channel.send(mensaje)
+			//console.log("Mensaje: ",mensaje)
+			if(mensaje!=undefined){
+				var procesado = mensaje.toString()
+				var longitud = procesado.length
+				//mensaje_objeto.channel.send(longitud.toString())
+				if(procesado.length<2000){
+					mensaje_objeto.channel.send(procesado)
+				}
+				
+			}
 		}
 		, procesar: function(mensaje_objeto,mensaje){
 			try{
@@ -98,14 +107,7 @@ module.exports =
 					procesado = this.funs.procesar(message,post_pref)
 					break;
 			}
-			if(procesado !=undefined){			
-				procesado = (procesado).toString()
-				//console.log("Procesado",procesado)
-				//message.channel.send(procesado.length.toString())
-				if(procesado.length<2000){
-					this.funs.enviar(message,procesado)
-				}
-			}
+			this.funs.enviar(message,procesado)
 			return;
 		})
 		var token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
