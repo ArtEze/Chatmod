@@ -17,9 +17,15 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 module.exports =
 {
 	funs: {
-		mostrar: function(){
+		salida: function(){
+			return process.stdout.write(...arguments)
+		}
+		cambiar_título: function(título){
+			this.salida(`\x1B]2;${título}\x07`)
+		}
+		, mostrar: function(){
 			console.log(...arguments)
-			process.stdout.write(">\x20")
+			this.salida(">\x20")
 		}
 		, enviar: function(mensaje_objeto,mensaje){
 			//this.mostrar("Mensaje: ",mensaje)
@@ -82,6 +88,7 @@ module.exports =
 
 		bot.on("ready", function() {
 			this.funs.mostrar(" Listo y sin errores.")
+			this.funs.cambiar_título("Otecald Bot Discord")
 		})
 
 		bot.on("message", function(message) {
