@@ -17,8 +17,12 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 module.exports =
 {
 	funs: {
-		enviar: function(mensaje_objeto,mensaje){
-			//console.log("Mensaje: ",mensaje)
+		mostrar: function(mensaje){
+			console.log(mensaje)
+			process.stdout.write(">\x20")
+		}
+		, enviar: function(mensaje_objeto,mensaje){
+			//this.mostrar("Mensaje: ",mensaje)
 			if(mensaje!=undefined){
 				var procesado = mensaje.toString()
 				var longitud = procesado.length
@@ -38,7 +42,7 @@ module.exports =
 				var consola = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
 				var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
 				//this.enviar( mensaje_objeto, por_enviar )
-				console.log(error)
+				this.mostrar(error)
 				return mensaje
 			}
 		},
@@ -71,13 +75,13 @@ module.exports =
 		discord = require("../../../node_modules/discord.js")
 		bot = new discord.Client()
 
-		bot.funs=this.funs
+		bot.funs = this.funs
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
 
 		bot.on("ready", function() {
-			console.log(" Listo y sin errores.")
+			this.funs.mostrar(" Listo y sin errores.")
 		})
 
 		bot.on("message", function(message) {
@@ -85,7 +89,7 @@ module.exports =
 			c = m.channel.name || `(Privado)`
 			a = m.author.username
 			n = m.content
-			console.log(c,a,n)
+			this.funs.mostrar(c,a,n)
 			dichos.push( `${c} '${a}': ${n}` )
 
 			var mensaje = message.content
