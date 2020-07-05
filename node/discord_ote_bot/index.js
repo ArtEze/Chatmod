@@ -17,8 +17,8 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 module.exports =
 {
 	funs: {
-		mostrar: function(mensaje){
-			console.log(mensaje)
+		mostrar: function(){
+			console.log(...arguments)
 			process.stdout.write(">\x20")
 		}
 		, enviar: function(mensaje_objeto,mensaje){
