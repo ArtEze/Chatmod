@@ -103,9 +103,6 @@ module.exports =
 				case "+":
 					procesado = args.slice(1).join(" ")
 					break;
-				case "kill":
-					procesado = `<@!${message.author.id}> Le has robado ${Math.floor(Date.now()/30)%8+2} kills a ${args[1]}.`
-					break;
 				default:
 					procesado = this.funs.procesar(message,post_pref)
 					break;
