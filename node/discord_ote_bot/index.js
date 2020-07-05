@@ -14,56 +14,56 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 
 */
 
-funs = {
-	enviar: function(mensaje_objeto,mensaje){
-		mensaje_objeto.channel.send(mensaje)
-	}
-	, procesar: function(esto,mensaje_objeto,mensaje){
-		try{
-			return eval(mensaje)
-		}catch(error){
-			e = error
-			var consola = `Error:\n\x60\x60\x60\js\n${error.stack}\x60\x60\x60`
-			var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
-			//esto.funs.enviar( mensaje_objeto, por_enviar )
-			console.log(consola)
-			return mensaje
-		}
-	},
-	quitar_prefijo: function(mensaje,prefijo){
-		var salida = ""
-		var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
-		var prefijo_encontrado = mensaje.match(regex)
-		if(prefijo_encontrado!=null){
-			salida = mensaje.replace(prefijo_encontrado,"")
-		}
-		return salida
-	},
-	desencriptar: function desencriptar(token_encriptado,contraseña){
-		var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
-		var salida = desencriptador.update(token_encriptado, "base64", "utf8")
-		salida += desencriptador.final("utf8")
-		return salida
-	}
-	, encriptar: function encriptar(token,contraseña) {
-		var encriptador = crypto.createCipher("aes-128-cbc", contraseña)
-		var salida = encriptador.update(token, 'utf8', "base64")
-		salida += encriptador.final("base64")
-		return salida
-	}
-
-}
-
 module.exports =
 {
-	iniciar:function(contraseña){
+	funs: {
+		enviar: function(mensaje_objeto,mensaje){
+			mensaje_objeto.channel.send(mensaje)
+		}
+		, procesar: function(esto,mensaje_objeto,mensaje){
+			console.log(this)
+			try{
+				return eval(mensaje)
+			}catch(error){
+				e = error
+				var pila = error.stack
+				var consola = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
+				var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
+				//esto.funs.enviar( mensaje_objeto, por_enviar )
+				console.log(error)
+				return mensaje
+			}
+		},
+		quitar_prefijo: function(mensaje,prefijo){
+			var salida = ""
+			var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
+			var prefijo_encontrado = mensaje.match(regex)
+			if(prefijo_encontrado!=null){
+				salida = mensaje.replace(prefijo_encontrado,"")
+			}
+			return salida
+		},
+		desencriptar: function desencriptar(token_encriptado,contraseña){
+			var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
+			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
+			salida += desencriptador.final("utf8")
+			return salida
+		}
+		, encriptar: function encriptar(token,contraseña) {
+			var encriptador = crypto.createCipher("aes-128-cbc", contraseña)
+			var salida = encriptador.update(token, 'utf8', "base64")
+			salida += encriptador.final("base64")
+			return salida
+		}
+
+	}
+	, iniciar:function(contraseña){
 		
 		dichos = []
 		discord = require("../../../node_modules/discord.js")
 		bot = new discord.Client()
 
-		this.funs=funs
-		bot.funs=funs
+		bot.funs=this.funs
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
