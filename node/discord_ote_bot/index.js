@@ -14,6 +14,9 @@ https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&
 
 */
 
+var discord = require("../../../node_modules/discord.js")
+var crypto = require("crypto")
+
 module.exports =
 {
 	funs: {
@@ -78,7 +81,6 @@ module.exports =
 	, iniciar:function(contraseña){
 		
 		dichos = []
-		discord = require("../../../node_modules/discord.js")
 		bot = new discord.Client()
 
 		bot.funs = this.funs
@@ -127,5 +129,9 @@ module.exports =
 	}
 }
 
-// module.exports.iniciar("contraseña")
+var ote = module.exports
+var contraseña = process.argv[2]
+if(contraseña){
+	ote.iniciar(contraseña)
+}
 
