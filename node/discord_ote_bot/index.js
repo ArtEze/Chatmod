@@ -102,7 +102,9 @@ module.exports =
 			dichos.push( `${c} '${a}': ${n}` )
 
 			var mensaje = message.content
-			//if (message.author.equals(bot.user)) return;
+
+			//if (m.author.bot) return;
+
 			if ( regex_prefijo.test(mensaje) == null ) return;
 
 			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
@@ -116,6 +118,25 @@ module.exports =
 				case "+":
 					procesado = args.slice(1).join(" ")
 					break;
+				case "kill":
+					var aleatorio = Math.floor(Date.now()/30)%8+2
+					if(aleatorio>=5&&aleatorio<=9){
+						//if (message.author.username.includes("ari")) return;
+						//return;
+					}
+					if(aleatorio==2){
+	 					procesado = `<@!${message.author.id}> Le has robado ${aleatorio} kills a ${args[1]}.`
+					}
+					if(aleatorio>=3&&aleatorio<=8){
+						var menciona_a_ari = [...m.mentions.users].map(function(x){return x[1].username}).includes("ari ☯")
+						if( menciona_a_ari ){
+							procesado = `No se puede matar a la reina.`
+						}else{
+							procesado = `<@!${message.author.id}> Mataste a ${args[1]}.`
+						}
+						
+					}
+ 					break;
 				default:
 					procesado = this.funs.procesar(message,post_pref)
 					break;
