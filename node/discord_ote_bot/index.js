@@ -99,13 +99,14 @@ module.exports =
 			a = m.author.username
 			n = m.content
 			d = new Date()
-			l = [new Date(),`${c} '${a}': ${n}`]
-			o= `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n} \x1b[00m`
+			t = `${c} '${a}': ${n}`
+			l = [new Date(),t]
+			o = `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n} \x1b[00m`
 			this.funs.mostrar(d,o)
 			dichos.push(l)
 
 			var mensaje = message.content
-			this.funs.cambiar_título(`OteBotdiscord ${l}`)
+			this.funs.cambiar_título(`OteBotdiscord ${t}`)
 
 			//if (m.author.bot) return;
 
