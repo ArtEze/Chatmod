@@ -99,7 +99,7 @@ module.exports =
 			a = m.author.username
 			n = m.content
 			l = `${c} '${a}': ${n}`
-			o= `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n}`
+			o= `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n} \x1b[00m`
 			this.funs.mostrar(o)
 			dichos.push(l)
 
