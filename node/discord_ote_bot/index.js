@@ -98,11 +98,12 @@ module.exports =
 			c = m.channel.name || `(Privado)`
 			a = m.author.username
 			n = m.content
+			l = `${c} '${a}': ${n}`
 			this.funs.mostrar(c,a,n)
-			dichos.push( `${c} '${a}': ${n}` )
+			dichos.push(l)
 
 			var mensaje = message.content
-			cambiar_título(`OteBotdiscord {cambiar_título}}`)
+			this.funs.cambiar_título(`OteBotdiscord ${l}`)
 
 			//if (m.author.bot) return;
 
