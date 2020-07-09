@@ -100,8 +100,8 @@ module.exports =
 			n = m.content
 			l = `${c} '${a}': ${n}`
 			o= `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n}`
-			this.funs.mostrar(c,a,n)
-			dichos.push(o)
+			this.funs.mostrar(o)
+			dichos.push(l)
 
 			var mensaje = message.content
 			this.funs.cambiar_título(`OteBotdiscord ${l}`)
