@@ -81,9 +81,10 @@ module.exports =
 	, iniciar:function(contraseña,usuario){
 		
 		dichos = []
-		bot = new discord.Client()
+		var bot = new discord.Client()
 
 		bot.funs = this.funs
+		this.bot = bot
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
@@ -94,14 +95,17 @@ module.exports =
 		})
 
 		bot.on("message", function(message) {
+
 			m = message
 			c = m.channel.name || `(Privado)`
 			a = m.author.username
 			n = m.content
+			g = m.guild.name
+
 			d = new Date()
-			t = `${c} '${a}': ${n}`
+			t = `${a} ${n}`
 			l = [new Date(),t]
-			o = `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n} \x1b[00m`
+			o = `\x1b[01;34m ${g} \x1b[01;33m ${c} \x1b[01;32m ${a} \x1b[01;37m ${n} \x1b[00m`
 			this.funs.mostrar(d,o)
 			dichos.push(l)
 
