@@ -78,7 +78,7 @@ module.exports =
 		}
 
 	}
-	, iniciar:function(contraseña){
+	, iniciar:function(contraseña,usuario){
 		
 		dichos = []
 		bot = new discord.Client()
@@ -144,9 +144,18 @@ module.exports =
 			this.funs.enviar(message,procesado)
 			return;
 		})
-		var token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
+		var token_encriptado
+		if(usuario){
+			token_encriptado = "L3zZFI2NEORhTBjY6o+Fe7zQiUEhm6Y90fbGmBr5E0DkaDQqhKv0e4sL4/O2GsSMnYBTXfejKP2MDckY7w7hEg=="
+		}else{
+			token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
+		}
 		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
 		bot.login(token_desencriptado)
+		if(usuario){
+			console.log( token_desencriptado )
+		}
+		
 	}
 }
 
