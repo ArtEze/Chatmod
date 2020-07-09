@@ -89,7 +89,7 @@ module.exports =
 		var regex_prefijo = new RegExp(prefijo,"gi")
 
 		bot.on("ready", function() {
-			this.funs.mostrar(" Listo y sin errores.")
+			this.funs.mostrar(`Listo y sin errores. ${new Date()}`)
 			this.funs.cambiar_título("Otecald Bot Discord")
 		})
 
