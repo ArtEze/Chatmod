@@ -102,6 +102,7 @@ module.exports =
 			dichos.push( `${c} '${a}': ${n}` )
 
 			var mensaje = message.content
+			cambiar_título(`OteBotdiscord {cambiar_título}}`)
 
 			//if (m.author.bot) return;
 
@@ -151,11 +152,12 @@ module.exports =
 			token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
 		}
 		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
-		bot.login(token_desencriptado)
+		
 		if(usuario){
 			console.log( token_desencriptado )
+		}else{
+			bot.login(token_desencriptado)
 		}
-		
 	}
 }
 
