@@ -98,9 +98,10 @@ module.exports =
 			c = m.channel.name || `(Privado)`
 			a = m.author.username
 			n = m.content
-			l = `${c} '${a}': ${n}`
+			d = new Date()
+			l = [new Date(),`${c} '${a}': ${n}`]
 			o= `${c} \x1b[01;32m '${a}': \x1b[01;37m ${n} \x1b[00m`
-			this.funs.mostrar(o)
+			this.funs.mostrar(d,o)
 			dichos.push(l)
 
 			var mensaje = message.content
