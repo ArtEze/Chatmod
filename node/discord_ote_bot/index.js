@@ -111,7 +111,7 @@ module.exports =
 			var color = 31
 			if(m.author.id==naranja){
 				color = 30
-				a = "\x1b[01;${color}\x1b[00m"
+				a = `\x1b[01;${color}\x1b[00m`
 			}
 			r = [...m.mentions.users].map(function(x){return [x[1].id,x[1].username]})
 			i = 0
