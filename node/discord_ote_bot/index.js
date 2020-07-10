@@ -105,15 +105,16 @@ module.exports =
 			d = new Date()
 			
 			p = n
-			var menciones = [...m.mentions.users].map(function(x){return [x[1].id,x[1].username]}).map(function(x){
+			q = n
+			r = [...m.mentions.users].map(function(x){return [x[1].id,x[1].username]})
+			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!(${x[0]})>`,"g")
-				p = n.replace(regex_usuarios,`\x1b[01;35m@${x[1]}\x1b[01;37m`)
+				p = p.replace(regex_usuarios,`\x1b[01;35m@${x[1]}\x1b[01;37m`)
+				q = q.replace(regex_usuarios,`@${x[1]}`)
 			})
-			t = `${a} ${p}`
+			t = `${a} ${q}`
 			l = [new Date(),t]
 			o = `\x1b[01;34m${g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${p}\x1b[00m`
-			console.log(o)
-
 			this.funs.mostrar(d,o)
 			dichos.push(l)
 
