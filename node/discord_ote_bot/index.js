@@ -111,6 +111,9 @@ module.exports =
 			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var color = i%2?35:36
+				if(x[0]==621975714287321094){
+					color = 30
+				}
 				p = p.replace(regex_usuarios,`\x1b[01;${color}m@${x[1]}\x1b[01;37m`)
 				q = q.replace(regex_usuarios,`@${x[1]}`)
 				++i
