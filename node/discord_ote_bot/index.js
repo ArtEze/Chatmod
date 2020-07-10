@@ -106,12 +106,19 @@ module.exports =
 			
 			p = n
 			q = n
+			
+			var naranja = 621975714287321094
+			var color = 31
+			if(m.author.id==naranja){
+				color = 30
+				a = "\x1b[01;${color}\x1b[00m"
+			}
 			r = [...m.mentions.users].map(function(x){return [x[1].id,x[1].username]})
 			i = 0
 			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var color = i%2?35:36
-				if(x[0]==621975714287321094){
+				if(x[0]==naranja){
 					color = 30
 				}
 				p = p.replace(regex_usuarios,`\x1b[01;${color}m@${x[1]}\x1b[01;37m`)
