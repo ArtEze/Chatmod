@@ -100,11 +100,12 @@ module.exports =
 		var bot = new discord.Client()
 
 		this.ote = ote
-		this.externo = {
+		this.ote.externo = {
 			bot: bot
 			, discord: discord
 			, crypto: crypto
 		}
+		this.ote.e = this.ote.externo
 		bot.ote = this.ote
 
 		this.ote.g = {}
@@ -122,19 +123,19 @@ module.exports =
 
 			var o = this.ote.g
 
-			o.m = message
-			o.g = o.m.guild && o.m.guild.name || `privado`
+			o.e.m = message
+			o.g = o.e.m.guild && o.e.m.guild.name || `privado`
 
-			o.c = ( o.m.channel && (
-					o.m.channel.name
-					|| o.m.channel.recipient && o.m.channel.recipient.username
+			o.c = ( o.e.m.channel && (
+					o.e.m.channel.name
+					|| o.e.m.channel.recipient && o.e.m.channel.recipient.username
 				) || `desconocido`
 			)
-			o.a = ( o.m.member && o.m.member.nickname
-				|| o.m.author && o.m.author.username
+			o.a = ( o.e.m.member && o.e.m.member.nickname
+				|| o.e.m.author && o.e.m.author.username
 				|| "desconocido"
 			)
-			o.n = o.m.content
+			o.n = o.e.m.content
 
 			o.d = new Date()
 			
@@ -143,11 +144,11 @@ module.exports =
 			
 			var naranja = 621975714287321094
 			var color = 31
-			if(o.m.author.id==naranja){
+			if(o.e.m.author.id==naranja){
 				color = 30
 				o.a = `\x1b[01;${color}\x1b[00m`
 			}
-			o.r = this.ote.funs.obtener_mencionados_matriz(o.m)
+			o.r = this.ote.funs.obtener_mencionados_matriz(o.e.m)
 			o.i = 0
 			o.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
