@@ -4,9 +4,10 @@ Modo de uso:
 
 https://discordapp.com/developers/applications/me
 
-n_bot = require("C:/Users/Otecald/Desktop/Proyectos 2017/Node JS/Otecald Bot/código.js")
-
-n_bot.iniciar(escribir el token aquí) //Ejemplo: n_bot.iniciar("contraseña")
+cd ~/documentos/github/charlavod/node
+node
+ote = require("./discord_ote_bot")
+ote.iniciar() // Carga contraseña desde archivo "../../../contraseña.txt"
 
 Enlace para invitar con ClienId:
 
@@ -95,85 +96,84 @@ module.exports =
 			return salida
 		}
 	}
-	, iniciar:function(contraseña,usuario){
-		
-		if(contraseña==undefined){
-			contraseña = fs.readFileSync("../../../contraseña.txt").toString().slice(0,-1)
-		}
-		
-		dichos = []
+	, iniciar: function(contraseña){
 		var bot = new discord.Client()
 
-		bot.funs = this.funs
+		this.ote = ote
 		this.externo = {
 			bot: bot
 			, discord: discord
 			, crypto: crypto
 		}
-		bot.externo = this.externo
+		bot.ote = this.ote
 
+		this.ote.g = {}
+		this.ote.g.dichos = []
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
 
 		bot.on("ready", function() {
-			this.funs.mostrar(`Listo y sin errores. ${new Date()}`)
-			this.funs.cambiar_título("Otecald Bot Discord")
+			this.ote.funs.mostrar(`Listo y sin errores. ${new Date()}`)
+			this.ote.funs.cambiar_título("Otecald Bot Discord")
 		})
 
 		bot.on("message", function(message) {
 
-			m = message
-			g = m.guild && m.guild.name || `privado`
-			c = ( m.channel && (
-					m.channel.name
-					|| m.channel.recipient && m.channel.recipient.username
+			var o = this.ote.g
+
+			o.m = message
+			o.g = o.m.guild && o.m.guild.name || `privado`
+
+			o.c = ( o.m.channel && (
+					o.m.channel.name
+					|| o.m.channel.recipient && o.m.channel.recipient.username
 				) || `desconocido`
 			)
-			a = ( m.member && m.member.nickname
-				|| m.author && m.author.username
+			o.a = ( o.m.member && o.m.member.nickname
+				|| o.m.author && o.m.author.username
 				|| "desconocido"
 			)
-			n = m.content
+			o.n = o.m.content
 
-			d = new Date()
+			o.d = new Date()
 			
-			p = n
-			q = n
+			o.p = o.n
+			o.q = o.n
 			
 			var naranja = 621975714287321094
 			var color = 31
-			if(m.author.id==naranja){
+			if(o.m.author.id==naranja){
 				color = 30
-				a = `\x1b[01;${color}\x1b[00m`
+				o.a = `\x1b[01;${color}\x1b[00m`
 			}
-			r = this.funs.obtener_mencionados_matriz(m)
-			i = 0
+			o.r = this.ote.funs.obtener_mencionados_matriz(m)
+			o.i = 0
 			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var nick = x[2] || x[1]
-				var color = i%2?35:36
+				var color = o.i%2?35:36
 				if(x[0]==naranja){
 					color = 30
 				}
-				p = p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
-				q = q.replace(regex_usuarios,`@${nick}`)
-				++i
+				o.p = o.p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
+				o.q = o.q.replace(regex_usuarios,`@${nick}`)
+				++o.i
 			})
-			t = `${a} ${q}`
-			l = [new Date(),t]
-			o = `\x1b[01;34m${g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${p}\x1b[00m`
-			this.funs.mostrar(d,o)
-			dichos.push(l)
+			o.t = `${o.a} ${o.q}`
+			o.l = [new Date(),o.t]
+			o.o = `\x1b[01;34m${g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${p}\x1b[00m`
+			this.ote.funs.mostrar(o.d, o.o)
+			this.ote.g.dichos.push(o.l)
 
 			var mensaje = message.content
-			this.funs.cambiar_título(`OteBotdiscord ${t}`)
+			this.ote.funs.cambiar_título(`OteBotdiscord ${o.t}`)
 
 			//if (m.author.bot) return;
 
 			if ( regex_prefijo.test(mensaje) == null ) return;
 
-			var post_pref = this.funs.quitar_prefijo(mensaje,prefijo)
+			var post_pref = this.ote.funs.quitar_prefijo(mensaje,prefijo)
 			var args = post_pref.split(/\s+/g)
 			var argumento = args[0]
 			var procesado = ""
@@ -187,8 +187,8 @@ module.exports =
 					break;
 				case pref_mp:
 					procesado = args.slice(1).join(" ")
-					procesado = this.funs.quitar_menciones(procesado)
-					procesado = this.funs.procesar(message,procesado)
+					procesado = this.ote.funs.quitar_menciones(procesado)
+					procesado = this.ote.funs.procesar(message,procesado)
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
@@ -210,7 +210,7 @@ module.exports =
 					}
  					break;
 				default:
-					procesado = this.funs.procesar(message,post_pref)
+					procesado = this.ote.funs.procesar(message,post_pref)
 					break;
 			}
 			if(argumento==pref_mp){
@@ -219,27 +219,30 @@ module.exports =
 					, {
 						recipients: [
 							message.author
-							,...this.funs.obtener_mencionados_array(message)
+							,...this.ote.funs.obtener_mencionados_array(message)
 						]
 					}
 				).recipient.send(procesado)
 			}else{
-				this.funs.enviar(message,procesado)
+				this.ote.funs.enviar(message,procesado)
 			}
 			return;
 		})
-		var token_encriptado
-		if(usuario){
-			token_encriptado = "L3zZFI2NEORhTBjY6o+Fe7zQiUEhm6Y90fbGmBr5E0DkaDQqhKv0e4sL4/O2GsSMnYBTXfejKP2MDckY7w7hEg=="
-		}else{
-			token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
+
+		if(contraseña==undefined){
+			contraseña = fs.readFileSync("../../../contraseña.txt").toString().match(/\S+/g)
+			contraseña = contraseña && contraseña[0] || ""
 		}
-		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
+		var token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
+		var token_desencriptado = this.ote.funs.desencriptar(token_encriptado,contraseña)
 		bot.login(token_desencriptado)
 	}
 }
 
 var ote = module.exports
-var contraseña = process.argv[2]
-ote.iniciar(contraseña)
+var puede_iniciar = process.argv[2]
+var contraseña = process.argv[3]
+if(puede_iniciar=="sip"){
+	ote.iniciar(contraseña)
+}
 
