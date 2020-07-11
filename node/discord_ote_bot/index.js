@@ -69,7 +69,11 @@ module.exports =
 		}
 		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
 			return (this.obtener_mencionados_array(mensaje)
-				.map(function(x){return [x.id,x.username]})
+				.map(function(x){return [
+					x.id
+					,x.username
+					, mensaje.guild.member(x).nickname
+				]})
 			)
 		}
 		, quitar_menciones: function quitar_menciones(mensaje){
@@ -147,12 +151,13 @@ module.exports =
 			i = 0
 			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
+				var nick = x[2] || x[1]
 				var color = i%2?35:36
 				if(x[0]==naranja){
 					color = 30
 				}
-				p = p.replace(regex_usuarios,`\x1b[01;${color}m@${x[1]}\x1b[01;37m`)
-				q = q.replace(regex_usuarios,`@${x[1]}`)
+				p = p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
+				q = q.replace(regex_usuarios,`@${nick}`)
 				++i
 			})
 			t = `${a} ${q}`
@@ -236,7 +241,5 @@ module.exports =
 
 var ote = module.exports
 var contraseña = process.argv[2]
-if(contraseña){
-	ote.iniciar(contraseña)
-}
+ote.iniciar(contraseña)
 
