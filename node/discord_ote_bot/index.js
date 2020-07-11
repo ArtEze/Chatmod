@@ -225,7 +225,6 @@ module.exports =
 					message.author
 					,...ote.funs.obtener_mencionados_array(message)
 				])]
-				console.log(receptores)
 				receptores.map(function(x){
 					if(!x.bot){
 						var dm = ote.externo.discord.DMChannel
