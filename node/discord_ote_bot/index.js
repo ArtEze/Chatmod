@@ -121,13 +121,15 @@ module.exports =
 
 			m = message
 			g = m.guild && m.guild.name || `privado`
-			c = (
-				m.channel && (
+			c = ( m.channel && (
 					m.channel.name
 					|| m.channel.recipient && m.channel.recipient.username
 				) || `desconocido`
 			)
-			a = m.author.username
+			a = ( m.member && m.member.nickname
+				|| m.author && m.author.username
+				|| "desconocido"
+			)
 			n = m.content
 
 			d = new Date()
