@@ -54,8 +54,8 @@ module.exports =
 				this.mostrar(error)
 				return mensaje
 			}
-		},
-		quitar_prefijo: function(mensaje,prefijo){
+		}
+		, quitar_prefijo: function(mensaje,prefijo){
 			var salida = ""
 			var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
 			var prefijo_encontrado = mensaje.match(regex)
@@ -63,8 +63,8 @@ module.exports =
 				salida = mensaje.replace(prefijo_encontrado,"")
 			}
 			return salida
-		},
-		desencriptar: function desencriptar(token_encriptado,contraseña){
+		}
+		, desencriptar: function desencriptar(token_encriptado,contraseña){
 			var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
 			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
 			salida += desencriptador.final("utf8")
@@ -76,7 +76,14 @@ module.exports =
 			salida += encriptador.final("base64")
 			return salida
 		}
-
+		, obtener_mencionados_array: function obtener_mencionados(mensaje){
+			return mensaje.mentions.users.map(function(x){return x})
+		}
+		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
+			return (this.obtener_mencionados_array(mensaje)
+				.map(function(x){return [x.id,x.username]})
+			)
+		}
 	}
 	, iniciar:function(contraseña,usuario){
 		
@@ -123,7 +130,7 @@ module.exports =
 				color = 30
 				a = `\x1b[01;${color}\x1b[00m`
 			}
-			r = [...m.mentions.users].map(function(x){return [x[1].id,x[1].username]})
+			r = this.funs.obtener_mencionados_matriz(m)
 			i = 0
 			r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
@@ -189,7 +196,12 @@ module.exports =
 			if(argumento==pref_mp){
 				new this.externo.discord.DMChannel(
 					this
-					, {recipients:[message.author]}
+					, {
+						recipients: [
+							message.author
+							,...this.funs.obtener_mencionados_array(message)
+						]
+					}
 				).recipient.send(procesado)
 			}else{
 				this.funs.enviar(message,procesado)
