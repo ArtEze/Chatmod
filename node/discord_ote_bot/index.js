@@ -224,8 +224,10 @@ module.exports =
 				var receptores = [...new Set([
 					message.author
 					,...ote.funs.obtener_mencionados_array(message)
-				])].map(function(x){
-					if(!x.bot){
+				])]
+				console.log(receptores)
+				receptores.map(function(x){
+					if(x.bot){
 						var dm = ote.externo.discord.DMChannel
 						var privado = new ote.externo.discord.DMChannel(
 							ote.externo.bot
