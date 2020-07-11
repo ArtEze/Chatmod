@@ -217,7 +217,7 @@ module.exports =
 					break;
 			}
 			if(argumento==pref_mp){
-				new this.externo.discord.DMChannel(
+				new this.ote.externo.discord.DMChannel(
 					this
 					, {
 						recipients: [
