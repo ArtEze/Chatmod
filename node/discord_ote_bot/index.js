@@ -170,7 +170,7 @@ module.exports =
 			this.ote.g.dichos.push(o.l)
 
 			var mensaje = message.content
-			this.ote.funs.cambiar_título(`OteBotdiscord ${o.t}`)
+			this.ote.funs.cambiar_título(`${o.t} - OteDiscord`)
 
 			//if (m.author.bot) return;
 
