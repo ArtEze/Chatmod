@@ -227,7 +227,7 @@ module.exports =
 				])]
 				console.log(receptores)
 				receptores.map(function(x){
-					if(x.bot){
+					if(!x.bot){
 						var dm = ote.externo.discord.DMChannel
 						var privado = new ote.externo.discord.DMChannel(
 							ote.externo.bot
