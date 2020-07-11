@@ -123,19 +123,21 @@ module.exports =
 
 			var o = this.ote.g
 
-			o.e.m = message
-			o.g = o.e.m.guild && o.e.m.guild.name || `privado`
+			ote.e.m = message
+			var m = ote.e.m
+			
+			o.g = m.guild && m.guild.name || `privado`
 
-			o.c = ( o.e.m.channel && (
-					o.e.m.channel.name
-					|| o.e.m.channel.recipient && o.e.m.channel.recipient.username
+			o.c = ( m.channel && (
+					m.channel.name
+					|| m.channel.recipient && m.channel.recipient.username
 				) || `desconocido`
 			)
-			o.a = ( o.e.m.member && o.e.m.member.nickname
-				|| o.e.m.author && o.e.m.author.username
+			o.a = ( m.member && m.member.nickname
+				|| m.author && m.author.username
 				|| "desconocido"
 			)
-			o.n = o.e.m.content
+			o.n = m.content
 
 			o.d = new Date()
 			
@@ -144,11 +146,11 @@ module.exports =
 			
 			var naranja = 621975714287321094
 			var color = 31
-			if(o.e.m.author.id==naranja){
+			if(m.author.id==naranja){
 				color = 30
 				o.a = `\x1b[01;${color}\x1b[00m`
 			}
-			o.r = this.ote.funs.obtener_mencionados_matriz(o.e.m)
+			o.r = this.ote.funs.obtener_mencionados_matriz(m)
 			o.i = 0
 			o.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
