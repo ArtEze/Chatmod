@@ -121,7 +121,12 @@ module.exports =
 
 			m = message
 			g = m.guild && m.guild.name || `privado`
-			c = m.channel && m.channel.name || `privado`
+			c = (
+				m.channel && (
+					m.channel.name
+					|| m.channel.recipient && m.channel.recipient.username
+				) || `desconocido`
+			)
 			a = m.author.username
 			n = m.content
 
