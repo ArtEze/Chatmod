@@ -149,7 +149,7 @@ module.exports =
 			}
 			o.r = this.ote.funs.obtener_mencionados_matriz(o.m)
 			o.i = 0
-			r.map(function(x){
+			o.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var nick = x[2] || x[1]
 				var color = o.i%2?35:36
@@ -162,7 +162,7 @@ module.exports =
 			})
 			o.t = `${o.a} ${o.q}`
 			o.l = [new Date(),o.t]
-			o.o = `\x1b[01;34m${g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${o.p}\x1b[00m`
+			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${o.p}\x1b[00m`
 			this.ote.funs.mostrar(o.d, o.o)
 			this.ote.g.dichos.push(o.l)
 
