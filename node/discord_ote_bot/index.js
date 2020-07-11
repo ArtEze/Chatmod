@@ -64,6 +64,20 @@ module.exports =
 			}
 			return salida
 		}
+		, obtener_mencionados_array: function obtener_mencionados(mensaje){
+			return mensaje.mentions.users.map(function(x){return x})
+		}
+		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
+			return (this.obtener_mencionados_array(mensaje)
+				.map(function(x){return [x.id,x.username]})
+			)
+		}
+		, quitar_menciones: function quitar_menciones(mensaje){
+			var salida = mensaje
+			var regex_usuarios = new RegExp(`<@!?\\d+>`,"g")
+			salida = salida.replace(regex_usuarios,"")
+			return salida
+		}
 		, desencriptar: function desencriptar(token_encriptado,contraseña){
 			var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
 			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
@@ -75,14 +89,6 @@ module.exports =
 			var salida = encriptador.update(token, 'utf8', "base64")
 			salida += encriptador.final("base64")
 			return salida
-		}
-		, obtener_mencionados_array: function obtener_mencionados(mensaje){
-			return mensaje.mentions.users.map(function(x){return x})
-		}
-		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
-			return (this.obtener_mencionados_array(mensaje)
-				.map(function(x){return [x.id,x.username]})
-			)
 		}
 	}
 	, iniciar:function(contraseña,usuario){
@@ -169,6 +175,8 @@ module.exports =
 					break;
 				case pref_mp:
 					procesado = args.slice(1).join(" ")
+					procesado = this.funs.quitar_menciones(procesado)
+					procesado = this.funs.procesar(message,procesado)
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
