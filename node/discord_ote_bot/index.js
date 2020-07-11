@@ -80,11 +80,21 @@ module.exports =
 	}
 	, iniciar:function(contraseña,usuario){
 		
+		if(contraseña==undefined){
+			contraseña = fs.readFileSync("../../../contraseña.txt").toString().slice(0,-1)
+		}
+		
 		dichos = []
 		var bot = new discord.Client()
 
 		bot.funs = this.funs
-		this.bot = bot
+		this.externo = {
+			bot: bot
+			, discord: discord
+			, crypto: crypto
+		}
+		bot.externo = this.externo
+
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
@@ -97,10 +107,10 @@ module.exports =
 		bot.on("message", function(message) {
 
 			m = message
-			c = m.channel.name || `(Privado)`
+			g = m.guild && m.guild.name || `privado`
+			c = m.channel && m.channel.name || `privado`
 			a = m.author.username
 			n = m.content
-			g = m.guild.name
 
 			d = new Date()
 			
@@ -142,11 +152,15 @@ module.exports =
 			var args = post_pref.split(/\s+/g)
 			var argumento = args[0]
 			var procesado = ""
+			var pref_mp = "mp"
 			switch( argumento ){
 				case "info":
 					procesado = "Un mensaje."
 					break;
 				case "+":
+					procesado = args.slice(1).join(" ")
+					break;
+				case pref_mp:
 					procesado = args.slice(1).join(" ")
 					break;
 				case "kill":
@@ -172,7 +186,14 @@ module.exports =
 					procesado = this.funs.procesar(message,post_pref)
 					break;
 			}
-			this.funs.enviar(message,procesado)
+			if(argumento==pref_mp){
+				new this.externo.discord.DMChannel(
+					this
+					, {recipients:[message.author]}
+				).recipient.send(procesado)
+			}else{
+				this.funs.enviar(message,procesado)
+			}
 			return;
 		})
 		var token_encriptado
@@ -182,12 +203,7 @@ module.exports =
 			token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
 		}
 		var token_desencriptado = this.funs.desencriptar(token_encriptado,contraseña)
-		
-		if(usuario){
-			console.log( token_desencriptado )
-		}else{
-			bot.login(token_desencriptado)
-		}
+		bot.login(token_desencriptado)
 	}
 }
 
