@@ -162,7 +162,7 @@ module.exports =
 			})
 			o.t = `${o.a} ${o.q}`
 			o.l = [new Date(),o.t]
-			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${c} \x1b[01;32m${a} \x1b[01;37m${o.p}\x1b[00m`
+			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${o.c} \x1b[01;32m${o.a} \x1b[01;37m${o.p}\x1b[00m`
 			this.ote.funs.mostrar(o.d, o.o)
 			this.ote.g.dichos.push(o.l)
 
