@@ -1,17 +1,17 @@
 ﻿/*
 
-Modo de uso:
+// Modo de uso:
 
-https://discordapp.com/developers/applications/me
+// https://discordapp.com/developers/applications/me
 
 cd ~/documentos/github/charlavod/node
 node
-ote = require("./discord_ote_bot")
-ote.iniciar() // Carga contraseña desde archivo "../../../contraseña.txt"
 
-Enlace para invitar con ClienId:
+// Carga contraseña desde archivo "../../../contraseña.txt"
+var ote = require("./discord_ote_bot").iniciar()
 
-https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&permissions=8
+// Enlace para invitar con ClienId:
+// https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&permissions=8
 
 */
 
