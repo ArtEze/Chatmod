@@ -86,6 +86,9 @@ module.exports =
 			salida = salida.replace(regex_usuarios,"")
 			return salida
 		}
+		, archivo_hacia_json: function(x){
+			return JSON.parse(fs.readFileSync(x).toString())
+		}
 		, desencriptar: function desencriptar(token_encriptado,contraseña){
 			var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
 			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
@@ -102,7 +105,6 @@ module.exports =
 	, iniciar: function(contraseña){
 		var bot = new discord.Client()
 
-		ote = ote
 		ote.externo = {
 			bot: bot
 			, discord: discord
@@ -249,12 +251,14 @@ module.exports =
 		})
 
 		if(contraseña==undefined){
-			contraseña = fs.readFileSync("../../../contraseña.txt").toString().match(/\S+/g)
-			contraseña = contraseña && contraseña[0] || ""
+			var inicio = ote.funs.archivo_hacia_json("../../../otedis/inicio.json")
+			contraseña = inicio.clave
 		}
-		var token_encriptado = "rIBvtfOhf54JeOKMo2W4T/Tn4vpW36x4UU4J/gbqrE9kK+U2rW5rv0602Rht4na6RbYXJNkNPOaKsabMKq0HAw=="
+		var token_encriptado = inicio.token_encriptado
 		var token_desencriptado = ote.funs.desencriptar(token_encriptado,contraseña)
 		bot.login(token_desencriptado)
+		
+		return ote
 	}
 }
 
