@@ -221,10 +221,13 @@ module.exports =
 					break;
 			}
 			if(argumento==pref_mp){
-				var receptores = [...new Set([
-					message.author
-					,...ote.funs.obtener_mencionados_array(message)
-				])]
+				var receptores = undefined
+				var menciones = [...ote.funs.obtener_mencionados_array(message)]
+				if(menciones.length!=0){
+					receptores = [...new Set(menciones)]
+				}else{
+					receptores = [message.author]
+				}
 				receptores.map(function(x){
 					if(!x.bot){
 						var dm = ote.externo.discord.DMChannel
