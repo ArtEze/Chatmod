@@ -150,18 +150,17 @@ module.exports =
 			o.p = o.n
 			o.q = o.n
 			
-			var naranja = 621975714287321094
-			var color = 31
-			if(m.author.id==naranja){
-				color = 30
-				o.a = `\x1b[01;${color}\x1b[00m`
+			var naranja = (0x8a1b39de504n*0x10n**4n+6n).toString()
+			var c_autor = 32 // Color autor
+			if(ote.e.m.author.id==naranja){
+				c_autor = 30
 			}
 			o.r = ote.funs.obtener_mencionados_matriz(m)
 			o.i = 0
 			o.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var nick = x[2] || x[1]
-				var color = o.i%2?35:36
+				color = o.i%2?35:36
 				if(x[0]==naranja){
 					color = 30
 				}
@@ -171,7 +170,7 @@ module.exports =
 			})
 			o.t = `${o.a} ${o.q}`
 			o.l = [new Date(),o.t]
-			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${o.c} \x1b[01;32m${o.a} \x1b[01;37m${o.p}\x1b[00m`
+			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${o.c} \x1b[01;${c_autor}m${o.a} \x1b[01;37m${o.p}\x1b[00m`
 			ote.funs.mostrar(o.d, o.o)
 			ote.g.dichos.push(o.l)
 
