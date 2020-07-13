@@ -168,7 +168,7 @@ module.exports =
 				o.q = o.q.replace(regex_usuarios,`@${nick}`)
 				++o.i
 			})
-			o.t = `${o.a} ${o.q}`
+			o.t = `${o.a}: ${o.q}`
 			o.l = [new Date(),o.t]
 			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${o.c} \x1b[01;${c_autor}m${o.a} \x1b[01;37m${o.p}\x1b[00m`
 			ote.funs.mostrar(o.d, o.o)
