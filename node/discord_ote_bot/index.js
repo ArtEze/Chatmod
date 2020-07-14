@@ -185,7 +185,7 @@ module.exports = {
 			u.o = `\x1b[01;${c_autor}m${u.a} \x1b[01;37m${u.p}\x1b[00m`
 
 			var dicho_final = o.g.dichos.slice(-1)[0]
-			if( dicho_final && dicho_final[1]!=u.b ){
+			if( dicho_final && dicho_final[1]!=u.b || dicho_final==null ){
 				ote.funs.mostrar(u.b, "\n")
 			}
 			ote.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
