@@ -253,7 +253,6 @@ module.exports = {
 			}
 			return;
 		})
-		console.log(process.argv[1])
 		var inicio = ote.funs.archivo_hacia_json(
 			`${__dirname}/../../../../otedis/inicio.json`
 		)
