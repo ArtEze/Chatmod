@@ -247,7 +247,9 @@ module.exports = {
 					}
  					break;
 				default:
-					procesado = o.funs.procesar(message,desprefijado)
+					procesado = desprefijado
+					procesado = o.funs.quitar_menciones(procesado)
+					procesado = o.funs.procesar(message,procesado)
 					break;
 			}
 			if(argumento==pref_mp){
