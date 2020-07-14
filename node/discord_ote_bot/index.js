@@ -29,7 +29,7 @@ module.exports = {
 		}
 		, mostrar: function(){
 			console.log(...arguments)
-			this.salida(">\x20")
+			this.salida("\x1b[00m>\x20")
 		}
 		, enviar: function(mensaje_objeto,mensaje){
 			//this.mostrar("Mensaje: ",mensaje)
@@ -68,14 +68,26 @@ module.exports = {
 		, obtener_mencionados_array: function obtener_mencionados(mensaje){
 			return mensaje.mentions.users.map(function(x){return x})
 		}
+		, elegir_compacto: function(a,b){
+			if(a==undefined&&b==undefined){return undefined}
+			if(a!=undefined&&b==undefined){return a}
+			if(a==undefined&&b!=undefined){return b}
+			return a.length<b.length?a:b
+		}
+		, elegir_nombre_compacto: function(mensaje){
+			var no_definido = "desconocido"
+			var m = mensaje
+			var n = no_definido
+			var nombre = m && m.author && m.author.username
+			var alias = m && m.member && m.member.nickname
+			return o.funs.elegir_compacto(nombre,alias) || "desconocido"
+		}
 		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
 			return (this.obtener_mencionados_array(mensaje)
 				.map(function(x){return [
 					x.id
-					,x.username
-					, ( mensaje.guild
-						&& mensaje.guild.member(x).nickname
-					) || undefined
+					, x.username
+					, mensaje.guild && mensaje.guild.member(x).nickname
 				]})
 			)
 		}
@@ -152,10 +164,7 @@ module.exports = {
 					|| m.channel.recipient && m.channel.recipient.username
 				) || `desconocido`
 			)
-			u.a = ( m && m.member && m.member.nickname
-				|| m.author && m.author.username
-				|| "desconocido"
-			)
+			u.a = o.funs.elegir_nombre_compacto(m)
 			u.n = m.content
 
 			u.d = new Date()
@@ -172,7 +181,7 @@ module.exports = {
 			u.i = 0
 			u.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
-				var nick = x[2] || x[1]
+				var nick = o.funs.elegir_compacto(x[1],x[2])
 				color = u.i%2?35:36
 				if(x[0]==naranja){
 					color = 30
@@ -289,5 +298,4 @@ if(puede_iniciar=="sip"){
 	var clave = process.argv[3]
 	o.iniciar(clave)
 }
-
 
