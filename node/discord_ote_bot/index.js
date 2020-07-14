@@ -277,5 +277,5 @@ if(puede_iniciar=="sip"){
 	var clave = process.argv[3]
 	ote.iniciar(clave)
 }
-console.log(a)
+
 
