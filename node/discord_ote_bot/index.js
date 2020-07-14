@@ -102,14 +102,14 @@ module.exports = {
 			}
 		}
 		, desencriptar: function desencriptar(token_encriptado,clave){
-			var c = ote.funs.generar_iv_y_clave(clave)
+			var c = o.funs.generar_iv_y_clave(clave)
 			var desencriptador = crypto.createDecipheriv("aes-128-cbc",c.clave,c.iv,{})
 			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
 			salida += desencriptador.final("utf8")
 			return salida
 		}
 		, encriptar: function encriptar(token,clave) {
-			var c = ote.funs.generar_iv_y_clave(clave)
+			var c = o.funs.generar_iv_y_clave(clave)
 			var encriptador = crypto.createCipheriv("aes-128-cbc",c.clave,c.iv,{})
 			var salida = encriptador.update(token, "utf8", "base64")
 			salida += encriptador.final("base64")
@@ -118,32 +118,32 @@ module.exports = {
 	}
 	, iniciar: function(clave){
 		var bot = new discord.Client()
-		ote.externo = {
+		o.externo = {
 			bot: bot
 			, discord: discord
 			, crypto: crypto
 			, fs: fs
 		}
-		ote.e = ote.externo
+		o.e = o.externo
 		bot.ote = ote
 
-		ote.g = {}
-		ote.g.dichos = []
+		o.g = {}
+		o.g.dichos = []
 		
 		var prefijo = "ot+ec?a?l?d?"
 		var regex_prefijo = new RegExp(prefijo,"gi")
 
 		bot.on("ready", function() {
-			ote.funs.mostrar(`Listo y sin errores. ${new Date()}`)
-			ote.funs.titular("Otecald Bot Discord")
+			o.funs.mostrar(`Listo y sin errores. ${new Date()}`)
+			o.funs.titular("Otecald Bot Discord")
 		})
 
 		bot.on("message", function(message) {
 
-			var u = ote.g
+			var u = o.g
 
-			ote.e.m = message
-			var m = ote.e.m
+			o.e.m = message
+			var m = o.e.m
 			
 			u.g = m.guild && m.guild.name || `privado`
 
@@ -165,10 +165,10 @@ module.exports = {
 			
 			var naranja = (0x8a1b39de504n*0x10n**4n+6n).toString()
 			var c_autor = 32 // Color autor
-			if(ote.e.m.author.id==naranja){
+			if(o.e.m.author.id==naranja){
 				c_autor = 30
 			}
-			u.r = ote.funs.obtener_mencionados_matriz(m)
+			u.r = o.funs.obtener_mencionados_matriz(m)
 			u.i = 0
 			u.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
@@ -187,21 +187,21 @@ module.exports = {
 
 			var dicho_final = o.g.dichos.slice(-1)[0]
 			if( dicho_final && dicho_final[1]!=u.b || dicho_final==null ){
-				ote.funs.mostrar(u.b)
+				o.funs.mostrar(u.b)
 			}
-			ote.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
+			o.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
 
 			u.l = [ u.d, u.b, u.t ].filter(x=>x)
-			ote.g.dichos.push(u.l)
+			o.g.dichos.push(u.l)
 
 			var mensaje = message.content
-			ote.funs.titular(`${u.t} - OteDiscord`)
+			o.funs.titular(`${u.t} - OteDiscord`)
 
 			//if (m.author.bot) return;
 
 			if ( regex_prefijo.test(mensaje) == null ) return;
 
-			var desprefijado = ote.funs.desprefijar(mensaje,prefijo)
+			var desprefijado = o.funs.desprefijar(mensaje,prefijo)
 			var args = desprefijado.split(/\s+/g)
 			var argumento = args[0]
 			var procesado = ""
@@ -215,8 +215,8 @@ module.exports = {
 					break;
 				case pref_mp:
 					procesado = args.slice(1).join(" ")
-					procesado = ote.funs.quitar_menciones(procesado)
-					procesado = ote.funs.procesar(message,procesado)
+					procesado = o.funs.quitar_menciones(procesado)
+					procesado = o.funs.procesar(message,procesado)
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
@@ -238,12 +238,12 @@ module.exports = {
 					}
  					break;
 				default:
-					procesado = ote.funs.procesar(message,desprefijado)
+					procesado = o.funs.procesar(message,desprefijado)
 					break;
 			}
 			if(argumento==pref_mp){
 				var receptores = undefined
-				var menciones = [...ote.funs.obtener_mencionados_array(message)]
+				var menciones = [...o.funs.obtener_mencionados_array(message)]
 				if(menciones.length!=0){
 					receptores = [...new Set(menciones)]
 				}else{
@@ -251,33 +251,33 @@ module.exports = {
 				}
 				receptores.map(function(x){
 					if(!x.bot){
-						var dm = ote.externo.discord.DMChannel
-						var privado = new ote.externo.discord.DMChannel(
-							ote.externo.bot
+						var dm = o.externo.discord.DMChannel
+						var privado = new o.externo.discord.DMChannel(
+							o.externo.bot
 							, { recipients: [x] }
 						)
 						try{
 							privado.recipient.send(procesado)
 						}catch(e){
-							ote.funs.mostrar(x,e.toString())
+							o.funs.mostrar(x,e.toString())
 						}
 					}
 				})
 			}else{
-				ote.funs.enviar(message,procesado)
+				o.funs.enviar(message,procesado)
 			}
 			return;
 		})
-		var inicio = ote.funs.archivo_hacia_json(
+		var inicio = o.funs.archivo_hacia_json(
 			`${__dirname}/../../../../otedis/inicio.json`
 		)
-		var token_encriptado = ote.funs.archivo_hacia_json(
+		var token_encriptado = o.funs.archivo_hacia_json(
 			`${__dirname}/token_encriptado.json`
 		).token_encriptado
 		if(clave==undefined){
 			clave = inicio.clave
 		}
-		var token_desencriptado = ote.funs.desencriptar(token_encriptado,clave)
+		var token_desencriptado = o.funs.desencriptar(token_encriptado,clave)
 		bot.login(token_desencriptado)
 	}
 }
@@ -287,7 +287,7 @@ o = ote // Simplificado
 var puede_iniciar = process.argv[2]
 if(puede_iniciar=="sip"){
 	var clave = process.argv[3]
-	ote.iniciar(clave)
+	o.iniciar(clave)
 }
 
 
