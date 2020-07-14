@@ -91,7 +91,7 @@ module.exports = {
 			var ab = x=>tener_dos_cifras_finales(x)
 			var c = "Year Month Date Hours Minutes Seconds".
 				split(" ").map(x=>ab(d["get"+x]()))
-			return  `${c.slice(0,3).join("")} ${c.slice(-3).join(" ")}`
+			return  `\x1b[01;31m${c.slice(0,3).join("")} ${c.slice(-3).join(" ")}`
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
