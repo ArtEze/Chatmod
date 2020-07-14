@@ -105,11 +105,11 @@ module.exports = {
 				split(" ").map(x=>ab(d["get"+x]()))
 			return  `\x1b[01;31m${c.slice(0,3).join("")} ${c.slice(-3).join(" ")}`
 		}
-		, otecald: function(x){
-			var otecald = "otecald"
-			var aleatorio = Math.floor(Date.now()/1000).toString(7)
-			var chars = aleatorio.split("").slice(-7).map(x=>otecald[x])
-			return chars.join("")
+		, aleatorio_siete: function aleatorio_siete(x){
+			return Math.floor(Date.now()/1000).toString(7).slice(-7)
+		}
+		, otecald: function otecald(x){
+			return o.funs.aleatorio_siete().split("").map(x=>"otecald"[x]).join("")
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
