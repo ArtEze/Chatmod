@@ -7,8 +7,8 @@
 cd ~/documentos/github/charlavod/node
 node
 
-// Carga contraseña desde archivo "../../../contraseña.txt"
-var ote = require("./discord_ote_bot").iniciar()
+// Carga clave desde archivo "../../../clave.txt"
+require("./discord_ote_bot").iniciar()
 
 // Enlace para invitar con ClienId:
 // https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&permissions=8
@@ -19,13 +19,12 @@ var discord = require("../../../node_modules/discord.js")
 var fs = require("fs")
 var crypto = require("crypto")
 
-module.exports =
-{
+module.exports = {
 	funs: {
 		salida: function(){
 			return process.stdout.write(...arguments)
 		}
-		, cambiar_título: function(título){
+		, titular: function(título){
 			this.salida(`\x1B]2;${título}\x07`)
 		}
 		, mostrar: function(){
@@ -57,7 +56,7 @@ module.exports =
 				return mensaje
 			}
 		}
-		, quitar_prefijo: function(mensaje,prefijo){
+		, desprefijar: function(mensaje,prefijo){
 			var salida = ""
 			var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
 			var prefijo_encontrado = mensaje.match(regex)
@@ -89,22 +88,30 @@ module.exports =
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
 		}
-		, desencriptar: function desencriptar(token_encriptado,contraseña){
-			var desencriptador = crypto.createDecipher("aes-128-cbc", contraseña)
+		, generar_iv_y_clave: function(clave){
+			return {iv: "0123456789abcdef"
+				,clave: new Buffer.alloc(16,clave).toString()
+			}
+		}
+		, desencriptar: function desencriptar(token_encriptado,clave){
+			var c = ote.funs.generar_iv_y_clave(clave)
+			var desencriptador = crypto.createDecipheriv("aes-128-cbc",c.clave,c.iv,{})
 			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
 			salida += desencriptador.final("utf8")
 			return salida
 		}
-		, encriptar: function encriptar(token,contraseña) {
-			var encriptador = crypto.createCipher("aes-128-cbc", contraseña)
-			var salida = encriptador.update(token, 'utf8', "base64")
+		, encriptar: function encriptar(token,clave) {
+			var c = ote.funs.generar_iv_y_clave(clave)
+			var encriptador = crypto.createCipheriv("aes-128-cbc",c.clave,c.iv,{})
+			var salida = encriptador.update(token, "utf8", "base64")
 			salida += encriptador.final("base64")
 			return salida
 		}
 	}
-	, iniciar: function(contraseña){
-		var bot = new discord.Client()
+	, iniciar: function(clave){
+		console.log(this)
 
+		var bot = new discord.Client()
 		ote.externo = {
 			bot: bot
 			, discord: discord
@@ -122,67 +129,67 @@ module.exports =
 
 		bot.on("ready", function() {
 			ote.funs.mostrar(`Listo y sin errores. ${new Date()}`)
-			ote.funs.cambiar_título("Otecald Bot Discord")
+			ote.funs.titular("Otecald Bot Discord")
 		})
 
 		bot.on("message", function(message) {
 
-			var o = ote.g
+			var u = ote.g
 
 			ote.e.m = message
 			var m = ote.e.m
 			
-			o.g = m.guild && m.guild.name || `privado`
+			u.g = m.guild && m.guild.name || `privado`
 
-			o.c = ( m.channel && (
+			u.c = ( m.channel && (
 					m.channel.name
 					|| m.channel.recipient && m.channel.recipient.username
 				) || `desconocido`
 			)
-			o.a = ( m && m.member && m.member.nickname
+			u.a = ( m && m.member && m.member.nickname
 				|| m.author && m.author.username
 				|| "desconocido"
 			)
-			o.n = m.content
+			u.n = m.content
 
-			o.d = new Date()
+			u.d = new Date()
 			
-			o.p = o.n
-			o.q = o.n
+			u.p = u.n
+			u.q = u.n
 			
 			var naranja = (0x8a1b39de504n*0x10n**4n+6n).toString()
 			var c_autor = 32 // Color autor
 			if(ote.e.m.author.id==naranja){
 				c_autor = 30
 			}
-			o.r = ote.funs.obtener_mencionados_matriz(m)
-			o.i = 0
-			o.r.map(function(x){
+			u.r = ote.funs.obtener_mencionados_matriz(m)
+			u.i = 0
+			u.r.map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
 				var nick = x[2] || x[1]
-				color = o.i%2?35:36
+				color = u.i%2?35:36
 				if(x[0]==naranja){
 					color = 30
 				}
-				o.p = o.p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
-				o.q = o.q.replace(regex_usuarios,`@${nick}`)
-				++o.i
+				u.p = u.p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
+				u.q = u.q.replace(regex_usuarios,`@${nick}`)
+				++u.i
 			})
-			o.t = `${o.a}: ${o.q}`
-			o.l = [new Date(),o.t]
-			o.o = `\x1b[01;34m${o.g} \x1b[01;33m${o.c} \x1b[01;${c_autor}m${o.a} \x1b[01;37m${o.p}\x1b[00m`
-			ote.funs.mostrar(o.d, o.o)
-			ote.g.dichos.push(o.l)
+			u.t = `${u.a}: ${u.q}`
+			u.l = [new Date(),u.t]
+			u.o = `\x1b[01;34m${u.g} \x1b[01;33m${u.c} \x1b[01;${c_autor}m${u.a} \x1b[01;37m${u.p}\x1b[00m`
+			ote.funs.mostrar(u.d, u.o)
+			ote.g.dichos.push(u.l)
 
 			var mensaje = message.content
-			ote.funs.cambiar_título(`${o.t} - OteDiscord`)
+			ote.funs.titular(`${u.t} - OteDiscord`)
 
 			//if (m.author.bot) return;
 
 			if ( regex_prefijo.test(mensaje) == null ) return;
 
-			var post_pref = ote.funs.quitar_prefijo(mensaje,prefijo)
-			var args = post_pref.split(/\s+/g)
+			var desprefijado = ote.funs.desprefijar(mensaje,prefijo)
+			var args = desprefijado.split(/\s+/g)
 			var argumento = args[0]
 			var procesado = ""
 			var pref_mp = "mp"
@@ -218,7 +225,7 @@ module.exports =
 					}
  					break;
 				default:
-					procesado = ote.funs.procesar(message,post_pref)
+					procesado = ote.funs.procesar(message,desprefijado)
 					break;
 			}
 			if(argumento==pref_mp){
@@ -248,23 +255,27 @@ module.exports =
 			}
 			return;
 		})
-
-		if(contraseña==undefined){
-			var inicio = ote.funs.archivo_hacia_json("../../../otedis/inicio.json")
-			contraseña = inicio.clave
+		console.log(process.argv[1])
+		var inicio = ote.funs.archivo_hacia_json(
+			`${__dirname}/../../../../otedis/inicio.json`
+		)
+		var token_encriptado = ote.funs.archivo_hacia_json(
+			`${__dirname}/token_encriptado.json`
+		).token_encriptado
+		if(clave==undefined){
+			clave = inicio.clave
 		}
-		var token_encriptado = inicio.token_encriptado
-		var token_desencriptado = ote.funs.desencriptar(token_encriptado,contraseña)
+		var token_desencriptado = ote.funs.desencriptar(token_encriptado,clave)
 		bot.login(token_desencriptado)
-		
-		return ote
 	}
 }
 
-var ote = module.exports
+ote = module.exports // Variable global
+o = ote // Simplificado
 var puede_iniciar = process.argv[2]
-var contraseña = process.argv[3]
 if(puede_iniciar=="sip"){
-	ote.iniciar(contraseña)
+	var clave = process.argv[3]
+	ote.iniciar(clave)
 }
+console.log(a)
 
