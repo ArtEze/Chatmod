@@ -175,14 +175,16 @@ module.exports = {
 			})
 			u.t = `${u.a}: ${u.q}`
 			u.b = `\x1b[01;34m${u.g} \x1b[01;33m${u.c}`
-			
-			var dicho_final = o.g.dichos.slice(-1)[0]
-			if(dicho_final&&dicho_final[1]==u.b){
-				u.b = null
-			}
 			u.o = `\x1b[01;${c_autor}m${u.a} \x1b[01;37m${u.p}\x1b[00m`
-			u.l = [new Date(),u.b,u.t].filter(x=>x)
-			ote.funs.mostrar(u.b, "\n" , u.d, u.o)
+
+			var dicho_final = o.g.dichos.slice(-1)[0]
+			if( dicho_final && dicho_final[1]==u.b ){
+				ote.funs.mostrar(u.d, u.o)
+			}else{
+				ote.funs.mostrar(u.b, "\n" , u.d, u.o)
+			}
+
+			u.l = [ new Date(), u.b, u.t ].filter(x=>x)
 			ote.g.dichos.push(u.l)
 
 			var mensaje = message.content
