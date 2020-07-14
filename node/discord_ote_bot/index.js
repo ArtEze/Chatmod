@@ -89,8 +89,9 @@ module.exports = {
 			var d = fecha
 			var tener_dos_cifras_finales = x => `10${x}`.slice(-2)
 			var ab = x=>tener_dos_cifras_finales(x)
-			return  x=`\x1b[01;31m${ab(d.getYear())+ab(d.getMonth())+ab(d.getDate())} ` +
-				`${ab(d.getHours())} ${ab(d.getMinutes())} ${(d.getSeconds())}`
+			var c = "Year Month Date Hours Minutes Seconds".
+				split(" ").map(x=>ab(d["get"+x]())).join("")
+			return  `${c.slice(0,6)} ${c.slice(-6)}`
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
