@@ -89,7 +89,7 @@ module.exports = {
 			var d = fecha
 			var tener_dos_cifras_finales = x => `10${x}`.slice(-2)
 			var ab = x=>tener_dos_cifras_finales(x)
-			return  x=`${ab(d.getYear())+ab(d.getMonth())+ab(d.getDate())} ` +
+			return  x=`\x1b[01;31m${ab(d.getYear())+ab(d.getMonth())+ab(d.getDate())} ` +
 				`${ab(d.getHours())} ${ab(d.getMinutes())} ${(d.getSeconds())}`
 		}
 		, archivo_hacia_json: function(x){
@@ -181,12 +181,12 @@ module.exports = {
 				++u.i
 			})
 			u.t = `${u.a}: ${u.q}`
-			u.b = `\x1b[01;34m${u.g} \x1b[01;33m${u.c}`
-			u.o = `\x1b[01;${c_autor}m${u.a} \x1b[01;37m${u.p}\x1b[00m`
+			u.b = `\x1b[01;34m${u.g} \x1b[01;33m${u.c} \x1b[01;${c_autor}m${u.a}`
+			u.o = `\x1b[01;37m${u.p}\x1b[00m`
 
 			var dicho_final = o.g.dichos.slice(-1)[0]
 			if( dicho_final && dicho_final[1]!=u.b || dicho_final==null ){
-				ote.funs.mostrar(u.b, "\n")
+				ote.funs.mostrar(u.b)
 			}
 			ote.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
 
