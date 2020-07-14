@@ -32,7 +32,7 @@ module.exports = {
 			this.salida("\x1b[00m>\x20")
 		}
 		, enviar: function(mensaje_objeto,mensaje){
-			//this.mostrar("Mensaje: ",mensaje)
+			// this.mostrar( "Mensaje: ",JSON.stringify(mensaje) )
 			if(mensaje!=undefined){
 				var procesado = mensaje.toString()
 				var longitud = procesado.length
@@ -49,8 +49,8 @@ module.exports = {
 			}catch(error){
 				e = error
 				var pila = error.stack
-				var consola = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
-				var por_enviar = consola//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
+				var c = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
+				var por_enviar = c//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
 				//this.enviar( mensaje_objeto, por_enviar )
 				this.mostrar(error)
 				return mensaje
@@ -105,6 +105,12 @@ module.exports = {
 				split(" ").map(x=>ab(d["get"+x]()))
 			return  `\x1b[01;31m${c.slice(0,3).join("")} ${c.slice(-3).join(" ")}`
 		}
+		, otecald: function(x){
+			var otecald = "otecald"
+			var aleatorio = Math.floor(Date.now()/1000).toString(7)
+			var chars = aleatorio.split("").slice(-7).map(x=>otecald[x])
+			return chars.join("")
+		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
 		}
@@ -143,7 +149,8 @@ module.exports = {
 		o.g.dichos = []
 		
 		var prefijo = "ot+ec?a?l?d?"
-		var regex_prefijo = new RegExp(prefijo,"gi")
+		o.g.regex_prefijo = new RegExp(prefijo,"i")
+		o.g.regex_prefijo_b = new RegExp("^\s*"+prefijo+"\s*$","i")
 
 		bot.on("ready", function() {
 			o.funs.mostrar(`Listo y sin errores. ${new Date()}`)
@@ -208,7 +215,7 @@ module.exports = {
 
 			//if (m.author.bot) return;
 
-			if ( regex_prefijo.test(mensaje) == null ) return;
+			if ( !o.g.regex_prefijo.test(mensaje) ) return;
 
 			var desprefijado = o.funs.desprefijar(mensaje,prefijo)
 			var args = desprefijado.split(/\s+/g)
@@ -251,6 +258,9 @@ module.exports = {
 					procesado = o.funs.quitar_menciones(procesado)
 					procesado = o.funs.procesar(message,procesado)
 					break;
+			}
+			if( o.g.regex_prefijo_b.test(mensaje) ){
+				procesado = o.funs.otecald()
 			}
 			if(argumento==pref_mp){
 				var receptores = undefined
