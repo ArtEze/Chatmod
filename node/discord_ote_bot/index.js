@@ -85,6 +85,13 @@ module.exports = {
 			salida = salida.replace(regex_usuarios,"")
 			return salida
 		}
+		, formatear_fecha: function(fecha){
+			var d = fecha
+			var tener_dos_cifras_finales = x => `10${x}`.slice(-2)
+			var ab = x=>tener_dos_cifras_finales(x)
+			return  x=`${ab(d.getYear())+ab(d.getMonth())+ab(d.getDate())} ` +
+				`${ab(d.getHours())} ${ab(d.getMinutes())} ${(d.getSeconds())}`
+		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
 		}
@@ -181,9 +188,9 @@ module.exports = {
 			if( dicho_final && dicho_final[1]!=u.b ){
 				ote.funs.mostrar(u.b, "\n")
 			}
-			ote.funs.mostrar(u.d, u.o)
+			ote.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
 
-			u.l = [ new Date(), u.b, u.t ].filter(x=>x)
+			u.l = [ u.d, u.b, u.t ].filter(x=>x)
 			ote.g.dichos.push(u.l)
 
 			var mensaje = message.content
