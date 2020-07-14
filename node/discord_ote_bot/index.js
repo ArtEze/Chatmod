@@ -182,7 +182,7 @@ module.exports = {
 				++u.i
 			})
 			u.t = `${u.a}: ${u.q}`
-			u.b = `\x1b[01;34m${u.g} \x1b[01;33m${u.c} \x1b[01;${c_autor}m${u.a}`
+			u.b = `\x1b[01;${c_autor}m${u.a} \x1b[01;34m${u.g} \x1b[01;33m${u.c}`
 			u.o = `\x1b[01;37m${u.p}\x1b[00m`
 
 			var dicho_final = o.g.dichos.slice(-1)[0]
