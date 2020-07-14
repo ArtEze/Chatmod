@@ -109,8 +109,6 @@ module.exports = {
 		}
 	}
 	, iniciar: function(clave){
-		console.log(this)
-
 		var bot = new discord.Client()
 		ote.externo = {
 			bot: bot
