@@ -178,11 +178,10 @@ module.exports = {
 			u.o = `\x1b[01;${c_autor}m${u.a} \x1b[01;37m${u.p}\x1b[00m`
 
 			var dicho_final = o.g.dichos.slice(-1)[0]
-			if( dicho_final && dicho_final[1]==u.b ){
-				ote.funs.mostrar(u.d, u.o)
-			}else{
-				ote.funs.mostrar(u.b, "\n" , u.d, u.o)
+			if( dicho_final && dicho_final[1]!=u.b ){
+				ote.funs.mostrar(u.b, "\n")
 			}
+			ote.funs.mostrar(u.d, u.o)
 
 			u.l = [ new Date(), u.b, u.t ].filter(x=>x)
 			ote.g.dichos.push(u.l)
