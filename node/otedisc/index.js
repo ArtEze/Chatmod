@@ -121,9 +121,9 @@ module.exports = {
 				if(err){
 					console.log(err)
 				}else{
-					var lenguaje = "cs"
+					var lenguaje = "js"
 					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
-					console.log(procesado)
+					//console.log(procesado)
 					o.funs.enviar(mensaje,procesado)
 				}
 			})
@@ -158,6 +158,7 @@ module.exports = {
 			, discord: discord
 			, crypto: crypto
 			, fs: fs
+			, image_to_ascii: image_to_ascii
 		}
 		o.e = o.externo
 		bot.ote = ote
@@ -232,13 +233,25 @@ module.exports = {
 
 			//if (m.author.bot) return;
 
-			if ( !o.g.regex_prefijo.test(mensaje) ) return;
-
-			var adjuntos = m.attachments
+			// Adjuntos
+			var adjuntos = m.attachments.map(function(x){return x})
+			var a = "a-z"
+			var n = "0-9"
+			var ang = `${a}${n}_`
+			var regex_urls = new RegExp(`([${ang}]+\.)+[${ang}]+(\/[${ang}.]+)+`,"gi")
+			var enlaces = u.n.match(regex_urls)
+			if(enlaces){
+				enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
+				adjuntos = adjuntos.concat(enlaces)
+			}
+			z=adjuntos
 			var array_adjuntos = adjuntos.map(function(x){
-				o.funs.imagen_hacia_texto(m,x.url,28)
+				o.funs.imagen_hacia_texto(m,x.url,27)
 				return x.attachment
 			})
+
+
+			if ( !o.g.regex_prefijo.test(mensaje) ) return;
 
 			var desprefijado = o.funs.desprefijar(mensaje,prefijo)
 			var args = desprefijado.split(/\s+/g)
