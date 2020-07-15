@@ -234,20 +234,6 @@ module.exports = {
 			//if (m.author.bot) return;
 
 			// Adjuntos
-			var adjuntos = m.attachments.map(function(x){return x})
-			var a = "a-z"
-			var n = "0-9"
-			var ang = `${a}${n}_`
-			var regex_urls = new RegExp(`([${ang}]+\.)+[${ang}]+(\/[${ang}.]+)+`,"gi")
-			var enlaces = u.n.match(regex_urls)
-			if(enlaces){
-				enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
-				adjuntos = adjuntos.concat(enlaces)
-			}
-			var array_adjuntos = adjuntos.map(function(x){
-				o.funs.imagen_hacia_texto(m,x.url,27)
-				return x.attachment
-			})
 
 			if ( !o.g.regex_prefijo.test(mensaje) ) return;
 
@@ -267,6 +253,23 @@ module.exports = {
 					procesado = args.slice(1).join(" ")
 					procesado = o.funs.quitar_menciones(procesado)
 					procesado = o.funs.procesar(message,procesado)
+					break;
+				case "img":
+					procesado = args.slice(1).join(" ")
+					var adjuntos = m.attachments.map(function(x){return x})
+					var a = "a-z"
+					var n = "0-9"
+					var ang = `${a}${n}_`
+					var regex_urls = new RegExp(`([${ang}]+\.)+[${ang}]+(\/[${ang}.]+)+`,"gi")
+					var enlaces = procesado.match(regex_urls)
+					if(enlaces){
+						enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
+						adjuntos = adjuntos.concat(enlaces)
+					}
+					var array_adjuntos = adjuntos.map(function(x){
+						o.funs.imagen_hacia_texto(m,x.url,27)
+						return x.attachment
+					})
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
