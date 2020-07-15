@@ -244,12 +244,10 @@ module.exports = {
 				enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
 				adjuntos = adjuntos.concat(enlaces)
 			}
-			z=adjuntos
 			var array_adjuntos = adjuntos.map(function(x){
 				o.funs.imagen_hacia_texto(m,x.url,27)
 				return x.attachment
 			})
-
 
 			if ( !o.g.regex_prefijo.test(mensaje) ) return;
 
