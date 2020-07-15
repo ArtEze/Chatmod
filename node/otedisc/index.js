@@ -15,10 +15,13 @@ require("./discord_ote_bot").iniciar()
 
 */
 
-var discord = require("../../../node_modules/discord.js")
-var fs = require("fs")
-var crypto = require("crypto")
-var image_to_ascii = require("image-to-ascii")
+var externo = {
+	fs: require("fs")
+	, crypto: require("crypto")
+
+	, discord: require("discord.js")
+	, image_to_ascii: require("image-to-ascii")
+}
 
 module.exports = {
 	funs: {
@@ -152,19 +155,14 @@ module.exports = {
 		}
 	}
 	, iniciar: function(clave){
-		var bot = new discord.Client()
-		o.externo = {
-			bot: bot
-			, discord: discord
-			, crypto: crypto
-			, fs: fs
-			, image_to_ascii: image_to_ascii
-		}
+		o.externo = externo
 		o.e = o.externo
-		bot.ote = ote
+		o.e.bot = new o.e.discord.Client()
 
 		o.g = {}
 		o.g.dichos = []
+
+		var bot = o.e.bot
 		
 		var prefijo = "ot+ec?a?l?d?"
 		o.g.regex_prefijo = new RegExp(prefijo,"i")
@@ -229,7 +227,7 @@ module.exports = {
 			o.g.dichos.push(u.l)
 
 			var mensaje = message.content
-			o.funs.titular(`${u.t} - OteDiscord`)
+			o.funs.titular(`${u.t} ; otedisc`)
 
 			//if (m.author.bot) return;
 
@@ -342,7 +340,12 @@ module.exports = {
 			clave = inicio.clave
 		}
 		var token_desencriptado = o.funs.desencriptar(token_encriptado,clave)
-		bot.login(token_desencriptado)
+		try{
+			bot.login(token_desencriptado)
+		}catch(e){
+			o.funs.mostrar("Error: ")
+		}
+		
 	}
 }
 
