@@ -18,6 +18,7 @@ require("./discord_ote_bot").iniciar()
 var discord = require("../../../node_modules/discord.js")
 var fs = require("fs")
 var crypto = require("crypto")
+var image_to_ascii = require("image-to-ascii")
 
 module.exports = {
 	funs: {
@@ -110,6 +111,22 @@ module.exports = {
 		}
 		, otecald: function otecald(x){
 			return o.funs.aleatorio_siete().split("").map(x=>"otecald"[x]).join("")
+		}
+		, imagen_hacia_texto: function imagen_hacia_texto(mensaje,url,ancho){
+			if(url==null){return;}
+			image_to_ascii(url, {
+				colored: false
+				, size: {width: ancho}
+			},(err, procesado) => {
+				if(err){
+					console.log(err)
+				}else{
+					var lenguaje = "cs"
+					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
+					console.log(procesado)
+					o.funs.enviar(mensaje,procesado)
+				}
+			})
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
@@ -213,6 +230,12 @@ module.exports = {
 			var mensaje = message.content
 			o.funs.titular(`${u.t} - OteDiscord`)
 
+			var adjuntos = m.attachments
+			var array_adjuntos = adjuntos.map(function(x){
+				o.funs.imagen_hacia_texto(m,x.url,28)
+				return x.attachment
+			})
+
 			//if (m.author.bot) return;
 
 			if ( !o.g.regex_prefijo.test(mensaje) ) return;
@@ -287,8 +310,10 @@ module.exports = {
 			}else{
 				o.funs.enviar(message,procesado)
 			}
+
 			return;
 		})
+
 		var inicio = o.funs.archivo_hacia_json(
 			`${__dirname}/../../../../otedis/inicio.json`
 		)
