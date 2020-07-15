@@ -230,15 +230,15 @@ module.exports = {
 			var mensaje = message.content
 			o.funs.titular(`${u.t} - OteDiscord`)
 
+			//if (m.author.bot) return;
+
+			if ( !o.g.regex_prefijo.test(mensaje) ) return;
+
 			var adjuntos = m.attachments
 			var array_adjuntos = adjuntos.map(function(x){
 				o.funs.imagen_hacia_texto(m,x.url,28)
 				return x.attachment
 			})
-
-			//if (m.author.bot) return;
-
-			if ( !o.g.regex_prefijo.test(mensaje) ) return;
 
 			var desprefijado = o.funs.desprefijar(mensaje,prefijo)
 			var args = desprefijado.split(/\s+/g)
