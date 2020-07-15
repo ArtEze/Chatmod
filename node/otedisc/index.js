@@ -8,7 +8,7 @@ cd ~/documentos/github/charlavod/node
 node
 
 // Carga clave desde archivo "../../../clave.txt"
-require("./discord_ote_bot").iniciar()
+require("./otedisc").iniciar()
 
 // Enlace para invitar con ClienId:
 // https://discordapp.com/oauth2/authorize?&client_id=373132327842349056&scope=bot&permissions=8
@@ -162,18 +162,16 @@ module.exports = {
 		o.g = {}
 		o.g.dichos = []
 
-		var bot = o.e.bot
-		
 		var prefijo = "ot+ec?a?l?d?"
 		o.g.regex_prefijo = new RegExp(prefijo,"i")
 		o.g.regex_prefijo_b = new RegExp("^\s*"+prefijo+"\s*$","i")
 
-		bot.on("ready", function() {
+		o.e.bot.on("ready", function() {
 			o.funs.mostrar(`Listo y sin errores. ${new Date()}`)
 			o.funs.titular("Otecald Bot Discord")
 		})
 
-		bot.on("message", function(message) {
+		o.e.bot.on("message", function(message) {
 
 			var u = o.g
 
@@ -269,7 +267,7 @@ module.exports = {
 					}
 					o.g.z = enlaces
 					var array_adjuntos = adjuntos.map(function(x){
-						o.funs.imagen_hacia_texto(m,x.url,27)
+						o.funs.imagen_hacia_texto(m,x.url,26)
 						return x.attachment
 					})
 					break;
@@ -340,12 +338,7 @@ module.exports = {
 			clave = inicio.clave
 		}
 		var token_desencriptado = o.funs.desencriptar(token_encriptado,clave)
-		try{
-			bot.login(token_desencriptado)
-		}catch(e){
-			o.funs.mostrar("Error: ")
-		}
-		
+		o.e.bot.login(token_desencriptado)
 	}
 }
 
