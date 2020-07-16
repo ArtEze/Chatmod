@@ -144,7 +144,9 @@ module.exports = {
 			// console.log( regex_urls )
 			var enlaces = contenido.match(regex_urls)
 			if(enlaces){
-				enlaces = enlaces.map(x=>`http://${x}`)
+				enlaces = enlaces.map(x=>{
+					return /^https?:\/\//i.test(x)?x:`http://${x}`
+				})
 				adjuntos = adjuntos.concat(enlaces)
 			}
 			return adjuntos
