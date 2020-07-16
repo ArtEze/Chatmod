@@ -112,7 +112,7 @@ module.exports = {
 			return `\x1b[01;31m${tiempos.slice(0,3).join("")} ${tiempos.slice(-3).join(" ")}`
 		}
 		, imagen_hacia_texto: function imagen_hacia_texto(canal,url,puede_mostrar){
-			var ancho = puede_mostrar?26:52
+			var ancho = puede_mostrar?26:51
 			if(url==null){return;}
 			externo.image_to_ascii(url, {
 				colored: false
@@ -149,7 +149,7 @@ module.exports = {
 			procesado = contenido
 			adjuntos.map(function(x){
 				procesado = ote.funs.desprefijar(procesado,x)
-				ote.funs.imagen_hacia_texto(externo.canal,x,26,puede_mostrar)
+				ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
 				return x
 			})
 		}
