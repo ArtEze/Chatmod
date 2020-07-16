@@ -122,7 +122,7 @@ module.exports = {
 				}else{
 					var lenguaje = "js"
 					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
-					//console.log(procesado)
+					console.log("procesado",procesado)
 					ote.funs.enviar(canal,procesado)
 				}
 			})
@@ -140,6 +140,13 @@ module.exports = {
 				adjuntos = adjuntos.concat(enlaces)
 			}
 			return adjuntos
+		}
+		, graficar: function(contenido,adjuntos,x){
+			adjuntos.map(function(x){
+				var contenido = ote.funs.desprefijar(contenido,x)
+				ote.funs.imagen_hacia_texto(externo.canal,x,26,puede_mostrar)
+				return x
+			})
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
@@ -246,14 +253,19 @@ module.exports = {
 
 			depurado.adjuntos = ote.funs.obtener_enlaces(mensaje)
 
-			//if (mensaje.author.bot) return;
-			if ( !depurado.regex_prefijo.test(contenido) ) return;
-
 			var desprefijado = ote.funs.desprefijar(contenido,prefijo)
 			var args = desprefijado.split(/\s+/g)
-			var argumento = args[0]
+
+			//if (mensaje.author.bot) return;
+			if ( !depurado.regex_prefijo.test(contenido) ){
+				var puede_mostrar = false
+				ote.funs.graficar("",depurado.adjuntos,puede_mostrar)
+				return;
+			}
+
 			var procesado = ""
 			var pref_mp = "mp"
+			var argumento = args[0]
 			switch( argumento ){
 				case "info":
 					procesado = "Un mensaje."
@@ -267,12 +279,9 @@ module.exports = {
 					procesado = ote.funs.procesar(mensaje,procesado)
 					break;
 				case "img":
+					var puede_mostrar = true
 					procesado = args.slice(1).join(" ")
-					var array_adjuntos = depurado.adjuntos.map(function(x){
-						procesado = ote.funs.desprefijar(procesado,x)
-						ote.funs.imagen_hacia_texto(depurado.canal,x.url,26)
-						return x.attachment
-					})
+					ote.funs.graficar(procesado,depurado.adjuntos,puede_mostrar)
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
