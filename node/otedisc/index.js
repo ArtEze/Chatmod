@@ -152,6 +152,7 @@ module.exports = {
 				ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
 				return x
 			})
+			return procesado
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
@@ -286,7 +287,7 @@ module.exports = {
 				case "img":
 					var puede_mostrar = true
 					procesado = args.slice(1).join(" ")
-					ote.funs.graficar(procesado,depurado.adjuntos,puede_mostrar)
+					procesado = ote.funs.graficar(procesado,depurado.adjuntos,puede_mostrar)
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
