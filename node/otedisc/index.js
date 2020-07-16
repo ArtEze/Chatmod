@@ -129,20 +129,17 @@ module.exports = {
 		}
 		, obtener_enlaces: function(mensaje){
 			var contenido = mensaje.content
-			var adjuntos = mensaje.attachments.map(function(x){return x})
+			var adjuntos = mensaje.attachments.map(function(x){return x.url})
 			var abecedario = "a-z"
-			var a_1 = `${abecedario}\d\\.`
+			var a_1 = `${abecedario}\\d.`
 			var a_2 = `${a_1}_?=`
-			var regex_urls = new RegExp(`[${a_1}]+(\/[${a_2}.]+)+`,"gi")
+			var regex_urls = new RegExp(`[${a_1}]+(\/[${a_2}]+)+`,"gi")
 			var enlaces = contenido.match(regex_urls)
 			if(enlaces){
-				enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
+				enlaces = enlaces.map(x=>`http://${x}`)
 				adjuntos = adjuntos.concat(enlaces)
 			}
-			var array_adjuntos = adjuntos.map(function(x){
-				return x.attachment.url
-			})
-			return array_adjuntos
+			return adjuntos
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
@@ -271,9 +268,9 @@ module.exports = {
 					break;
 				case "img":
 					procesado = args.slice(1).join(" ")
-					var array_adjuntos = ote.depurado.adjuntos.map(function(x){
+					var array_adjuntos = depurado.adjuntos.map(function(x){
 						procesado = ote.funs.desprefijar(procesado,x)
-						ote.funs.imagen_hacia_texto(ote.depurado.canal,x.url,26)
+						ote.funs.imagen_hacia_texto(depurado.canal,x.url,26)
 						return x.attachment
 					})
 					break;
