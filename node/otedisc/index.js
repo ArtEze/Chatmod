@@ -35,42 +35,47 @@ module.exports = {
 			console.log(...arguments)
 			this.salida("\x1b[00m>\x20")
 		}
-		, enviar: function(mensaje_objeto,mensaje){
-			// this.mostrar( "Mensaje: ",JSON.stringify(mensaje) )
-			if(mensaje!=undefined){
-				var procesado = mensaje.toString()
+		, enviar: function(canal,contenido){
+			// this.mostrar( "Mensaje: ",JSON.stringify(contenido) )
+			if(contenido!=undefined){
+				var procesado = contenido.toString()
 				var longitud = procesado.length
-				//mensaje_objeto.channel.send(longitud.toString())
+				//canal.send(longitud.toString())
 				if(procesado.length<2000){
-					mensaje_objeto.channel.send(procesado)
+					canal.send(procesado)
 				}
 				
 			}
 		}
-		, procesar: function(mensaje_objeto,mensaje){
+		, aleatorio_siete: function aleatorio_siete(x){
+			return Math.floor(Date.now()/1000).toString(7).slice(-7)
+		}
+		, otecald: function otecald(x){
+			return ote.funs.aleatorio_siete().split("").map(x=>"otecald"[x]).join("")
+		}
+		, procesar: function(canal,contenido){
 			try{
-				return eval(mensaje)
-			}catch(error){
-				e = error
-				var pila = error.stack
-				var c = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
-				var por_enviar = c//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
-				//this.enviar( mensaje_objeto, por_enviar )
-				this.mostrar(error)
-				return mensaje
+				if(contenido.includes("fs.")){
+					return ote.funs.otecald()
+				}
+				return eval(contenido)
+			}catch(e){
+				var pila = e.stack
+				var sentencias = `Error:\n\x60\x60\x60\js\n${pila}\x60\x60\x60`
+				var futuro = sentencias//.replace(/\/node_modules\/(.+?)\//g,"/node_modules/__$1__/")
+				//this.enviar( canal, futuro )
+				this.mostrar(e)
+				return contenido
 			}
 		}
-		, desprefijar: function(mensaje,prefijo){
+		, desprefijar: function(contenido,prefijo){
 			var salida = ""
 			var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
-			var prefijo_encontrado = mensaje.match(regex)
+			var prefijo_encontrado = contenido.match(regex)
 			if(prefijo_encontrado!=null){
-				salida = mensaje.replace(prefijo_encontrado,"")
+				salida = contenido.replace(prefijo_encontrado,"")
 			}
 			return salida
-		}
-		, obtener_mencionados_array: function obtener_mencionados(mensaje){
-			return mensaje.mentions.users.map(function(x){return x})
 		}
 		, elegir_compacto: function(a,b){
 			if(a==undefined&&b==undefined){return undefined}
@@ -79,12 +84,12 @@ module.exports = {
 			return a.length<b.length?a:b
 		}
 		, elegir_nombre_compacto: function(mensaje){
-			var no_definido = "desconocido"
-			var m = mensaje
-			var n = no_definido
-			var nombre = m && m.author && m.author.username
-			var alias = m && m.member && m.member.nickname
-			return o.funs.elegir_compacto(nombre,alias) || "desconocido"
+			var nombre = mensaje && mensaje.author && mensaje.author.username
+			var alias  = mensaje && mensaje.member && mensaje.member.nickname
+			return ote.funs.elegir_compacto(nombre,alias) || "desconocido"
+		}
+		, obtener_mencionados_array: function obtener_mencionados(mensaje){
+			return mensaje.mentions.users.map(function(x){return x})
 		}
 		, obtener_mencionados_matriz: function obtener_mencionados_matriz(mensaje){
 			return (this.obtener_mencionados_array(mensaje)
@@ -102,22 +107,13 @@ module.exports = {
 			return salida
 		}
 		, formatear_fecha: function(fecha){
-			var d = fecha
-			var tener_dos_cifras_finales = x => `10${x}`.slice(-2)
-			var ab = x=>tener_dos_cifras_finales(x)
-			var c = "Year Month Date Hours Minutes Seconds".
-				split(" ").map(x=>ab(d["get"+x]()))
-			return  `\x1b[01;31m${c.slice(0,3).join("")} ${c.slice(-3).join(" ")}`
+			var tiempos = "Year Month Date Hours Minutes Seconds".
+				split(" ").map(x=>`10${fecha["get"+x]()}`.slice(-2))
+			return `\x1b[01;31m${tiempos.slice(0,3).join("")} ${tiempos.slice(-3).join(" ")}`
 		}
-		, aleatorio_siete: function aleatorio_siete(x){
-			return Math.floor(Date.now()/1000).toString(7).slice(-7)
-		}
-		, otecald: function otecald(x){
-			return o.funs.aleatorio_siete().split("").map(x=>"otecald"[x]).join("")
-		}
-		, imagen_hacia_texto: function imagen_hacia_texto(mensaje,url,ancho){
+		, imagen_hacia_texto: function imagen_hacia_texto(canal,url,ancho){
 			if(url==null){return;}
-			image_to_ascii(url, {
+			externo.image_to_ascii(url, {
 				colored: false
 				, size: {width: ancho}
 			},(err, procesado) => {
@@ -127,113 +123,134 @@ module.exports = {
 					var lenguaje = "js"
 					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
 					//console.log(procesado)
-					o.funs.enviar(mensaje,procesado)
+					ote.funs.enviar(canal,procesado)
 				}
 			})
+		}
+		, obtener_enlaces: function(mensaje){
+			var contenido = mensaje.content
+			var adjuntos = mensaje.attachments.map(function(x){return x})
+			var abecedario = "a-z"
+			var a_1 = `${abecedario}\d\\.`
+			var a_2 = `${a_1}_?=`
+			var regex_urls = new RegExp(`[${a_1}]+(\/[${a_2}.]+)+`,"gi")
+			var enlaces = contenido.match(regex_urls)
+			if(enlaces){
+				enlaces = enlaces.map(x=>{return {url: `http://${x}`}})
+				adjuntos = adjuntos.concat(enlaces)
+			}
+			var array_adjuntos = adjuntos.map(function(x){
+				return x.attachment.url
+			})
+			return array_adjuntos
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
 		}
-		, generar_iv_y_clave: function(clave){
-			return {iv: "0123456789abcdef"
-				,clave: new Buffer.alloc(16,clave).toString()
-			}
+		, criptorar: function(cifrado,clave,puede_encriptar){
+			var bases = ["base64","utf8"]
+			var array = (!puede_encriptar)?[ "Dec",...bases]:["C",...bases.reverse()]
+			var vector_inicial = "0123456789abcdef"
+			var llave = new Buffer.alloc(16,clave).toString()
+			var criptura = externo.crypto[`create${array[0]}ipheriv`]("aes-128-cbc",llave,vector_inicial,{})
+			var salida = criptura.update(cifrado,array[1],array[2])
+			salida += criptura.final(array[2])
+			return salida
 		}
 		, desencriptar: function desencriptar(token_encriptado,clave){
-			var c = o.funs.generar_iv_y_clave(clave)
-			var desencriptador = crypto.createDecipheriv("aes-128-cbc",c.clave,c.iv,{})
-			var salida = desencriptador.update(token_encriptado, "base64", "utf8")
-			salida += desencriptador.final("utf8")
-			return salida
+			return ote.funs.criptorar(token_encriptado,clave,false)
 		}
-		, encriptar: function encriptar(token,clave) {
-			var c = o.funs.generar_iv_y_clave(clave)
-			var encriptador = crypto.createCipheriv("aes-128-cbc",c.clave,c.iv,{})
-			var salida = encriptador.update(token, "utf8", "base64")
-			salida += encriptador.final("base64")
-			return salida
+		, encriptar: function encriptar(token_original ,clave) {
+			return ote.funs.criptorar(token_original,clave,true)
 		}
 	}
 	, iniciar: function(clave){
-		o.externo = externo
-		o.e = o.externo
-		o.e.bot = new o.e.discord.Client()
+		ote.externo = externo
+		externo.bot = new externo.discord.Client()
 
-		o.g = {}
-		o.g.dichos = []
+		ote.depurado = {
+			dichos: []
+		}
+		var depurado = ote.depurado
 
 		var prefijo = "ot+ec?a?l?d?"
-		o.g.regex_prefijo = new RegExp(prefijo,"i")
-		o.g.regex_prefijo_b = new RegExp("^\s*"+prefijo+"\s*$","i")
+		depurado.regex_prefijo = new RegExp(prefijo,"i")
+		depurado.regex_prefijo_ote = new RegExp("^\s*"+prefijo+"\s*$","i")
 
-		o.e.bot.on("ready", function() {
-			o.funs.mostrar(`Listo y sin errores. ${new Date()}`)
-			o.funs.titular("Otecald Bot Discord")
+		externo.bot.on("ready", function() {
+			ote.funs.mostrar(`Listo y sin errores. ${new Date()}`)
+			ote.funs.titular("Otecald Bot Discord")
 		})
 
-		o.e.bot.on("message", function(message) {
+		externo.bot.on("message", function(mensaje) {
+			var contenido = mensaje.content
+			depurado.contenido = contenido
+			externo.canal = mensaje.channel
 
-			var u = o.g
+			externo.mensaje = mensaje
 
-			o.e.m = message
-			var m = o.e.m
-			
-			u.g = m.guild && m.guild.name || `privado`
+			depurado.servidor = mensaje.guild && mensaje.guild.name || `privado`
 
-			u.c = ( m.channel && (
-					m.channel.name
-					|| m.channel.recipient && m.channel.recipient.username
+			depurado.receptor = ( externo.canal && (
+					externo.canal.name
+					|| externo.canal.recipient && externo.canal.recipient.username
 				) || `desconocido`
 			)
-			u.a = o.funs.elegir_nombre_compacto(m)
-			u.n = m.content
 
-			u.d = new Date()
+			depurado.autor_mensaje = mensaje.author.id
+			depurado.autor = ote.funs.elegir_nombre_compacto(mensaje)
+
+			depurado.fecha = new Date()
 			
-			u.p = u.n
-			u.q = u.n
+			depurado.consola = contenido
+			depurado.titulado = contenido
 			
 			var naranja = (0x8a1b39de504n*0x10n**4n+6n).toString()
-			var c_autor = 32 // Color autor
-			if(o.e.m.author.id==naranja){
-				c_autor = 30
+			var color_autor = 32 // Color autor
+			if(depurado.autor_mensaje==naranja){
+				color_autor = 30
 			}
-			u.r = o.funs.obtener_mencionados_matriz(m)
-			u.i = 0
-			u.r.map(function(x){
+
+			depurado.conteo = 0
+			ote.funs.obtener_mencionados_matriz(mensaje).map(function(x){
 				var regex_usuarios = new RegExp(`<@!?(${x[0]})>`,"g")
-				var nick = o.funs.elegir_compacto(x[1],x[2])
-				color = u.i%2?35:36
+				var nick = ote.funs.elegir_compacto(x[1],x[2])
+				color = depurado.conteo%2?35:36
 				if(x[0]==naranja){
 					color = 30
 				}
-				u.p = u.p.replace(regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`)
-				u.q = u.q.replace(regex_usuarios,`@${nick}`)
-				++u.i
+				depurado.consola = depurado.consola.replace(
+					regex_usuarios,`\x1b[01;${color}m@${nick}\x1b[01;37m`
+				)
+				depurado.titulado = depurado.titulado.replace(
+					regex_usuarios,`@${nick}`
+				)
+				++depurado.conteo
 			})
-			u.t = `${u.a}: ${u.q}`
-			u.b = `\x1b[01;${c_autor}m${u.a} \x1b[01;34m${u.g} \x1b[01;33m${u.c}`
-			u.o = `\x1b[01;37m${u.p}\x1b[00m`
+			depurado.titulado_nombre_y_mensaje = `${depurado.autor}: ${depurado.titulado}`
 
-			var dicho_final = o.g.dichos.slice(-1)[0]
-			if( dicho_final && dicho_final[1]!=u.b || dicho_final==null ){
-				o.funs.mostrar(u.b)
+			depurado.b = `\x1b[01;${color_autor}m${depurado.autor} `
+				+`\x1b[01;34m${depurado.servidor} \x1b[01;33m${depurado.receptor}`
+
+			depurado.o = `\x1b[01;37m${depurado.consola}\x1b[00m`
+
+			var dicho_final = depurado.dichos.slice(-1)[0]
+			if( dicho_final && dicho_final[1]!=depurado.b || dicho_final==null ){
+				ote.funs.mostrar(depurado.b)
 			}
-			o.funs.mostrar(o.funs.formatear_fecha(u.d), u.o)
+			ote.funs.mostrar(ote.funs.formatear_fecha(depurado.fecha), depurado.o)
 
-			u.l = [ u.d, u.b, u.t ].filter(x=>x)
-			o.g.dichos.push(u.l)
+			depurado.l = [ depurado.fecha, depurado.b, depurado.titulado_nombre_y_mensaje ].filter(x=>x)
+			depurado.dichos.push(depurado.l)
 
-			var mensaje = message.content
-			o.funs.titular(`${u.t} ; otedisc`)
+			ote.funs.titular(`${depurado.titulado_nombre_y_mensaje} ; otedisc`)
 
-			//if (m.author.bot) return;
+			depurado.adjuntos = ote.funs.obtener_enlaces(mensaje)
 
-			// Adjuntos
+			//if (mensaje.author.bot) return;
+			if ( !depurado.regex_prefijo.test(contenido) ) return;
 
-			if ( !o.g.regex_prefijo.test(mensaje) ) return;
-
-			var desprefijado = o.funs.desprefijar(mensaje,prefijo)
+			var desprefijado = ote.funs.desprefijar(contenido,prefijo)
 			var args = desprefijado.split(/\s+/g)
 			var argumento = args[0]
 			var procesado = ""
@@ -247,106 +264,95 @@ module.exports = {
 					break;
 				case pref_mp:
 					procesado = args.slice(1).join(" ")
-					procesado = o.funs.quitar_menciones(procesado)
-					procesado = o.funs.procesar(message,procesado)
+					procesado = ote.funs.quitar_menciones(procesado)
+					procesado = ote.funs.procesar(mensaje,procesado)
 					break;
 				case "img":
 					procesado = args.slice(1).join(" ")
-					var adjuntos = m.attachments.map(function(x){return x})
-					var a = "a-z"
-					var n = "0-9"
-					var ang = `${a}${n}_?=`
-					var regex_urls = new RegExp(`([${ang}]+\.)+[${ang}]+(\/[${ang}.]+)+`,"gi")
-					var enlaces = procesado.match(regex_urls)
-					if(enlaces){
-						enlaces = enlaces.map(x=>{
-							procesado = o.funs.desprefijar(procesado,x)
-							return {url: `http://${x}`}
-						})
-						adjuntos = adjuntos.concat(enlaces)
-					}
-					o.g.z = enlaces
-					var array_adjuntos = adjuntos.map(function(x){
-						o.funs.imagen_hacia_texto(m,x.url,26)
+					var array_adjuntos = ote.depurado.adjuntos.map(function(x){
+						procesado = ote.funs.desprefijar(procesado,x)
+						ote.funs.imagen_hacia_texto(ote.depurado.canal,x.url,26)
 						return x.attachment
 					})
 					break;
 				case "kill":
 					var aleatorio = Math.floor(Date.now()/30)%8+2
 					if(aleatorio>=5&&aleatorio<=9){
-						//if (message.author.username.includes("ari")) return;
+						//if (mensaje.author.username.includes("ari")) return;
 						//return;
 					}
 					if(aleatorio==2){
-	 					procesado = `<@!${message.author.id}> Le has robado ${aleatorio} kills a ${args[1]}.`
+	 					procesado = `<@!${mensaje.author.id}> Le has robado `
+	 						+`${aleatorio} kills a ${args[1]}.`
 					}
 					if(aleatorio>=3&&aleatorio<=8){
-						var menciona_a_ari = [...m.mentions.users].map(function(x){return x[1].username}).includes("ari ☯")
+						var menciona_a_ari = [...mensaje.mentions.users]
+							.map(function(x){return x[1].username})
+							.includes("ari ☯")
 						if( menciona_a_ari ){
 							procesado = `No se puede matar a la reina.`
 						}else{
-							procesado = `<@!${message.author.id}> Mataste a ${args[1]}.`
+							procesado = `<@!${mensaje.author.id}> Mataste a ${args[1]}.`
 						}
 						
 					}
  					break;
 				default:
 					procesado = desprefijado
-					procesado = o.funs.quitar_menciones(procesado)
-					procesado = o.funs.procesar(message,procesado)
+					procesado = ote.funs.quitar_menciones(procesado)
+					procesado = ote.funs.procesar(mensaje,procesado)
 					break;
 			}
-			if( o.g.regex_prefijo_b.test(mensaje) ){
-				procesado = o.funs.otecald()
+			if( ote.depurado.regex_prefijo_ote.test(mensaje) ){
+				procesado = ote.funs.otecald()
 			}
 			if(argumento==pref_mp){
 				var receptores = undefined
-				var menciones = [...o.funs.obtener_mencionados_array(message)]
+				var menciones = [...ote.funs.obtener_mencionados_array(mensaje)]
 				if(menciones.length!=0){
 					receptores = [...new Set(menciones)]
 				}else{
-					receptores = [message.author]
+					receptores = [mensaje.author]
 				}
 				receptores.map(function(x){
 					if(!x.bot){
-						var dm = o.externo.discord.DMChannel
-						var privado = new o.externo.discord.DMChannel(
-							o.externo.bot
+						var dm = externo.discord.DMChannel
+						var privado = new externo.discord.DMChannel(
+							externo.bot
 							, { recipients: [x] }
 						)
 						try{
 							privado.recipient.send(procesado)
 						}catch(e){
-							o.funs.mostrar(x,e.toString())
+							ote.funs.mostrar(x,e.toString())
 						}
 					}
 				})
 			}else{
-				o.funs.enviar(message,procesado)
+				ote.funs.enviar(externo.canal,procesado)
 			}
 
 			return;
 		})
 
-		var inicio = o.funs.archivo_hacia_json(
+		var inicio = ote.funs.archivo_hacia_json(
 			`${__dirname}/../../../../otedis/inicio.json`
 		)
-		var token_encriptado = o.funs.archivo_hacia_json(
+		var token_encriptado = ote.funs.archivo_hacia_json(
 			`${__dirname}/token_encriptado.json`
 		).token_encriptado
 		if(clave==undefined){
 			clave = inicio.clave
 		}
-		var token_desencriptado = o.funs.desencriptar(token_encriptado,clave)
-		o.e.bot.login(token_desencriptado)
+		var token_desencriptado = ote.funs.desencriptar(token_encriptado,clave)
+		externo.inicio = externo.bot.login(token_desencriptado)
 	}
 }
 
 ote = module.exports // Variable global
-o = ote // Simplificado
 var puede_iniciar = process.argv[2]
 if(puede_iniciar=="sip"){
 	var clave = process.argv[3]
-	o.iniciar(clave)
+	ote.iniciar(clave)
 }
 
