@@ -68,9 +68,10 @@ module.exports = {
 				return contenido
 			}
 		}
-		, desprefijar: function(contenido,prefijo){
+		, desprefijar: function(contenido,prefijo,es_imagen){
 			var salida = ""
-			var regex = new RegExp("^\\s*"+prefijo+"\\s+","gi")
+			var texto = es_imagen?prefijo:"^\\s*"+prefijo+"\\s+"
+			var regex = new RegExp(texto,"gi")
 			var prefijo_encontrado = contenido.match(regex)
 			if(prefijo_encontrado!=null){
 				salida = contenido.replace(prefijo_encontrado,"")
@@ -149,7 +150,8 @@ module.exports = {
 		, graficar: function(contenido,adjuntos,puede_mostrar){
 			procesado = contenido
 			adjuntos.map(function(x){
-				procesado = ote.funs.desprefijar(procesado,x)
+				var es_imagen = true
+				procesado = ote.funs.desprefijar(procesado,x,es_imagen)
 				ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
 				return x
 			})
