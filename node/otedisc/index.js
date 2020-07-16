@@ -111,7 +111,8 @@ module.exports = {
 				split(" ").map(x=>`10${fecha["get"+x]()}`.slice(-2))
 			return `\x1b[01;31m${tiempos.slice(0,3).join("")} ${tiempos.slice(-3).join(" ")}`
 		}
-		, imagen_hacia_texto: function imagen_hacia_texto(canal,url,ancho){
+		, imagen_hacia_texto: function imagen_hacia_texto(canal,url,puede_mostrar){
+			var ancho = puede_mostrar?26:52
 			if(url==null){return;}
 			externo.image_to_ascii(url, {
 				colored: false
@@ -122,8 +123,11 @@ module.exports = {
 				}else{
 					var lenguaje = "js"
 					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
-					console.log("procesado",procesado)
-					ote.funs.enviar(canal,procesado)
+					if(!puede_mostrar){
+						ote.funs.mostrar(procesado)
+					}else{
+						ote.funs.enviar(canal,procesado)
+					}
 				}
 			})
 		}
@@ -141,9 +145,10 @@ module.exports = {
 			}
 			return adjuntos
 		}
-		, graficar: function(contenido,adjuntos,x){
+		, graficar: function(contenido,adjuntos,puede_mostrar){
+			procesado = contenido
 			adjuntos.map(function(x){
-				var contenido = ote.funs.desprefijar(contenido,x)
+				procesado = ote.funs.desprefijar(procesado,x)
 				ote.funs.imagen_hacia_texto(externo.canal,x,26,puede_mostrar)
 				return x
 			})
