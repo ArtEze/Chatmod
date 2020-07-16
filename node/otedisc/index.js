@@ -115,7 +115,7 @@ module.exports = {
 			var ancho = puede_mostrar?26:51
 			if(url==null){return;}
 			externo.image_to_ascii(url, {
-				colored: false
+				colored: !puede_mostrar
 				, size: {width: ancho}
 			},(err, procesado) => {
 				if(err){
