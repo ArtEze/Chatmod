@@ -37,7 +37,7 @@ module.exports = {
 		}
 		, enviar: function(canal,contenido){
 			// this.mostrar( "Mensaje: ",JSON.stringify(contenido) )
-			if(contenido!=undefined){
+			if( contenido!=undefined && !/^\s*$/.test(contenido) ){
 				var procesado = contenido.toString()
 				var longitud = procesado.length
 				//canal.send(longitud.toString())
