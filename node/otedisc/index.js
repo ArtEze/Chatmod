@@ -229,19 +229,21 @@ module.exports = {
 			})
 			depurado.titulado_nombre_y_mensaje = `${depurado.autor}: ${depurado.titulado}`
 
-			depurado.b = `\x1b[01;${color_autor}m${depurado.autor} `
+			depurado.canal_final = `\x1b[01;${color_autor}m${depurado.autor} `
 				+`\x1b[01;34m${depurado.servidor} \x1b[01;33m${depurado.receptor}`
 
-			depurado.o = `\x1b[01;37m${depurado.consola}\x1b[00m`
+			depurado.mensaje_final = `\x1b[01;37m${depurado.consola}\x1b[00m`
 
 			var dicho_final = depurado.dichos.slice(-1)[0]
-			if( dicho_final && dicho_final[1]!=depurado.b || dicho_final==null ){
-				ote.funs.mostrar(depurado.b)
+			if( dicho_final && dicho_final[1]!=depurado.canal_final || dicho_final==null ){
+				ote.funs.mostrar(depurado.canal_final)
 			}
-			ote.funs.mostrar(ote.funs.formatear_fecha(depurado.fecha), depurado.o)
+			ote.funs.mostrar(ote.funs.formatear_fecha(depurado.fecha), depurado.mensaje_final)
 
-			depurado.l = [ depurado.fecha, depurado.b, depurado.titulado_nombre_y_mensaje ].filter(x=>x)
-			depurado.dichos.push(depurado.l)
+			depurado.dicho = [
+				depurado.fecha, depurado.canal_final, depurado.titulado_nombre_y_mensaje
+			].filter(x=>x)
+			depurado.dichos.push(depurado.dicho)
 
 			ote.funs.titular(`${depurado.titulado_nombre_y_mensaje} ; otedisc`)
 
