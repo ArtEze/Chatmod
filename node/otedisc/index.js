@@ -138,7 +138,7 @@ module.exports = {
 			var a_1 = `${abecedario}\\d-.`
 			var a_2 = `${a_1}_+()\\?=`
 			var regex_urls = new RegExp(`(https?://)?[${a_1}]+(/[${a_2}]+)+`,"gi")
-			console.log( regex_urls )
+			// console.log( regex_urls )
 			var enlaces = contenido.match(regex_urls)
 			if(enlaces){
 				enlaces = enlaces.map(x=>`http://${x}`)
