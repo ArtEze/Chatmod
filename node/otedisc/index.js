@@ -70,7 +70,9 @@ module.exports = {
 		}
 		, desprefijar: function(contenido,prefijo,es_imagen){
 			var salida = ""
-			var texto = es_imagen?prefijo:"^\\s*"+prefijo+"\\s+"
+			var texto = es_imagen?(
+				prefijo.replace(/\//g,"\\/").replace(/\+/g,"\\+")
+			):"^\\s*"+prefijo+"\\s+"
 			var regex = new RegExp(texto,"gi")
 			var prefijo_encontrado = contenido.match(regex)
 			if(prefijo_encontrado!=null){
