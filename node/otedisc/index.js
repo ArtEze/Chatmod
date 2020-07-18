@@ -120,9 +120,9 @@ module.exports = {
 			externo.image_to_ascii(url, {
 				colored: !puede_mostrar
 				, size: {width: ancho}
-			},(err, procesado) => {
-				if(err){
-					console.log(err)
+			},(e, procesado) => {
+				if(e){
+					console.log(`Error: ${e.toString()}`)
 				}else{
 					var lenguaje = "js"
 					procesado = `\n\x60\x60\x60${lenguaje}\n${procesado}\x60\x60\x60`
