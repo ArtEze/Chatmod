@@ -167,6 +167,18 @@ module.exports = {
 		, listar_servidores: function(){
 			return ote.externo.bot.guilds.cache.map(x=>[x.name,[x]])
 		}
+		, listar_presentes: function(nombre_servidor){
+			var servidor = ote.funs.listar_servidores()
+				.filter(x=>x[0].includes(nombre_servidor))[0][1][0]
+			var presentes = servidor.presences.cache
+				.map(x=>[x.userID,x.status,null,[x]])
+				.map(x=>{
+					var array = x
+					array[2] = array[3][0].guild.member(array[0]).user.username
+					return array
+				})
+			return presentes
+		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
 		}
