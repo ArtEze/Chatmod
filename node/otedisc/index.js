@@ -283,7 +283,10 @@ module.exports = {
 			ote.funs.mostrar(ote.funs.formatear_fecha(depurado.fecha), depurado.mensaje_final)
 
 			depurado.dicho = [
-				depurado.fecha, depurado.canal_final, depurado.titulado_nombre_y_mensaje
+				depurado.fecha
+				, depurado.canal_final
+				, depurado.titulado_nombre_y_mensaje
+				, [mensaje]
 			].filter(x=>x)
 			depurado.dichos.push(depurado.dicho)
 
