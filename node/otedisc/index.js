@@ -155,10 +155,17 @@ module.exports = {
 			adjuntos.map(function(x){
 				var es_imagen = true
 				procesado = ote.funs.desprefijar(procesado,x,es_imagen)
-				ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
+				if( /bmp|jpg|gif/i.test() ){
+					ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
+				}else{
+					ote.funs.mostrar("El enlace no es coincidente con la extensión.")
+				}
 				return x
 			})
 			return procesado
+		}
+		, listar_servidores: function(){
+			return ote.externo.bot.guilds.cache.map(x=>[x.name,[x]])
 		}
 		, archivo_hacia_json: function(x){
 			return JSON.parse(fs.readFileSync(x).toString())
