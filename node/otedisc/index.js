@@ -171,12 +171,19 @@ module.exports = {
 			var servidor = ote.funs.listar_servidores()
 				.filter(x=>x[0].includes(nombre_servidor))[0][1][0]
 			var presentes = servidor.presences.cache
-				.map(x=>[x.userID,x.status,null,[x]])
+				.map(x=>[x.userID,x.status,x])
 				.map(x=>{
 					var array = x
-					array[2] = array[3][0].guild.member(array[0]).user.username
-					return array
-				})
+					var array_nuevo = []
+					var usuario = array.slice(-1)[0].guild.member(array[0]).user
+					array_nuevo.push(
+						usuario.bot?"bot":"usuario"
+						, array[1]
+						, usuario.username
+						, [ array[2], usuario ]
+					)
+					return array_nuevo
+				}).filter(x=>x[0]=="usuario")
 			return presentes
 		}
 		, archivo_hacia_json: function(x){
