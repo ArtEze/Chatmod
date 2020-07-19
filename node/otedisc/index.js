@@ -222,6 +222,7 @@ module.exports = {
 		externo.bot.on("ready", function() {
 			ote.funs.mostrar(`Listo y sin errores. ${new Date()}`)
 			ote.funs.titular("Otecald Bot Discord")
+			externo.inicio = "otedisc iniciado" // Reemplazando token
 		})
 
 		externo.bot.on("message", function(mensaje) {
