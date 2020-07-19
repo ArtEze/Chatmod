@@ -44,7 +44,6 @@ module.exports = {
 				if(procesado.length<2000){
 					canal.send(procesado)
 				}
-				
 			}
 		}
 		, aleatorio_siete: function aleatorio_siete(x){
@@ -262,7 +261,7 @@ module.exports = {
 			].filter(x=>x)
 			depurado.dichos.push(depurado.dicho)
 
-			ote.funs.titular(`${depurado.titulado_nombre_y_mensaje} ; otedisc`)
+			ote.funs.titular(`${depurado.titulado_nombre_y_mensaje}`) // otedisc
 
 			depurado.adjuntos = ote.funs.obtener_enlaces(mensaje)
 
