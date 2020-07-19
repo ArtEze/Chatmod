@@ -155,7 +155,7 @@ module.exports = {
 			adjuntos.map(function(x){
 				var es_imagen = true
 				procesado = ote.funs.desprefijar(procesado,x,es_imagen)
-				if( /bmp|jpg|gif/i.test() ){
+				if( /bmp|jpg|gif/i.test(x) ){
 					ote.funs.imagen_hacia_texto(externo.canal,x,puede_mostrar)
 				}else{
 					ote.funs.mostrar("El enlace no es coincidente con la extensión.")
